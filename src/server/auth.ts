@@ -4,7 +4,7 @@ import {
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
+import SpotifyProvider from "next-auth/providers/spotify";
 
 import { env } from "~/env.mjs";
 
@@ -45,10 +45,11 @@ export const authOptions: NextAuthOptions = {
     }),
   },
   providers: [
-    DiscordProvider({
-      clientId: env.DISCORD_CLIENT_ID,
-      clientSecret: env.DISCORD_CLIENT_SECRET,
+    SpotifyProvider({
+      clientId: env.SPOTIFY_CLIENT_ID,
+      clientSecret: env.SPOTIFY_CLIENT_SECRET,
     }),
+
     /**
      * ...add more providers here.
      *

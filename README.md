@@ -15,8 +15,11 @@
 
 **Noel:**
 
-- [ ] Init
-- [ ] Grund interface
+- [x] Init
+- [x] Landingpage
+- [x] Spotify Authentifizierung
+- [x] CI Pipeline
+- [ ] Dashboard
 
 **Basti**
 
