@@ -8,8 +8,8 @@ import {
 import { textoSpeech } from "~/utils/ttsFunc";
 
 export const ttsRouter = createTRPCRouter({
-  ttsNew: publicProcedure.query(async () => {
-    const result = await textoSpeech();
+  ttsNew: publicProcedure.query( () => {
+    const result = textoSpeech();
     return result;
   }),
 });
