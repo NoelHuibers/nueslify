@@ -20,6 +20,7 @@ export async function textoSpeech() {
   
   const mp3 = await readMp3File("./public/speech.mp3");
 
+  
   const buffer = Buffer.from(await mp3.arrayBuffer());
   const binaryString = buffer.toString('binary');
   return binaryString;

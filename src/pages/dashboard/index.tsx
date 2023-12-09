@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
+
+//import { IoPlayCircle } from "react-icons/io5";
+
 import { SlControlPlay } from "react-icons/sl";
 import { SlControlPause } from "react-icons/sl";
 
@@ -11,9 +14,11 @@ export default function Home() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
+  const spotifySong = useRef<HTMLIFrameElement>(null);
+
+  const [news, setNews] = useState(true);
 
   const audiodata = api.tts.ttsNew.useQuery();
-  const audioPath = "";
 
   useEffect(() => {
     if (sourceRef.current && audiodata.data) {
@@ -26,14 +31,18 @@ export default function Home() {
       const blobUrl = URL.createObjectURL(blob);
       sourceRef.current.src = blobUrl;
     }
-  }, [sourceRef, audiodata]);
+  }, [sourceRef.current, audiodata.data]);
 
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = async () => {
     setIsPlaying(true);
     if (audioRef.current) {
-      await audioRef.current.play();
+      try {
+        await audioRef.current.play();
+      } catch (error) {
+        console.log("playback was not possible");
+      }
     }
   };
 
@@ -55,36 +64,57 @@ export default function Home() {
   }
 
   return (
-    <main className="h-screen w-screen bg-slate-50">
+    <main className="h-screen w-screen bg-gradient-to-b from-zinc-900 to-indigo-950">
       <div className="flex h-full w-full flex-col">
         <nav className="flex h-fit w-full flex-row items-center p-8 ">
-          <h1 className="text-lg">Dashboard</h1>
+          <h1 className="text-xl text-slate-50">Dashboard</h1>
           <button
-            className="mx-auto mr-1 rounded-xl bg-indigo-900 px-6 py-2 text-slate-50"
+            className="mx-auto mr-1 rounded-xl bg-indigo-200 px-6 py-2 text-indigo-900 hover:bg-emerald-300"
             onClick={() => void signOut()}
           >
-            <p className="text-lg">Logout</p>
+            <p className="text-xl">Logout</p>
           </button>
         </nav>
-        <div className="flex h-full w-full flex-col items-center justify-center">
-          {isPlaying ? (
-            <button
-              onClick={handlePause}
-              className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-900 p-6 hover:bg-indigo-800"
-            >
-              <SlControlPause className="h-8 w-8 text-slate-50" />
-            </button>
-          ) : (
-            <button
-              onClick={handlePlay}
-              className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-900 p-6 hover:bg-indigo-800"
-            >
-              <SlControlPlay className="h-8 w-8 text-slate-50" />
-            </button>
-          )}
-          <audio ref={audioRef} controls hidden>
-            <source ref={sourceRef} src={audioPath} type="audio/mp3" />
-          </audio>
+        <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
+          <div className={news ? "" : "hidden"}>
+            {isPlaying ? (
+              <button
+                onClick={handlePause}
+                className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 hover:bg-emerald-300"
+              >
+                <SlControlPause className="h-8 w-8 text-indigo-900" />
+              </button>
+            ) : (
+              <button
+                onClick={handlePlay}
+                className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 hover:bg-emerald-300"
+              >
+                <SlControlPlay className="h-8 w-8 text-indigo-900" />
+              </button>
+            )}
+
+            <audio ref={audioRef} controls hidden>
+              <source ref={sourceRef} src="/" type="audio/mp3" />
+            </audio>
+          </div>
+          <div className={news ? "hidden" : "w-5/6"}>
+            <iframe
+              ref={spotifySong}
+              className="border-radius:12px"
+              src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo"
+              width="100%"
+              height="352"
+              frameBorder="5"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+          <button
+            onClick={() => setNews(!news)}
+            className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+          >
+            toggle news/music player
+          </button>
         </div>
       </div>
     </main>
