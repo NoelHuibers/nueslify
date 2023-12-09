@@ -2,7 +2,7 @@
 
 ## Architecture
 
-### WebApp
+### Progressive WebApp
 
 - Frontend: TypeScript
 - Backend: TypeScript, Node.js, Next.js, tRPC
@@ -19,16 +19,20 @@
 - [x] Landingpage
 - [x] Spotify Authentifizierung
 - [x] CI Pipeline
-- [ ] Dashboard
+- [x] Dashboard
+- [x] PWA Configuration
+- [ ] Datenbankanbindung (Userdata)
 
 **Basti**
 
 - [ ] Ansprechen der Spotify API Bsp.: Letzten Song abspielen (Lieblingssongs Playlist spotify)
+- [ ] URIs der Playlists bekommen
 
 **Anton & Peter**
 
 - [ ] News herbekommen (Webcrawlen/API): Irgendwas
-- [ ] Text To Speech
+- [x] Text To Speech
+- [ ] Init Buttons
 
 **Gabriel**
 
@@ -38,6 +42,4 @@
 
 - [ ] Mixer
 - [ ] Andere Features
-- [ ] Init Buttons
-- [ ] Datenbankanbindung (Userdata)
 - [ ] Dokumentation
