@@ -3,7 +3,13 @@ import { Html, Head, Main, NextScript } from "next/document";
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+        <title>Nueslify</title>
+        <meta
+          name="description"
+          content="Enhance your radio experience with Nueslify, the innovative web application seamlessly integrated with Spotify."
+        />
+      </Head>
 
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
