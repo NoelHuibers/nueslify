@@ -20,19 +20,6 @@ export default function Home() {
 
   const audiodata = api.tts.ttsNew.useQuery();
 
-  useEffect(() => {
-    if (sourceRef.current && audiodata.data) {
-      const arrayBuffer = new ArrayBuffer(audiodata.data.length);
-      const uint8Array = new Uint8Array(arrayBuffer);
-      for (let i = 0; i < audiodata.data.length; i++) {
-        uint8Array[i] = audiodata.data.charCodeAt(i) & 0xff;
-      }
-      const blob = new Blob([arrayBuffer], { type: "audio/mp3" });
-      const blobUrl = URL.createObjectURL(blob);
-      sourceRef.current.src = blobUrl;
-    }
-  }, [sourceRef.current, audiodata.data]);
-
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = async () => {
@@ -45,6 +32,19 @@ export default function Home() {
       }
     }
   };
+
+  useEffect(() => {
+    if (sourceRef.current && audiodata.data !== undefined) {
+      const arrayBuffer = new ArrayBuffer(audiodata.data.length);
+      const uint8Array = new Uint8Array(arrayBuffer);
+      for (let i = 0; i < audiodata.data.length; i++) {
+        uint8Array[i] = audiodata.data.charCodeAt(i) & 0xff;
+      }
+      const blob = new Blob([arrayBuffer], { type: "audio/mp3" });
+      const blobUrl = URL.createObjectURL(blob);
+      sourceRef.current.src = blobUrl;
+    }
+  }, [sourceRef.current, audiodata.data]);
 
   const handlePause = () => {
     setIsPlaying(false);
@@ -92,10 +92,11 @@ export default function Home() {
                 <SlControlPlay className="h-8 w-8 text-indigo-900" />
               </button>
             )}
-
-            <audio ref={audioRef} controls hidden>
-              <source ref={sourceRef} src="/" type="audio/mp3" />
-            </audio>
+            { audiodata.isFetched ?
+              <audio ref={audioRef} controls hidden>
+                <source ref={sourceRef} src="" type="audio/mp3" />
+              </audio> : null
+            }
           </div>
           <div className={news ? "hidden" : "w-5/6"}>
             <iframe
@@ -104,8 +105,6 @@ export default function Home() {
               src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo"
               width="100%"
               height="352"
-              frameBorder="5"
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"
             ></iframe>
           </div>
