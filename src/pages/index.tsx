@@ -2,6 +2,7 @@ import { signIn, useSession } from "next-auth/react";
 
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
+import { api } from "../utils/api";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -10,6 +11,7 @@ export default function Home() {
     void router.replace("/dashboard");
     return null;
   }
+  const data = api.tts.ttsNew.useQuery();
 
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
