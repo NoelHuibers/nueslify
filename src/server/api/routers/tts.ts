@@ -9,7 +9,7 @@ import { textoSpeech } from "~/utils/ttsFunc";
 
 export const ttsRouter = createTRPCRouter({
   ttsNew: publicProcedure.query(async () => {
-    let result = await textoSpeech();
-    return "Hey";
+    const result = await textoSpeech();
+    return result;
   }),
 });
