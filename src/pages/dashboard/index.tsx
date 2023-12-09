@@ -44,7 +44,7 @@ export default function Home() {
       const blobUrl = URL.createObjectURL(blob);
       sourceRef.current.src = blobUrl;
     }
-  }, [sourceRef.current, audiodata.data]);
+  }, [audiodata.data]);
 
   const handlePause = () => {
     setIsPlaying(false);
