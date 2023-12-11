@@ -7,7 +7,7 @@ export default function Document() {
         <title>Nueslify</title>
         <meta
           name="description"
-          content="Enhance your radio experience with Nueslify, the innovative web application seamlessly integrated with Spotify."
+          content="Enhance your radio experience with Nueslify, the innovative AI web application seamlessly integrated with Spotify."
         />
       </Head>
 
