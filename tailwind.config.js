@@ -2,6 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    extend: {},
+    extend: {
+      brightness: {
+        90: '.90',
+        175: '1.75',
+      }
+    },
   },
 };
