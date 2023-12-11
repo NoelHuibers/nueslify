@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
+import Image from "next/image";
 
 //import { IoPlayCircle } from "react-icons/io5";
 
-import { SlControlPlay } from "react-icons/sl";
-import { SlControlPause } from "react-icons/sl";
+import { RiPlayFill } from "react-icons/ri";
+import { IoMdPause } from "react-icons/io";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -76,33 +77,58 @@ export default function Home() {
           </button>
         </nav>
         <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
-          <div className={news ? "" : "hidden"}>
-            {isPlaying ? (
-              <button
-                onClick={handlePause}
-                className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 hover:bg-emerald-300"
-              >
-                <SlControlPause className="h-8 w-8 text-indigo-900" />
-              </button>
-            ) : (
-              <button
-                onClick={handlePlay}
-                className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 hover:bg-emerald-300"
-              >
-                <SlControlPlay className="h-8 w-8 text-indigo-900" />
-              </button>
-            )}
-            { audiodata.isFetched ?
-              <audio ref={audioRef} controls hidden>
-                <source ref={sourceRef} src="" type="audio/mp3" />
-              </audio> : null
-            }
-          </div>
+          {/* */}
+          {/* Player Section */}
           <div className={news ? "hidden" : "w-5/6"}>
+            <div className="flex items-center justify-between rounded-lg bg-purple-700 p-4 shadow-lg">
+              {/* Album Cover */}
+              <div className="w-1/6 p-5">
+                <Image
+                  src="/cover.png"
+                  alt="Album cover"
+                  layout="responsive"
+                  height={500}
+                  width={500}
+                  className="hover:contrast-85 hover:saturate-125 cursor-pointer rounded-lg shadow-lg transition-all hover:brightness-90"
+                />
+              </div>
+              <div className="flex-grow px-4">
+                <h2 className="text-lg font-bold text-slate-50">
+                  Your Daily Newsflash
+                </h2>
+                <p className="text-sm text-slate-50">Nueslify AI-Radio</p>
+              </div>
+
+              <div className="w-1/8 yrelative h-full items-end py-3 pr-0.5">
+                {isPlaying ? (
+                  <button
+                    onClick={handlePause}
+                    className="hover:tranform bottom-0 right-0  flex cursor-pointer items-center justify-center rounded-full p-2 hover:scale-105"
+                  >
+                    <IoMdPause className="h-8 w-8 transform text-indigo-200" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={handlePlay}
+                    className="hover:tranform bottom-0 right-0 flex cursor-pointer rounded-full bg-indigo-200 p-2 hover:scale-105"
+                  >
+                    <RiPlayFill className="h-8 w-8  transform text-indigo-900" />
+                  </button>
+                )}
+                {audiodata.isFetched ? (
+                  <audio ref={audioRef} controls hidden>
+                    <source ref={sourceRef} src="" type="audio/mp3" />
+                  </audio>
+                ) : null}
+              </div>
+            </div>
+          </div>
+
+          <div className={news ? "w-5/6" : "hidden"}>
             <iframe
               ref={spotifySong}
               className="border-radius:12px"
-              src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo"
+              src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo?utm_source=generator"
               width="100%"
               height="352"
               loading="lazy"
