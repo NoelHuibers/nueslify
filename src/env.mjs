@@ -25,6 +25,7 @@ export const env = createEnv({
     SPOTIFY_CLIENT_ID: z.string(),
     SPOTIFY_CLIENT_SECRET: z.string(),
     OPENAI_API_KEY: z.string(),
+    SPOTIFY_CLIENT_ID_TOP_TRACKS: z.string()
   },
 
   /**
@@ -47,6 +48,7 @@ export const env = createEnv({
     SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID,
     SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET,
     OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    SPOTIFY_CLIENT_ID_TOP_TRACKS: process.env.SPOTIFY_CLIENT_ID_TOP_TRACKS,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
