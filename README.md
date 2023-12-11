@@ -1,5 +1,7 @@
 # Nüslify
 
+npm run dev
+
 ## Architecture
 
 ### Progressive WebApp

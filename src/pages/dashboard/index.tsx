@@ -3,6 +3,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import Image from "next/image";
+import Link from "next/link";
 
 //import { IoPlayCircle } from "react-icons/io5";
 
@@ -69,12 +70,19 @@ export default function Home() {
       <div className="flex h-full w-full flex-col">
         <nav className="flex h-fit w-full flex-row items-center p-8 ">
           <h1 className="text-xl text-slate-50">Dashboard</h1>
+
           <button
-            className="mx-auto mr-1 rounded-xl bg-indigo-200 px-6 py-2 text-indigo-900 hover:bg-emerald-300"
+            className="duration-30 mx-auto mr-1 rounded-xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
             onClick={() => void signOut()}
           >
             <p className="text-xl">Logout</p>
           </button>
+          <Link
+            href="/interests"
+            className="cursor-pointer rounded-xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition duration-300 hover:bg-emerald-300"
+          >
+            Choose Interests
+          </Link>
         </nav>
         <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
           {/* */}
