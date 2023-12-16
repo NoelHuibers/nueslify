@@ -22,6 +22,13 @@ export default function Home() {
 
   const audiodata = api.tts.ttsNew.useQuery();
 
+  const spotifyTracks = api.spotify.topTracks.useQuery();
+  useEffect(() => {
+    if (spotifyTracks.data !== undefined) {
+      console.log(spotifyTracks.data);
+    }
+  });
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = async () => {
