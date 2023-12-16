@@ -1,4 +1,5 @@
 import { type GetServerSidePropsContext } from "next";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import {
   getServerSession,
   type DefaultSession,
@@ -7,6 +8,8 @@ import {
 import SpotifyProvider from "next-auth/providers/spotify";
 
 import { env } from "~/env.mjs";
+import { db } from "~/server/db";
+import { mysqlTable } from "~/server/db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -16,11 +19,11 @@ import { env } from "~/env.mjs";
  */
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: DefaultSession["user"] & {
+    user: {
       id: string;
       // ...other properties
       // role: UserRole;
-    };
+    } & DefaultSession["user"];
   }
 
   // interface User {
@@ -36,18 +39,24 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, token }) => ({
+    session: ({ session, user }) => ({
       ...session,
       user: {
         ...session.user,
-        id: token.sub,
+        id: user.id,
       },
     }),
   },
+  adapter: DrizzleAdapter(db, mysqlTable),
   providers: [
     SpotifyProvider({
       clientId: env.SPOTIFY_CLIENT_ID,
       clientSecret: env.SPOTIFY_CLIENT_SECRET,
+      authorization: {
+        params: {
+          scope: ["user-read-email", "user-top-read"].join(" "),
+        },
+      },
     }),
 
     /**
