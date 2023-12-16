@@ -9,6 +9,7 @@ import Link from "next/link";
 
 import { RiPlayFill } from "react-icons/ri";
 import { IoMdPause } from "react-icons/io";
+import {useQuery} from "@tanstack/react-query";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -21,6 +22,7 @@ export default function Home() {
   const [news, setNews] = useState(true);
 
   const audiodata = api.tts.ttsNew.useQuery();
+  const gptData = api.gpt.gptAnswer.useQuery();
 
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -34,6 +36,10 @@ export default function Home() {
       }
     }
   };
+
+  function askGPT() {
+    console.log(gptData.data?.binaryString);
+  }
 
   useEffect(() => {
     if (sourceRef.current && audiodata.data !== undefined) {
@@ -147,6 +153,12 @@ export default function Home() {
             className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
           >
             toggle news/music player
+          </button>
+          <button
+              onClick={() => askGPT()}
+              className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+          >
+            ask the ai
           </button>
         </div>
       </div>
