@@ -5,7 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
-import getTopTracks from "~/utils/getTopTracks";
+import getTopTracks, { refreshSpotifyToken } from "~/utils/getTopTracks";
 
 export const spotifyRouter = createTRPCRouter({
   topTracks: protectedProcedure.query(async ({ ctx }) => {
@@ -21,7 +21,8 @@ export const spotifyRouter = createTRPCRouter({
       throw new Error("No access token found");
     }
 
-    const result = getTopTracks(account.access_token);
+    const accessToken = await refreshSpotifyToken(ctx.session.user.id);
+    const result = getTopTracks(accessToken);
     return result;
   }),
 });

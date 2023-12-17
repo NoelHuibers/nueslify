@@ -22,6 +22,7 @@ npm run dev
 - [x] Dashboard
 - [x] PWA Configuration
 - [x] Datenbankanbindung (Userdata)
+- [x] Token aktualisieren
 
 **Basti**
 
@@ -44,10 +45,6 @@ npm run dev
 **Gabriel & Noel**
 
 - [ ] Mixer
-
-**Basti & Noel**
-
-- [ ] Token aktualisieren
 
 **Offen**
 
