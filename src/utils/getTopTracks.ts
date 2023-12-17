@@ -1,8 +1,9 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { eq } from "drizzle-orm";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 import { accounts } from "~/server/db/schema";
+import type { AxiosResponse } from "axios";
 
 type ExternalUrls = {
   spotify: string;
@@ -54,7 +55,7 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
   }
 }
 
-export async function refreshSpotifyToken(userId: string) {
+export async function refreshSpotifyToken(userId: string): Promise<string> {
   const account = await db.query.accounts.findFirst({
     where: (accounts, { eq }) => eq(accounts.userId, userId),
   });
@@ -67,7 +68,11 @@ export async function refreshSpotifyToken(userId: string) {
     if (!account.refresh_token) {
       throw new Error("No refresh token found");
     }
-    const response = await axios.post(
+
+    const response: AxiosResponse<{
+      access_token: string;
+      expires_in: number;
+    }> = await axios.post(
       "https://accounts.spotify.com/api/token",
       new URLSearchParams({
         grant_type: "refresh_token",
@@ -94,6 +99,10 @@ export async function refreshSpotifyToken(userId: string) {
 
     return refreshedTokenData.access_token;
   }
+  if (!account.access_token) {
+    throw new Error("No access token found");
+  }
+
   return account.access_token;
 }
 

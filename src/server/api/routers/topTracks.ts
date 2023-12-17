@@ -1,10 +1,5 @@
-import { z } from "zod";
 import { db } from "~/server/db";
-import {
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import getTopTracks, { refreshSpotifyToken } from "~/utils/getTopTracks";
 
 export const spotifyRouter = createTRPCRouter({
