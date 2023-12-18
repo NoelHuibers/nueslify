@@ -8,10 +8,8 @@ npm run dev
 
 - Frontend: TypeScript
 - Backend: TypeScript, Node.js, Next.js, tRPC
-- Datenbank: Dokumentenbasiert: MongoDB/MariaDB/FireStore:
-  - Jeder Nutzer hat eine Sammlung die nach seiner ID bennant wird.
-  - Jede Sammlung hat Dokumente für jede Interaktion.
-  - InitDokument, Skipetc.Dokument, FavouritsDokument.
+- Hosted on Vercel
+- Datenbank: SQL über Planetscale.
 
 ## Team Responsibilities
 
@@ -23,25 +21,44 @@ npm run dev
 - [x] CI Pipeline
 - [x] Dashboard
 - [x] PWA Configuration
-- [ ] Datenbankanbindung (Userdata)
+- [x] Datenbankanbindung (Userdata)
+- [x] Token aktualisieren
 
 **Basti**
 
-- [ ] Ansprechen der Spotify API Bsp.: Letzten Song abspielen (Lieblingssongs Playlist spotify)
-- [ ] URIs der Playlists bekommen
+- [x] Ansprechen der Spotify API Bsp.: Letzten Song abspielen (Lieblingssongs Playlist spotify)
+- [x] URIs der Playlists bekommen
+- [ ] TTS Research (Andere Provider/Günstigere Alternativen/Lokal)
 
 **Anton & Peter**
 
 - [ ] News herbekommen (Webcrawlen/API): Irgendwas
 - [x] Text To Speech
 - [ ] Init Buttons
+- [ ] Interests in Datenbank speichern
 
 **Gabriel**
 
-- [ ] LLM anbinden (OpenAI? Api Zugriff)
+- [x] LLM anbinden
+- [ ] Userdata von der Datenbank anfragen darauf den Prompt anpassen
+
+**Gabriel & Noel**
+
+- [ ] Mixer
 
 **Offen**
 
-- [ ] Mixer
+- [ ] Skip Button
+- [ ] Upvote/Downvote
+- [ ] News Text speichern
+- [ ] Übergänge? Ein Vorgefertigten
+- [ ] LLMs tauschen (Settings)
 - [ ] Andere Features
 - [ ] Dokumentation
+
+## Termine
+
+03.01: Team Meeting (TBD)
+22.01: Individual Help
+29.01: Individual Help
+08.02: Abgabe

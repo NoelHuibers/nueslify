@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Nueslify</title>
         <meta
           name="description"
           content="Enhance your radio experience with Nueslify, the innovative AI web application seamlessly integrated with Spotify."
