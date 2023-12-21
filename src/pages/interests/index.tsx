@@ -75,24 +75,24 @@ const FavoritesSelectionPage: React.FC = () => {
 
   return (
     <main className="bg-gradient-to-b from-zinc-900 to-indigo-950">
-      <div className="content-container mx-auto">
-        <form className="mx-auto max-w-2xl">
-          <div className="space-y-12">
-            <div className="border-b border-white/10 pb-12">
-              <h2 className="text-base font-semibold leading-7 text-white">
+      <div className="mx-auto">
+        <form className="mx-auto">
+          <div className="">
+            <div className="">
+              <h1 className="font-semibold leading-7 text-white">
                 Your Profile
-              </h2>
+              </h1>
 
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
+              <div className="mt-5">
+                <div className="">
                   <label
                     htmlFor="username"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     Username
                   </label>
-                  <div className="mt-2">
-                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                  <div className="">
+                    <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
                         type="text"
                         name="username"
@@ -107,15 +107,15 @@ const FavoritesSelectionPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
+              <div className="mt-5">
+                <div className="">
                   <label
                     htmlFor="age"
-                    className="appFont block text-sm font-medium leading-6 text-white"
+                    className="block text-sm font-medium leading-6 text-white"
                   >
                     Age
                   </label>
-                  <div className="mt-2">
+                  <div className="">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
                         type="number"
@@ -167,7 +167,7 @@ const FavoritesSelectionPage: React.FC = () => {
                   </label>
                 </div>
               </div>
-              <div className="genres-container">
+              <div className="genres-container max-w-3xl">
                 {genresList.map((genre) => (
                   <button
                     key={genre.name}
@@ -192,7 +192,7 @@ const FavoritesSelectionPage: React.FC = () => {
               <div className="mt-6 flex items-center justify-center gap-x-6">
                 <Link
                   href="../dashboard"
-                  className="transition-duration-600 text-sm font-bold leading-6 text-white"
+                  className="transition-duration-600 text-xl font-bold leading-6 text-white"
                 >
                   Cancel
                 </Link>
@@ -209,20 +209,7 @@ const FavoritesSelectionPage: React.FC = () => {
         </form>
       </div>
 
-      <button
-        onClick={handleSubmit}
-        className="save-button transition-duration-600 bg-indigo-200 text-xl font-bold text-indigo-900 hover:bg-emerald-300"
-      >
-        Save
-      </button>
-
       <style jsx>{`
-        .content-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-
         .label-text {
           font-family: "Pacifico", sans-serif, cursive;
           margin-right: 8px;
@@ -232,7 +219,7 @@ const FavoritesSelectionPage: React.FC = () => {
           border: 1px solid #ccc;
           border-radius: 4px;
           padding: 8px;
-          width: 300px; /* Adjust width as needed */
+          width: 300px;
         }
 
         .range-input {
@@ -284,7 +271,6 @@ const FavoritesSelectionPage: React.FC = () => {
         .save-button {
           margin: 16px auto;
           padding: 8px 16px;
-
           border: none;
           border-radius: 8px;
           cursor: pointer;
