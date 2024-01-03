@@ -74,32 +74,32 @@ const FavoritesSelectionPage: React.FC = () => {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
-      <div className="flex w-full items-center justify-center">
-        <form className="mx-auto max-w-md">
-          <div className="">
-            <div className="">
-              <h1 className="appFont font-semibold leading-7 text-white">
+    <main className="bg-gradient-to-b from-zinc-900 to-indigo-950">
+      <div className="content-container mx-auto">
+        <form className="mx-auto max-w-2xl">
+          <div className="space-y-12">
+            <div className="border-b border-white/10 pb-12">
+              <h2 className="text-base font-semibold leading-7 text-white">
                 Your Profile
-              </h1>
+              </h2>
 
-              <div className="mt-5">
-                <div className="">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-4">
                   <label
                     htmlFor="username"
                     className="block text-sm font-medium leading-6 text-white"
                   >
                     Username
                   </label>
-                  <div className="">
-                    <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                  <div className="mt-2">
+                    <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
                         type="text"
                         name="username"
                         id="username"
                         autoComplete="username"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder="nueslify-user123"
+                        placeholder="nueslify"
                         onChange={handleNameChange}
                       />
                     </div>
@@ -107,15 +107,15 @@ const FavoritesSelectionPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-5">
-                <div className="">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-4">
                   <label
                     htmlFor="age"
-                    className="block text-sm font-medium leading-6 text-white"
+                    className="appFont block text-sm font-medium leading-6 text-white"
                   >
                     Age
                   </label>
-                  <div className="">
+                  <div className="mt-2">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
                         type="number"
@@ -136,11 +136,11 @@ const FavoritesSelectionPage: React.FC = () => {
                 <div className="sm:col-span-4">
                   <label
                     htmlFor="musicNewsAmount"
-                    className="block text-sm font-medium leading-6 text-white"
+                    className="appFont block text-sm font-medium leading-6 text-white"
                   >
                     select how much music/news you want to listen to
                   </label>
-                  <div className="range-input appFont text-white">
+                  <div className="range-input text-white">
                     <span>music</span>
                     <input
                       type="range"
@@ -161,13 +161,13 @@ const FavoritesSelectionPage: React.FC = () => {
                 <div className="sm:col-span-4">
                   <label
                     htmlFor="musicNewsAmount"
-                    className="block text-sm font-medium leading-6 text-white"
+                    className="appFont block text-sm font-medium leading-6 text-white"
                   >
                     select your favorite news genres
                   </label>
                 </div>
               </div>
-              <div className="genres-container max-w-3xl">
+              <div className="genres-container">
                 {genresList.map((genre) => (
                   <button
                     key={genre.name}
@@ -192,7 +192,7 @@ const FavoritesSelectionPage: React.FC = () => {
               <div className="mt-6 flex items-center justify-center gap-x-6">
                 <Link
                   href="../dashboard"
-                  className="transition-duration-600 text-xl font-bold leading-6 text-white"
+                  className="transition-duration-600 text-sm font-bold leading-6 text-white"
                 >
                   Cancel
                 </Link>
@@ -209,7 +209,20 @@ const FavoritesSelectionPage: React.FC = () => {
         </form>
       </div>
 
+      <button
+        onClick={handleSubmit}
+        className="save-button transition-duration-600 bg-indigo-200 text-xl font-bold text-indigo-900 hover:bg-emerald-300"
+      >
+        Save
+      </button>
+
       <style jsx>{`
+        .content-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
         .label-text {
           font-family: "Pacifico", sans-serif, cursive;
           margin-right: 8px;
@@ -219,7 +232,7 @@ const FavoritesSelectionPage: React.FC = () => {
           border: 1px solid #ccc;
           border-radius: 4px;
           padding: 8px;
-          width: 300px;
+          width: 300px; /* Adjust width as needed */
         }
 
         .range-input {
@@ -271,6 +284,7 @@ const FavoritesSelectionPage: React.FC = () => {
         .save-button {
           margin: 16px auto;
           padding: 8px 16px;
+
           border: none;
           border-radius: 8px;
           cursor: pointer;
