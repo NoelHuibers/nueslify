@@ -1,7 +1,7 @@
 .interests-container {
-  display: grid;
+  display: flex;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  gap: 10px;
 }
 
 .interest-card {
