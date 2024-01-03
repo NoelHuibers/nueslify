@@ -53,6 +53,11 @@ const FavoritesSelectionPage: React.FC = () => {
     }
   };
 
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLocation = e.target.value;
+    setName(newLocation);
+  };
+
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
       if (prevGenres.includes(genre)) {
@@ -132,13 +137,37 @@ const FavoritesSelectionPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
+              <div className="mt-5">
+                <div className="">
+                  <label
+                    htmlFor="location"
+                    className="block text-sm font-medium leading-6 text-white"
+                  >
+                    Location
+                  </label>
+                  <div className="">
+                    <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                      <input
+                        type="text"
+                        name="location"
+                        id="location"
+                        autoComplete="location"
+                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                        placeholder="Germany"
+                        onChange={handleLocationChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <div className="">
                   <label
                     htmlFor="musicNewsAmount"
                     className="block text-sm font-medium leading-6 text-white"
                   >
-                    select how much music/news you want to listen to
+                    Select how much music/news you want to listen to
                   </label>
                   <div className="range-input text-white">
                     <span className="appFont">music</span>
@@ -150,7 +179,7 @@ const FavoritesSelectionPage: React.FC = () => {
                       onChange={(e) =>
                         setNewsMusicAmount(parseInt(e.target.value, 10))
                       }
-                      className="w-1/3"
+                      className="w-full"
                     />
                     <span className="appFont">news</span>
                   </div>
@@ -163,7 +192,7 @@ const FavoritesSelectionPage: React.FC = () => {
                     htmlFor="musicNewsAmount"
                     className="block text-sm font-medium leading-6 text-white"
                   >
-                    select your favorite news genres
+                    Select your favorite news genres
                   </label>
                 </div>
               </div>
@@ -176,23 +205,23 @@ const FavoritesSelectionPage: React.FC = () => {
                     }`}
                     onClick={() => handleGenreClick(genre.name)}
                   >
-                    <div className="relative h-48 w-48">
+                    <div className="relative h-32 w-32">
                       <Image
                         src={genre.image}
                         alt={genre.name}
                         layout="fill"
                         objectFit="cover"
-                        className="rounded-lg"
+                        className="rounded"
                       />
                     </div>
                     <p>{genre.name}</p>
                   </button>
                 ))}
               </div>
-              <div className="mt-6 flex items-center justify-center gap-x-6">
+              <div className="mb-2 mt-6 flex items-center justify-center gap-x-6">
                 <Link
                   href="../dashboard"
-                  className="transition-duration-600 text-xl font-bold leading-6 text-white"
+                  className="transition-duration-1000 text-xl font-bold leading-6 text-white"
                 >
                   Cancel
                 </Link>
@@ -245,11 +274,10 @@ const FavoritesSelectionPage: React.FC = () => {
         }
 
         .genre-button {
-          border: 4px solid #ccc;
           background-color: #ccc;
-          border-radius: 8px;
-          margin: 8px;
-          padding: 8px;
+          border-radius: 6px;
+          margin: 4px;
+          padding: 4px;
           display: flex;
           flex-direction: column;
         }
