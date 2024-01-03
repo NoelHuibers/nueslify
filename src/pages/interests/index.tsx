@@ -140,8 +140,8 @@ const FavoritesSelectionPage: React.FC = () => {
                   >
                     select how much music/news you want to listen to
                   </label>
-                  <div className="range-input appFont text-white">
-                    <span>music</span>
+                  <div className="range-input text-white">
+                    <span className="appFont">music</span>
                     <input
                       type="range"
                       min="0"
@@ -152,7 +152,7 @@ const FavoritesSelectionPage: React.FC = () => {
                       }
                       className="w-1/3"
                     />
-                    <span>news</span>
+                    <span className="appFont">news</span>
                   </div>
                 </div>
               </div>
