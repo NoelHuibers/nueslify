@@ -1,6 +1,6 @@
 // FavoritesSelectionPage.tsx
 import React, { useState } from "react";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 
 interface Genre {
@@ -180,10 +180,12 @@ const FavoritesSelectionPage: React.FC = () => {
                       <Image
                         src={genre.image}
                         alt={genre.name}
-                        layout="fill"
-                        objectFit="cover"
                         className="rounded-lg"
-                      />
+                        fill
+                        sizes="100vw"
+                        style={{
+                          objectFit: "cover"
+                        }} />
                     </div>
                     <p>{genre.name}</p>
                   </button>
