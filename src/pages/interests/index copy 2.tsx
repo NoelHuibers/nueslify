@@ -2,15 +2,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ZodType, z } from 'zod';
+import { z } from 'zod';
 import { createTsForm } from "@ts-react/form";
 import { TextField, CheckBoxField, NumberField } from "./formComponents";
-
-type FormData = {
-  name: string;
-  age: number;
-  musicNewsAmount: number;
-};
 
 interface Genre {
   name: string;
@@ -34,12 +28,38 @@ const FavoritesSelectionPage: React.FC = () => {
     50,
   ); // Add state for the newAmount
 
-  const schema: ZodType<FormData> =
-    z.object({
-      name: z.string().min(2, 'First name must be at least 2 characters'),
-      age: z.number().min(10, 'You must be at least 10 years old').max(100, 'You must be at most 100 years old'),
-      musicNewsAmount: z.number().min(0).max(100),
-    });
+  const isNameValid = (value: string): boolean => {
+    const regex = /^[a-zA-Z\s-]+$/;
+    return regex.test(value);
+  };
+
+  const isAgeValid = (value: number | undefined): boolean => {
+    return (
+      value !== undefined &&
+      Number.isInteger(value) &&
+      value >= 0 &&
+      value <= 120
+    );
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    if (isNameValid(newName)) {
+      setName(newName);
+    }
+  };
+
+  const handleAgeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAge = parseInt(e.target.value, 10);
+    if (isAgeValid(newAge)) {
+      setAge(newAge);
+    }
+  };
+
+  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLocation = e.target.value;
+    setName(newLocation);
+  };
 
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
@@ -91,7 +111,7 @@ const FavoritesSelectionPage: React.FC = () => {
                         autoComplete="username"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="nueslify-user123"
-                      //onChange={handleNameChange}
+                        onChange={handleNameChange}
                       />
                     </div>
                   </div>
@@ -116,7 +136,7 @@ const FavoritesSelectionPage: React.FC = () => {
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="25"
                         value={age ?? ""}
-                      //onChange={handleAgeChange}
+                        onChange={handleAgeChange}
                       />
                     </div>
                   </div>
@@ -140,7 +160,7 @@ const FavoritesSelectionPage: React.FC = () => {
                         autoComplete="location"
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Germany"
-                      //onChange={handleLocationChange}
+                        onChange={handleLocationChange}
                       />
                     </div>
                   </div>
@@ -165,9 +185,9 @@ const FavoritesSelectionPage: React.FC = () => {
                       min="0"
                       max="100"
                       value={musicNewsAmount}
-                      /*onChange={(e) =>
+                      onChange={(e) =>
                         setMusicNewsAmount(parseInt(e.target.value, 10))
-                      }*/
+                      }
                       className="slider w-full"
                     />
                     <span className="appFont">news</span>
