@@ -47,6 +47,13 @@ export default function Home() {
     }
   });
 
+  const newsValues = api.news.News.useQuery();
+  useEffect(() => {
+    if (newsValues.data !== undefined) {
+      console.log(spotifyTracks.data);
+    }
+  });
+
   const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = async () => {
