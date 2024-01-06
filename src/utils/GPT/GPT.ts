@@ -5,23 +5,34 @@ export interface GPT {
 
 export type Segment = {
     segmentKind: SegmentKind,
+    content: Music[] | News | Transition
+}
+
+type Music = {
     title: string,
-    duration: number,
-    url?: URL,
-    binaryString?: string | null
+    artistNames: string[],
+    id: Number
 }
 
-export enum SegmentKind {
-    News,
-    Music,
-    Transition
+type News = {
+    content: string
 }
 
-export enum Interest {
-    Technology = "technology",
-    Science = "science",
-    Business = "business",
-    Entertainment = "entertainment",
-    Health = "health",
-    Sports = "sports"
+type Transition = {
+    content: string
 }
+
+function isMusic(segment: Segment): segment is Segment & { content: Music[] } {
+    return segment.segmentKind === "Music";
+}
+
+export function getMusicContent(segment: Segment): Music[] | null {
+    if (isMusic(segment)) {
+        return segment.content as Music[];
+    }
+    return null;
+}
+
+export type SegmentKind = 'News' | 'Music' | 'Transition'
+
+export type Interest = 'technology' | 'science' | 'business' | 'entertainment' | 'health' | 'sports'
