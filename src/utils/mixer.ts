@@ -1,18 +1,13 @@
-import { Segment, SegmentKind, GPT, getMusicContent } from "~/utils/GPT/GPT";
+import { Segment, GPT, getMusicContent } from "~/utils/GPT/GPT";
 import { createTransition, createNewsSummary } from "./GPT/OpenAIGPT";
-// currentSegment: Segment
-// numberOfFutureSegments: Number
-
-// Waitlist -> In DB
-
 // Wenn ich grade News bekomme, dann mach mal bitte neue TrackIDs
 // Wenn ich gerdae Musik höre und nur noch ein Segment übrig dann geb mal bitte die neuen News
 
-const mixer = async (currentSegment: Segment, numberOfFutureSegments: Number) => {
-    if (currentSegment.segmentKind === 'News') {
+const mixer = async (currentSegment: Segment) => {
+    if (currentSegment.segmentKind === 'news') {
         // return transition: string/mp3 + x musicids id[]
         const newsSegment: Segment = {
-            segmentKind: 'News',
+            segmentKind: 'news',
             content: {
                 content: "Tolle Nachrichten aus aller Welt"
             }
@@ -20,7 +15,7 @@ const mixer = async (currentSegment: Segment, numberOfFutureSegments: Number) =>
         }
 
         const musicSegment: Segment = {
-            segmentKind: 'Music',
+            segmentKind: 'music',
             content: [{
                 title: "Test1",
                 artistNames: ["Artist 1", "Collaboration 1"],
@@ -39,7 +34,7 @@ const mixer = async (currentSegment: Segment, numberOfFutureSegments: Number) =>
         return [transitionSegment, musicIds]
 
     }
-    else if (currentSegment.segmentKind === 'Music') {
+    else if (currentSegment.segmentKind === 'music') {
         // Get news from Db => Make to TTS => return transition: string/mp3 + news: mp3
         const news = "Langer newsstring, alle Infos die du jemals möchtest, wie cool ist das denn!"
 
@@ -54,6 +49,7 @@ const mixer = async (currentSegment: Segment, numberOfFutureSegments: Number) =>
     }
 }
 
+export default mixer;
 
 
 // Ich spiele gerade Musik, dann bedeutet das ich habe bereits die news+transition

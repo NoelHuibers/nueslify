@@ -4,26 +4,26 @@ export interface GPT {
 }
 
 export type Segment = {
-    segmentKind: SegmentKind,
+    segmentKind: 'music' | 'news' | 'transition';
     content: Music[] | News | Transition
 }
 
-type Music = {
+export type Music = {
     title: string,
     artistNames: string[],
     id: Number
 }
 
-type News = {
+export type News = {
     content: string
 }
 
-type Transition = {
+export type Transition = {
     content: string
 }
 
 function isMusic(segment: Segment): segment is Segment & { content: Music[] } {
-    return segment.segmentKind === "Music";
+    return segment.segmentKind === "music";
 }
 
 export function getMusicContent(segment: Segment): Music[] | null {
@@ -32,7 +32,5 @@ export function getMusicContent(segment: Segment): Music[] | null {
     }
     return null;
 }
-
-export type SegmentKind = 'News' | 'Music' | 'Transition'
 
 export type Interest = 'technology' | 'science' | 'business' | 'entertainment' | 'health' | 'sports'
