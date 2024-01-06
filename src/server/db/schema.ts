@@ -97,6 +97,23 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
 }));
 
+export const news = mysqlTable(
+  "news",
+  {
+    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    ressort: varchar("ressort", { length: 255 }).notNull(),
+    topline: varchar("topline", { length: 255 }).notNull(),
+    shareurl: varchar("shareurl", { length: 255 }).notNull(),
+    firstline: varchar("firstline", { length: 255 }).notNull(),
+  },
+  (news) => ({
+    ressortIndex: index("ressort_idx").on(news.ressort),
+    toplineIndex: index("topline_idx").on(news.topline),
+    shareurlIndex: index("shareurl_idx").on(news.shareurl),
+    firstlineIndex: index("firstline_idx").on(news.firstline),
+  }),
+);
+
 export const verificationTokens = mysqlTable(
   "verificationToken",
   {

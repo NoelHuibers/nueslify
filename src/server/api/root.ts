@@ -2,6 +2,7 @@ import { postRouter } from "~/server/api/routers/post";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { ttsRouter } from "./routers/tts";
 import { spotifyRouter } from "./routers/topTracks";
+import { newsRouter } from "./routers/news";
 
 /**
  * This is the primary router for your server.
@@ -12,6 +13,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   tts: ttsRouter,
   spotify: spotifyRouter,
+  news: newsRouter
 });
 
 // export type definition of API
