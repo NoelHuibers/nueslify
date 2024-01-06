@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import { RiPlayFill } from "react-icons/ri";
 import { IoMdPause } from "react-icons/io";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -19,10 +19,30 @@ export default function Home() {
   const sourceRef = useRef<HTMLSourceElement>(null);
   const spotifySong = useRef<HTMLIFrameElement>(null);
 
+  const [musicIds, setMusicIds] = useState(["1VNvsvEsUpuUCbHpVop1vo"])
+
+  const [musicID, setMusicID] = useState(musicIds[0]);
+  useEffect(() => {
+    setMusicID(musicIds[1]);
+  }, [musicID]);
+
+  const newData = api.mixer.mixer.useQuery();
+
   const [news, setNews] = useState(true);
+  useEffect(() => {
+    // if (newData.data !== undefined) {
+    //   if (newData.data.newsSegment !== undefined) {
+    //     setNews(false);
+    //   }
+    //   if (newData.data.musicIds !== undefined) {
+    //     setMusicIds(newData.data.musicIds);
+    //     setNews(true);
+    //   }
+    // }
+  }, [newData.data]);
 
   const audiodata = api.tts.ttsNew.useQuery();
-  const gptData = api.gpt.gptAnswer.useQuery();
+  //const gptData = api.gpt.gptAnswer.useQuery();
 
   const spotifyTracks = api.spotify.topTracks.useQuery();
   useEffect(() => {
@@ -45,7 +65,8 @@ export default function Home() {
   };
 
   function askGPT() {
-    console.log(gptData.data?.binaryString);
+    console.log("placeholder");
+    //console.log(gptData.data?.content);
   }
 
   useEffect(() => {
@@ -149,7 +170,7 @@ export default function Home() {
             <iframe
               ref={spotifySong}
               className="border-radius:12px"
-              src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo?utm_source=generator"
+              src={`https://open.spotify.com/embed/track/${musicID}?utm_source=generator`}
               width="100%"
               height="352"
               loading="lazy"
@@ -162,8 +183,8 @@ export default function Home() {
             toggle news/music player
           </button>
           <button
-              onClick={() => askGPT()}
-              className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+            onClick={() => askGPT()}
+            className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
           >
             ask the ai
           </button>

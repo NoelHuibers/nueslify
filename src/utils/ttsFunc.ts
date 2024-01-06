@@ -5,14 +5,14 @@ import { promisify } from "util";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
-export async function textoSpeech() {
+export async function textoSpeech(text: string) {
   // For Actual usage:
 
   // const mp3 = await openai.audio.speech.create({
-  //   model: "tts-1-hd",
+  //   model: "tts-1",
   //   voice: "fable",
   //   input:
-  //     "INSERT TTS TEXT HERE",
+  //     text,
   // });
 
   // For Mockdata:

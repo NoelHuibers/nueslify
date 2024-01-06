@@ -10,12 +10,12 @@ export const gptRouter = createTRPCRouter({
             content: [{
                 title: "Test1",
                 artistNames: ["Artist 1", "Collaboration 1"],
-                id: 1
+                id: "1"
             },
             {
                 title: "With a Little Help From My Friends",
                 artistNames: ["The Beatles"],
-                id: 2
+                id: "2"
             }]
         }
 
