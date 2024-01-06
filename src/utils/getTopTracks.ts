@@ -15,6 +15,17 @@ type Track = {
   id: string;
   name: string;
   duration_ms: number;
+  artistNames?: string[];
+  artists: Artist[];
+};
+
+type Artist = {
+  external_urls: ExternalUrls;
+  name: string;
+  id: string;
+  href: string;
+  type: string;
+  uri: string;
 };
 
 type SpotifyResponse = {
@@ -39,15 +50,21 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
     );
     const responseBody = response.data;
     const simplifiedTracks: Track[] = responseBody.items.map(
-      ({ external_urls, preview_url, id, name, duration_ms }: Track) => ({
+      ({ external_urls, preview_url, id, name, duration_ms, artists }: Track) => ({
         external_urls,
         preview_url,
         id,
         name,
         duration_ms,
+        artists
       }),
     );
 
+    simplifiedTracks.forEach((track) => {
+      track.artistNames = track.artists.map((artist) => artist.name);
+    });
+
+    console.log("artistsnames:", simplifiedTracks[0]?.artistNames);
     return simplifiedTracks;
   } catch (error) {
     console.error("Error getting top tracks:", error);
