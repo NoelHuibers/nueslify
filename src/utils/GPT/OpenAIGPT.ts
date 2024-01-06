@@ -9,7 +9,7 @@ export const createTransition = async (from: Segment, to: Segment): Promise<Segm
     console.log("create transition")
     const requestMessage: ChatCompletionUserMessageParam = {
         "role": "user",
-        "content": "Your previous segment was" + segmentDescription(from) + ", the next segment is " + segmentDescription(to) + " . Create a suitable and short transition between the two segments."
+        "content": "Your previous segment was" + segmentDescription(from, false) + ", the next segment is " + segmentDescription(to) + " . Create a suitable and short transition between the two segments."
     }
     return request(requestMessage).then(answer => {
         console.log("received answer:", answer)
@@ -40,6 +40,24 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
     })
 }
 
+export const createStart = async (to: Segment): Promise<Segment> => {
+    console.log("create start")
+    const requestMessage: ChatCompletionUserMessageParam = {
+        "role": "user",
+        "content": "RadioGPT starts to air and you are the moderator. First, introduce yourself and the station and then create a suitable and short transition to " + segmentDescription(to)
+    }
+
+    return request(requestMessage).then(answer => {
+        console.log("received answer:", answer)
+        return {
+            segmentKind: 'transition',
+            content: {
+                content: answer?.message.content ? answer?.message.content : "Next up: " + segmentDescription(to)
+            }
+        }
+    });
+}
+
 const request = async (requestMessage: ChatCompletionMessageParam) => {
     const completion = await openai.chat.completions.create({
         messages: [systemMessage, requestMessage],
@@ -48,11 +66,11 @@ const request = async (requestMessage: ChatCompletionMessageParam) => {
     return completion.choices[0]
 }
 
-const segmentDescription = (segment: Segment) => {
+const segmentDescription = (segment: Segment, isNext: Boolean = true) => {
     if (segment.segmentKind === "music") {
         const content = getMusicContent(segment)!
-        const lastSong = content[content.length - 1]
-        return "the song \"" + lastSong?.title + "\" by " + lastSong?.artistNames
+        const song = isNext ? content[0] : content[content.length - 1]
+        return "the song \"" + song?.title + "\" by " + song?.artistNames
     } else if (segment.segmentKind === "news") {
         return "a news report"
     } else {

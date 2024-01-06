@@ -11,7 +11,7 @@ export type Segment = {
 export type Music = {
     title: string,
     artistNames: string[],
-    id: Number
+    id: string
 }
 
 export type News = {
