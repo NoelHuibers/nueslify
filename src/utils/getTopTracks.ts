@@ -74,7 +74,6 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
       track.artistNames = track.artists.map((artist) => artist.name);
     });
 
-    console.log("artistsnames:", simplifiedTracks[0]?.artistNames);
     return simplifiedTracks;
   } catch (error) {
     console.error("Error getting top tracks:", error);
