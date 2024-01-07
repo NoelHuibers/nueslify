@@ -20,7 +20,7 @@ type TagesschauResponse = {
 async function getNews(): Promise<NewsItem[]> {
   try {
     const response: AxiosResponse<TagesschauResponse> = await axios.get(
-      'https://www.tagesschau.de/api2/news',
+      'https://www.tagesschau.de/api2/news/?regions=2&ressort=ausland',
     );
 
     const result = response.data.news.map(({ firstSentence, title, shareURL, ressort, details }) => ({
