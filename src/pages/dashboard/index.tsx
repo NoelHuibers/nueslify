@@ -100,7 +100,7 @@ export default function Home() {
         <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
           {/* */}
           {/* Player Section */}
-          <div className={news ? "hidden" : "w-5/6"}>
+          <div className={news ? "hidden" : "w-5/6" }>
             <div className="flex items-center justify-between rounded-lg bg-purple-700 p-4 shadow-lg">
               {/* Album Cover */}
               <div className="w-1/6 p-5">
@@ -149,10 +149,11 @@ export default function Home() {
             <iframe
               ref={spotifySong}
               className="border-radius:12px"
-              src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo?utm_source=generator"
+              src="https://open.spotify.com/embed/track/6R5iuYqG0HsnC41RT3lzqX?utm_source=generator"
               width="100%"
               height="352"
               loading="lazy"
+              allow={"encrypted-media"}
             ></iframe>
           </div>
           <button

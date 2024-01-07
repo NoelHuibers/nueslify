@@ -54,7 +54,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.SPOTIFY_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: ["user-read-email", "user-top-read"].join(" "),
+          scope: ["user-read-email", "user-top-read", "streaming",  "user-read-private"].join(" "),
         },
       },
     }),
