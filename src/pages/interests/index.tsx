@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ZodType, z } from 'zod';
-import { createTsForm } from "@ts-react/form";
-import { TextField, CheckBoxField, NumberField } from "./formComponents";
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 type FormData = {
   name: string;
   age: number;
+  location: string;
   musicNewsAmount: number;
+  categories: string[];
 };
 
 interface Genre {
@@ -28,18 +30,6 @@ const genresList: Genre[] = [
 
 const FavoritesSelectionPage: React.FC = () => {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [name, setName] = useState<string>(""); // Add state for the name
-  const [age, setAge] = useState<number | undefined>(undefined); // Add state for the age
-  const [musicNewsAmount, setMusicNewsAmount] = useState<number | undefined>(
-    50,
-  ); // Add state for the newAmount
-
-  const schema: ZodType<FormData> =
-    z.object({
-      name: z.string().min(2, 'First name must be at least 2 characters'),
-      age: z.number().min(10, 'You must be at least 10 years old').max(100, 'You must be at most 100 years old'),
-      musicNewsAmount: z.number().min(0).max(100),
-    });
 
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
@@ -53,20 +43,28 @@ const FavoritesSelectionPage: React.FC = () => {
     });
   };
 
-  const handleSubmit = () => {
-    // Process the selected genres
-    console.log("Selected Genres:", selectedGenres);
-    console.log("Name:", name);
-    console.log("Age:", age);
-    console.log("Music/News Amount:", musicNewsAmount);
-  };
+  const schema: ZodType<FormData> =
+    z.object({
+      name: z.string().min(2, 'Name must be at least 2 characters'),
+      age: z.number().min(10, 'You must be at least 10 years old').max(100, 'You must be at most 100 years old'),
+      location: z.string().min(3, 'Location must be at least 3 characters'),
+      musicNewsAmount: z.number(),
+      categories: z.array(z.string()),
+    });
 
+    const{register, handleSubmit, formState: {errors}} = useForm<FormData>({resolver : zodResolver(schema),});
+
+  const submitData = (data: FormData) => {
+    
+    
+    console.log("it worked", data);
+  };
 
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
       <div className="m-1 flex w-full items-center justify-center">
-        <form className="mx-auto max-w-md">
+      <form className="mx-auto max-w-md" onSubmit={handleSubmit(submitData)}>
           <div className="">
             <div className="">
               <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
@@ -85,14 +83,12 @@ const FavoritesSelectionPage: React.FC = () => {
                   <div className="">
                     <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        autoComplete="username"
+                        type="text" {...register('name')}
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="nueslify-user123"
                       //onChange={handleNameChange}
                       />
+                      {errors.name && <span className="flex items-center text-red-500 mr-1 text-xs" >{errors.name.message}</span>}
                     </div>
                   </div>
                 </div>
@@ -109,15 +105,14 @@ const FavoritesSelectionPage: React.FC = () => {
                   <div className="">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
-                        type="number"
-                        name="age"
-                        id="age"
-                        autoComplete="age"
+                        type="number" {...register('age', {valueAsNumber: true})}
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="25"
-                        value={age ?? ""}
+                        
                       //onChange={handleAgeChange}
                       />
+                      {errors.age && <span className="flex items-center text-red-500 mr-1 text-xs">{errors.age.message}</span>}
+
                     </div>
                   </div>
                 </div>
@@ -134,14 +129,11 @@ const FavoritesSelectionPage: React.FC = () => {
                   <div className="">
                     <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
-                        type="text"
-                        name="location"
-                        id="location"
-                        autoComplete="location"
+                        type="text" {...register('location')}
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="Germany"
-                      //onChange={handleLocationChange}
                       />
+                      {errors.location && <span className="flex items-center text-red-500 mr-1 text-xs">{errors.location.message}</span>}
                     </div>
                   </div>
                 </div>
@@ -161,19 +153,16 @@ const FavoritesSelectionPage: React.FC = () => {
                   <div className="range-input ml-4 mr-4 text-white">
                     <span className="appFont">music</span>
                     <input
-                      type="range"
+                      type="range" {...register('musicNewsAmount', {valueAsNumber: true})}
                       min="0"
                       max="100"
-                      value={musicNewsAmount}
-                      /*onChange={(e) =>
-                        setMusicNewsAmount(parseInt(e.target.value, 10))
-                      }*/
                       className="slider w-full"
                     />
                     <span className="appFont">news</span>
                   </div>
                 </div>
               </div>
+
 
               <h1 className="appFont mt-10 text-3xl font-semibold leading-7 text-white">
                 Your Taste
@@ -190,13 +179,17 @@ const FavoritesSelectionPage: React.FC = () => {
               </div>
               <div className="genres-container">
                 {genresList.map((genre) => (
-                  <button
-                    key={genre.name}
-                    type="button"
-                    className={`genre-button ${selectedGenres.includes(genre.name) ? "selected" : ""
-                      }`}
-                    onClick={() => handleGenreClick(genre.name)}
-                  >
+                  <div key={genre.name} className={`genre-button ${selectedGenres.includes(genre.name) ? "selected" : ""}`}>
+                  <input
+                    type="checkbox"
+                    id={genre.name}
+                    {...register('categories', { required: true })}
+                    value={genre.name}
+                    checked={selectedGenres.includes(genre.name)}
+                    onChange={() => handleGenreClick(genre.name)}
+                    style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+                  />
+                  <label htmlFor={genre.name}>
                     <div className="relative h-32 w-32">
                       <Image
                         src={genre.image}
@@ -216,9 +209,13 @@ const FavoritesSelectionPage: React.FC = () => {
                       )}
                     </div>
                     <p>{genre.name}</p>
-                  </button>
+                  </label>
+                </div>
+                
                 ))}
               </div>
+
+
               <div className="mb-2 mt-6 flex items-center justify-center gap-x-6">
                 <Link
                   href="../dashboard"
@@ -228,11 +225,12 @@ const FavoritesSelectionPage: React.FC = () => {
                 </Link>
                 <button
                   type="submit"
-                  onClick={handleSubmit}
                   className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-sm text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Save
                 </button>
+
+                
               </div>
             </div>
           </div>
