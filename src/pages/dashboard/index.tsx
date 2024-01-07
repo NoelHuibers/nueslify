@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import { RiPlayFill } from "react-icons/ri";
 import { IoMdPause } from "react-icons/io";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -22,7 +22,7 @@ export default function Home() {
   const [news, setNews] = useState(true);
 
   const audiodata = api.tts.ttsNew.useQuery();
-  const gptData = api.gpt.gptAnswer.useQuery();
+  // const gptData = api.gpt.gptAnswer.useQuery();
 
   const spotifyTracks = api.spotify.topTracks.useQuery();
   useEffect(() => {
@@ -44,9 +44,9 @@ export default function Home() {
     }
   };
 
-  function askGPT() {
-    console.log(gptData.data?.binaryString);
-  }
+  // function askGPT() {
+  //   console.log(gptData.data?.binaryString);
+  // }
 
   useEffect(() => {
     if (sourceRef.current && audiodata.data !== undefined) {
@@ -100,7 +100,7 @@ export default function Home() {
         <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
           {/* */}
           {/* Player Section */}
-          <div className={news ? "hidden" : "w-5/6" }>
+          <div className={news ? "hidden" : "w-5/6"}>
             <div className="flex items-center justify-between rounded-lg bg-purple-700 p-4 shadow-lg">
               {/* Album Cover */}
               <div className="w-1/6 p-5">
@@ -162,12 +162,12 @@ export default function Home() {
           >
             toggle news/music player
           </button>
-          <button
-              onClick={() => askGPT()}
-              className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+          {/* <button
+            onClick={() => askGPT()}
+            className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
           >
             ask the ai
-          </button>
+          </button> */}
         </div>
       </div>
     </main>
