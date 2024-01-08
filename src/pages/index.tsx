@@ -3,15 +3,20 @@ import { signIn, useSession } from "next-auth/react";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Home() {
-  const { data: session } = useSession();
+  const { status } = useSession();
   const router = useRouter();
-  if (session) {
-    void router.replace("/dashboard");
+  useEffect(() => {
+    if (status === "authenticated") {
+      void router.replace("/dashboard");
+    }
+  }, [status, router]);
+
+  if (status === "authenticated" || status === "loading") {
     return null;
   }
-
   return (
     <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
       <div className={styles.appName}>Nueslify</div>

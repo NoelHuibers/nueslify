@@ -39,6 +39,9 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
+    async redirect({ baseUrl }) {
+      return baseUrl + "/dashboard";
+    },
     session: ({ session, user }) => ({
       ...session,
       user: {
@@ -54,7 +57,12 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.SPOTIFY_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: ["user-read-email", "user-top-read", "streaming",  "user-read-private"].join(" "),
+          scope: [
+            "user-read-email",
+            "user-top-read",
+            "streaming",
+            "user-read-private",
+          ].join(" "),
         },
       },
     }),
