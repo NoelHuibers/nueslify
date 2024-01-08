@@ -2,14 +2,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ZodType, z } from 'zod';
-import {useForm} from 'react-hook-form';
-import {zodResolver} from '@hookform/resolvers/zod';
+import { ZodType, z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { countryList } from "./countries"; // Import the countryList
 
 type FormData = {
   name: string;
   age: number;
-  location: string;
+  country: string;
   musicNewsAmount: number;
   categories: string[];
 };
@@ -20,12 +21,12 @@ interface Genre {
 }
 
 const genresList: Genre[] = [
-  { name: "technology", image: "/photos/technology.jpg" },
-  { name: "science", image: "/photos/science.jpg" },
-  { name: "business", image: "/photos/business.jpg" },
-  { name: "entertainment", image: "/photos/entertainment.jpg" },
-  { name: "health", image: "/photos/health.jpg" },
-  { name: "sports", image: "/photos/sports.jpg" },
+  { name: "Technology", image: "/photos/technology.jpg" },
+  { name: "Science", image: "/photos/science.jpg" },
+  { name: "Business", image: "/photos/business.jpg" },
+  { name: "Entertainment", image: "/photos/entertainment.jpg" },
+  { name: "Health", image: "/photos/health.jpg" },
+  { name: "Sports", image: "/photos/sports.jpg" },
 ];
 
 const FavoritesSelectionPage: React.FC = () => {
@@ -43,52 +44,58 @@ const FavoritesSelectionPage: React.FC = () => {
     });
   };
 
-  const schema: ZodType<FormData> =
-    z.object({
-      name: z.string().min(2, 'Name must be at least 2 characters'),
-      age: z.number().min(10, 'You must be at least 10 years old').max(100, 'You must be at most 100 years old'),
-      location: z.string().min(3, 'Location must be at least 3 characters'),
-      musicNewsAmount: z.number(),
-      categories: z.array(z.string()),
-    });
+  const schema: ZodType<FormData> = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    age: z
+      .number()
+      .min(10, "You must be at least 10 years old")
+      .max(100, "You must be at most 100 years old"),
+    country: z.string().min(1, "Please select a country"),
+    musicNewsAmount: z.number(),
+    categories: z.array(z.string()),
+  });
 
-    const{register, handleSubmit, formState: {errors}} = useForm<FormData>({resolver : zodResolver(schema),});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const submitData = (data: FormData) => {
-    
-    
     console.log("it worked", data);
   };
-
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
       <div className="m-1 flex w-full items-center justify-center">
-      <form className="mx-auto max-w-md" onSubmit={handleSubmit(submitData)}>
+        <form className="mx-auto max-w-md" onSubmit={handleSubmit(submitData)}>
           <div className="">
             <div className="">
               <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
                 Your Profile
               </h1>
 
-
               <div className="mt-2">
                 <div className="">
                   <label
                     htmlFor="username"
-                    className="block text-sm font-medium leading-6 text-white"
+                    className="block flex items-center text-sm font-medium leading-6 text-white"
                   >
                     Username
+                    {errors.name && (
+                      <span className="ml-auto flex items-center text-xs text-red-500">
+                        {errors.name.message}
+                      </span>
+                    )}
                   </label>
                   <div className="">
                     <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
-                        type="text" {...register('name')}
+                        type="text"
+                        {...register("name")}
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="nueslify-user123"
-                      //onChange={handleNameChange}
                       />
-                      {errors.name && <span className="flex items-center text-red-500 mr-1 text-xs" >{errors.name.message}</span>}
                     </div>
                   </div>
                 </div>
@@ -98,21 +105,23 @@ const FavoritesSelectionPage: React.FC = () => {
                 <div className="">
                   <label
                     htmlFor="age"
-                    className="block text-sm font-medium leading-6 text-white"
+                    className="block flex items-center text-sm font-medium leading-6 text-white"
                   >
                     Age
+                    {errors.age && (
+                      <span className="ml-auto flex items-center text-xs text-red-500">
+                        {errors.age.message}
+                      </span>
+                    )}
                   </label>
                   <div className="">
                     <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                       <input
-                        type="number" {...register('age', {valueAsNumber: true})}
+                        type="number"
+                        {...register("age", { valueAsNumber: true })}
                         className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="25"
-                        
-                      //onChange={handleAgeChange}
                       />
-                      {errors.age && <span className="flex items-center text-red-500 mr-1 text-xs">{errors.age.message}</span>}
-
                     </div>
                   </div>
                 </div>
@@ -121,19 +130,30 @@ const FavoritesSelectionPage: React.FC = () => {
               <div className="mt-5">
                 <div className="">
                   <label
-                    htmlFor="location"
-                    className="block text-sm font-medium leading-6 text-white"
+                    htmlFor="country"
+                    className="block flex items-center text-sm font-medium leading-6 text-white"
                   >
-                    Location
+                    Country
+                    {errors.country && (
+                      <span className="ml-auto flex items-center text-xs text-red-500">
+                        {errors.country.message}
+                      </span>
+                    )}
                   </label>
                   <div className="">
                     <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
-                      <input
-                        type="text" {...register('location')}
-                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
-                        placeholder="Germany"
-                      />
-                      {errors.location && <span className="flex items-center text-red-500 mr-1 text-xs">{errors.location.message}</span>}
+                      <select
+                        id="countryDropdown"
+                        {...register("country")}
+                        className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                      >
+                        <option value="">choose your country</option>
+                        {countryList.map((country) => (
+                          <option key={country} value={country}>
+                            {country}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -153,7 +173,8 @@ const FavoritesSelectionPage: React.FC = () => {
                   <div className="range-input ml-4 mr-4 text-white">
                     <span className="appFont">music</span>
                     <input
-                      type="range" {...register('musicNewsAmount', {valueAsNumber: true})}
+                      type="range"
+                      {...register("musicNewsAmount", { valueAsNumber: true })}
                       min="0"
                       max="100"
                       className="slider w-full"
@@ -162,7 +183,6 @@ const FavoritesSelectionPage: React.FC = () => {
                   </div>
                 </div>
               </div>
-
 
               <h1 className="appFont mt-10 text-3xl font-semibold leading-7 text-white">
                 Your Taste
@@ -179,42 +199,49 @@ const FavoritesSelectionPage: React.FC = () => {
               </div>
               <div className="genres-container">
                 {genresList.map((genre) => (
-                  <div key={genre.name} className={`genre-button ${selectedGenres.includes(genre.name) ? "selected" : ""}`}>
-                  <input
-                    type="checkbox"
-                    id={genre.name}
-                    {...register('categories', { required: true })}
-                    value={genre.name}
-                    checked={selectedGenres.includes(genre.name)}
-                    onChange={() => handleGenreClick(genre.name)}
-                    style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
-                  />
-                  <label htmlFor={genre.name}>
-                    <div className="relative h-32 w-32">
-                      <Image
-                        src={genre.image}
-                        alt={genre.name}
-                        layout="fill"
-                        objectFit="cover"
-                        sizes="(max-width: 640px) 100vw, (max-width: 750px) 50vw, 33.3vw"
-                        className="rounded"
-                      />
-                      {selectedGenres.includes(genre.name) && (
-                        <div className="indicator">
-                          <div className="checkmark">
-                            <div className="checkmark_stem"></div>
-                            <div className="checkmark_kick"></div>
+                  <div
+                    key={genre.name}
+                    className={`genre-button ${
+                      selectedGenres.includes(genre.name) ? "selected" : ""
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      id={genre.name}
+                      {...register("categories", { required: true })}
+                      value={genre.name}
+                      checked={selectedGenres.includes(genre.name)}
+                      onChange={() => handleGenreClick(genre.name)}
+                      style={{
+                        position: "absolute",
+                        opacity: 0,
+                        pointerEvents: "none",
+                      }}
+                    />
+                    <label htmlFor={genre.name}>
+                      <div className="relative h-32 w-32">
+                        <Image
+                          src={genre.image}
+                          alt={genre.name}
+                          layout="fill"
+                          objectFit="cover"
+                          sizes="(max-width: 640px) 100vw, (max-width: 750px) 50vw, 33.3vw"
+                          className="rounded"
+                        />
+                        {selectedGenres.includes(genre.name) && (
+                          <div className="indicator">
+                            <div className="checkmark">
+                              <div className="checkmark_stem"></div>
+                              <div className="checkmark_kick"></div>
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                    <p>{genre.name}</p>
-                  </label>
-                </div>
-                
+                        )}
+                      </div>
+                      <p className="font-bold text-white">{genre.name}</p>
+                    </label>
+                  </div>
                 ))}
               </div>
-
 
               <div className="mb-2 mt-6 flex items-center justify-center gap-x-6">
                 <Link
@@ -229,8 +256,6 @@ const FavoritesSelectionPage: React.FC = () => {
                 >
                   Save
                 </button>
-
-                
               </div>
             </div>
           </div>
@@ -248,6 +273,56 @@ const FavoritesSelectionPage: React.FC = () => {
           border-radius: 4px;
           padding: 8px;
           width: 300px;
+        }
+
+        .dropdown {
+          color: white;
+          padding: 8px;
+          border: none;
+          border-radius: 4px;
+        }
+
+        .dropdown option {
+          background-color: #10b981;
+          color: white;
+        }
+
+        /* Style the scrollbar for WebKit browsers (Chrome, Safari) */
+        .dropdown::-webkit-scrollbar {
+          width: 12px;
+        }
+
+        .dropdown::-webkit-scrollbar-thumb {
+          background-color: #10b981;
+          border: 3px solid white;
+        }
+
+        .dropdown::-webkit-scrollbar-track {
+          background-color: white;
+        }
+
+        /* Style the scrollbar for Firefox */
+        .dropdown {
+          scrollbar-color: #10b981 white;
+        }
+
+        /* Style the scrollbar for Edge and IE */
+        .dropdown {
+          -ms-overflow-style: none;
+        }
+
+        .dropdown::-ms-scrollbar-thumb {
+          background-color: #10b981;
+          border: 3px solid white;
+        }
+
+        .dropdown::-ms-scrollbar-track {
+          background-color: white;
+        }
+
+        .dropdown:hover::-ms-scrollbar-thumb {
+          background-color: #10b981;
+          border: 3px solid white;
         }
 
         .range-input {
