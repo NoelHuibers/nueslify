@@ -9,7 +9,7 @@ import Link from "next/link";
 
 import { RiPlayFill } from "react-icons/ri";
 import { IoMdPause } from "react-icons/io";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -22,7 +22,7 @@ export default function Home() {
   const [news, setNews] = useState(true);
 
   const audiodata = api.tts.ttsNew.useQuery();
-  const gptData = api.gpt.gptAnswer.useQuery();
+  // const gptData = api.gpt.gptAnswer.useQuery();
 
   const spotifyTracks = api.spotify.topTracks.useQuery();
   useEffect(() => {
@@ -44,9 +44,9 @@ export default function Home() {
     }
   };
 
-  function askGPT() {
-    console.log(gptData.data?.binaryString);
-  }
+  // function askGPT() {
+  //   console.log(gptData.data?.binaryString);
+  // }
 
   useEffect(() => {
     if (sourceRef.current && audiodata.data !== undefined) {
@@ -149,10 +149,11 @@ export default function Home() {
             <iframe
               ref={spotifySong}
               className="border-radius:12px"
-              src="https://open.spotify.com/embed/track/1VNvsvEsUpuUCbHpVop1vo?utm_source=generator"
+              src="https://open.spotify.com/embed/track/6R5iuYqG0HsnC41RT3lzqX?utm_source=generator"
               width="100%"
               height="352"
               loading="lazy"
+              allow={"encrypted-media"}
             ></iframe>
           </div>
           <button
@@ -161,12 +162,12 @@ export default function Home() {
           >
             toggle news/music player
           </button>
-          <button
-              onClick={() => askGPT()}
-              className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+          {/* <button
+            onClick={() => askGPT()}
+            className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
           >
             ask the ai
-          </button>
+          </button> */}
         </div>
       </div>
     </main>
