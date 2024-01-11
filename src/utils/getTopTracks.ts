@@ -9,12 +9,16 @@ type ExternalUrls = {
   spotify: string;
 };
 
-type Track = {
+/*type Track = {
   external_urls: ExternalUrls;
   preview_url: string;
   id: string;
   name: string;
   duration_ms: number;
+};*/
+
+type Track = {
+  id: string;
 };
 
 type SpotifyResponse = {
@@ -30,14 +34,14 @@ type SpotifyResponse = {
 async function getTopTracks(accessToken: string): Promise<Track[]> {
   try {
     const response: AxiosResponse<SpotifyResponse> = await axios.get(
-      "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=10",
+      "https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10",
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       },
     );
-    const responseBody = response.data;
+    /*const responseBody = response.data;
     const simplifiedTracks: Track[] = responseBody.items.map(
       ({ external_urls, preview_url, id, name, duration_ms }: Track) => ({
         external_urls,
@@ -46,7 +50,12 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
         name,
         duration_ms,
       }),
-    );
+    );*/
+    const responseBody = response.data;
+    const simplifiedTracks: Track[] = responseBody.items.map(({ id }: Track) => ({
+      id: "spotify:track:" + id,
+    }));
+
 
     return simplifiedTracks;
   } catch (error) {
