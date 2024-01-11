@@ -10,6 +10,7 @@ import Link from "next/link";
 import { RiPlayFill } from "react-icons/ri";
 import { IoMdPause } from "react-icons/io";
 import { useQuery } from "@tanstack/react-query";
+import Player from "./Player";
 
 export default function Home() {
   const { status } = useSession();
@@ -22,7 +23,6 @@ export default function Home() {
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
-  const spotifySong = useRef<HTMLIFrameElement>(null);
 
   const [news, setNews] = useState(true);
 
@@ -134,25 +134,12 @@ export default function Home() {
                     <RiPlayFill className="h-8 w-8  transform text-indigo-900" />
                   </button>
                 )}
-                {audiodata.isFetched ? (
-                  <audio ref={audioRef} controls hidden>
-                    <source ref={sourceRef} src="" type="audio/mp3" />
-                  </audio>
-                ) : null}
               </div>
             </div>
           </div>
 
           <div className={news ? "w-5/6" : "hidden"}>
-            <iframe
-              ref={spotifySong}
-              className="border-radius:12px"
-              src="https://open.spotify.com/embed/track/6R5iuYqG0HsnC41RT3lzqX?utm_source=generator"
-              width="100%"
-              height="352"
-              loading="lazy"
-              allow={"encrypted-media"}
-            ></iframe>
+            <Player />
           </div>
           <button
             onClick={() => setNews(!news)}

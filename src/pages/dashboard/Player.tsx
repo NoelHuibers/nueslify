@@ -20,7 +20,7 @@ const track = {
   artists: [{ name: "" }],
 };
 
-export default function Home() {
+const Player = () => {
   const [is_paused, setPaused] = useState(false);
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
@@ -113,11 +113,11 @@ export default function Home() {
 
   const playTopTracks = () => {
     // Extracting the track IDs from topTracks
-    const trackIds = topTracks.data.map((track) => track.id);
+    const trackIds = topTracks.data?.map((track) => track.id);
     console.log(trackIds);
 
     // Constructing the uris array without adding "spotify:track:" again
-    const uris = trackIds.map((id) => id);
+    const uris = trackIds?.map((id) => id);
 
     fetch(`https://api.spotify.com/v1/me/player/play`, {
       method: "PUT",
@@ -298,8 +298,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <Background />
+        {/* <Background /> */}
       </>
     );
   }
-}
+};
+
+export default Player;
