@@ -25,17 +25,17 @@ export default function Home() {
   const sourceRef = useRef<HTMLSourceElement>(null);
 
   const [news, setNews] = useState(true);
-  useEffect(() => {
-    // if (newData.data !== undefined) {
-    //   if (newData.data.newsSegment !== undefined) {
-    //     setNews(false);
-    //   }
-    //   if (newData.data.musicIds !== undefined) {
-    //     setMusicIds(newData.data.musicIds);
-    //     setNews(true);
-    //   }
-    // }
-  }, [newData.data]);
+  // useEffect(() => {
+  //   if (newData.data !== undefined) {
+  //     if (newData.data.newsSegment !== undefined) {
+  //       setNews(false);
+  //     }
+  //     if (newData.data.musicIds !== undefined) {
+  //       setMusicIds(newData.data.musicIds);
+  //       setNews(true);
+  //     }
+  //   }
+  // }, [newData.data]);
 
   const audiodata = api.tts.ttsNew.useQuery();
   // const gptData = api.gpt.gptAnswer.useQuery();
