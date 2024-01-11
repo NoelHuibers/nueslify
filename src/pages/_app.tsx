@@ -5,6 +5,8 @@ import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import "~/styles/background.css";
+
 import Head from "next/head";
 
 const MyApp: AppType<{ session: Session | null }> = ({
