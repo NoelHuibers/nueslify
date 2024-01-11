@@ -137,13 +137,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           <div className={news ? "w-5/6" : "hidden"}>
-            <Player />
+            {news ? <Player /> : null}
           </div>
           <button
             onClick={() => setNews(!news)}
-            className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+            className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
           >
             toggle news/music player
           </button>
