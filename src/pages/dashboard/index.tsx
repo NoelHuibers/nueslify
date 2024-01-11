@@ -15,11 +15,11 @@ import Player from "./Player";
 export default function Home() {
   const { status } = useSession();
   const router = useRouter();
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      void router.replace("/");
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     void router.replace("/");
+  //   }
+  // }, [status, router]);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
@@ -102,7 +102,9 @@ export default function Home() {
 
           <button
             className="duration-30 mx-auto mr-1 rounded-xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
-            onClick={() => void signOut({ callbackUrl: "/" })}
+            onClick={async () => {
+              await signOut({ callbackUrl: "/", redirect: true });
+            }}
           >
             <p className="text-xl">Logout</p>
           </button>
