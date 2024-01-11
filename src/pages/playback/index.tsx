@@ -190,13 +190,14 @@ export default function Home() {
 
             <div className="now-playing__side">
               {/* <div className="now-playing__name">{current_track.id}</div> */}
-              <div className="mb-2 select-none text-2xl font-bold tracking-tight text-slate-50">
+              <div className="mb-2 mt-5 select-none text-2xl font-bold tracking-tight text-slate-50">
                 {current_track.name}
               </div>
               <div className="mb-2 select-none text-2xl font-bold tracking-tight text-slate-50">
                 {current_track.artists[0]?.name}
               </div>
-              <div className="control-container m-5 flex w-full items-center">
+              <div className="control-container m-5 flex items-center justify-center space-x-4">
+                {" "}
                 <button
                   className="btn-spotify"
                   onClick={() => {
@@ -219,7 +220,6 @@ export default function Home() {
                     ></path>
                   </svg>
                 </button>
-
                 <button
                   className="btn-spotify"
                   onClick={() => {
@@ -251,7 +251,6 @@ export default function Home() {
                     </svg>
                   )}
                 </button>
-
                 <button
                   className="btn-spotify"
                   onClick={() => {
