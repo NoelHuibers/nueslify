@@ -55,6 +55,7 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
     /*const responseBody = response.data;
     const simplifiedTracks: Track[] = responseBody.items.map(
       ({ external_urls, preview_url, id, name, duration_ms, artists }: Track) => ({
+      ({ external_urls, preview_url, id, name, duration_ms, artists }: Track) => ({
         external_urls,
         preview_url,
         id,

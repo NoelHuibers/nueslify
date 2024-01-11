@@ -2,6 +2,7 @@ import { postRouter } from "~/server/api/routers/post";
 import { createTRPCRouter } from "~/server/api/trpc";
 import { ttsRouter } from "./routers/tts";
 import { gptRouter } from "~/server/api/routers/gptRouter";
+import { gptRouter } from "~/server/api/routers/gptRouter";
 import { spotifyRouter } from "./routers/topTracks";
 import { playbackRouter } from "~/server/api/routers/playback";
 import { mixerRouter } from "./routers/mixer";
