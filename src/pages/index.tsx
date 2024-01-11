@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect } from "react";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Home() {
   const { status } = useSession();
@@ -28,7 +29,9 @@ export default function Home() {
           Sign Up
         </Link>
         <button
-          onClick={() => void signIn()}
+          onClick={() => {
+            signIn("spotify", { callbackUrl: "/dashboard" });
+          }}
           className="cursor-pointer rounded-2xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition duration-300 hover:bg-emerald-300"
         >
           Log In
