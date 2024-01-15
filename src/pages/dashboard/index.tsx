@@ -117,63 +117,69 @@ export default function Home() {
         </nav>
         <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
           {/* */}
-          {/* Player Section */}
-          <div className={news ? "hidden" : "w-5/6"}>
-            <div className="flex items-center justify-between rounded-lg bg-purple-700 p-4 shadow-lg">
-              {/* Album Cover */}
-              <div className="w-1/6 p-5">
-                <Image
-                  src="/cover.png"
-                  alt="Album cover"
-                  layout="responsive"
-                  height={500}
-                  width={500}
-                  className="hover:contrast-85 hover:saturate-125 cursor-pointer rounded-lg shadow-lg transition-all hover:brightness-90"
-                />
-              </div>
-              <div className="flex-grow px-4">
-                <h2 className="text-lg font-bold text-slate-50">
-                  Your Daily Newsflash
-                </h2>
-                <p className="text-sm text-slate-50">Nueslify AI-Radio</p>
-              </div>
 
-              <div className="w-1/8 yrelative h-full items-end py-3 pr-0.5">
-                {isPlaying ? (
-                  <button
-                    onClick={handlePause}
-                    className="hover:tranform bottom-0 right-0  flex cursor-pointer items-center justify-center rounded-full p-2 hover:scale-105"
-                  >
-                    <IoMdPause className="h-8 w-8 transform text-indigo-200" />
-                  </button>
-                ) : (
-                  <button
-                    onClick={handlePlay}
-                    className="hover:tranform bottom-0 right-0 flex cursor-pointer rounded-full bg-indigo-200 p-2 hover:scale-105"
-                  >
-                    <RiPlayFill className="h-8 w-8  transform text-indigo-900" />
-                  </button>
-                )}
-              </div>
+          {/* Player Section */}
+          <div
+            className={
+              news
+                ? "hidden"
+                : "flex w-5/6 items-center justify-between rounded-lg bg-purple-700 p-4 shadow-lg"
+            }
+          >
+            {/* Album Cover */}
+            <div className="">
+              <Image
+                src="/cover.png"
+                alt="Album cover"
+                height={200} // Set your desired height
+                width={200} // Set your desired width
+                className="hover:contrast-85 hover:saturate-125 cursor-pointer rounded-lg shadow-lg transition-all hover:brightness-90"
+              />
+            </div>
+            <div className="flex-grow px-4">
+              <h2 className="text-lg font-bold text-slate-50">
+                Your Daily Newsflash
+              </h2>
+              <p className="text-sm text-slate-50">Nueslify AI-Radio</p>
+            </div>
+
+            <div className="w-1/8 yrelative h-full items-end py-3 pr-0.5">
+              {isPlaying ? (
+                <button
+                  onClick={handlePause}
+                  className="hover:tranform bottom-0 right-0  flex cursor-pointer items-center justify-center rounded-full p-2 hover:scale-105"
+                >
+                  <IoMdPause className="h-8 w-8 transform text-indigo-200" />
+                </button>
+              ) : (
+                <button
+                  onClick={handlePlay}
+                  className="hover:tranform bottom-0 right-0 flex cursor-pointer rounded-full bg-indigo-200 p-2 hover:scale-105"
+                >
+                  <RiPlayFill className="h-8 w-8  transform text-indigo-900" />
+                </button>
+              )}
             </div>
           </div>
-          <div className={news ? "w-5/6" : "hidden"}>
-            {news ? <Player /> : null}
-          </div>
-          <button
-            onClick={() => setNews(!news)}
-            className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
-          >
-            toggle news/music player
-          </button>
-          {/* <button
+        </div>
+        <div className={news ? "w-5/6" : "hidden"}>
+          {news ? <Player /> : null}
+        </div>
+        <button
+          onClick={() => setNews(!news)}
+          className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+        >
+          toggle news/music player
+        </button>
+        {/* <button
             onClick={() => askGPT()}
             className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
           >
             ask the ai
           </button> */}
-        </div>
       </div>
+
+      <style jsx>{``}</style>
     </main>
   );
 }
