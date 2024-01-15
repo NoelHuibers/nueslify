@@ -1,9 +1,8 @@
 .text-container {
-  z-index: 100;
   width: 100vw;
   height: 100vh;
   display: flex;
-  position: absolute;
+  position: flex;
   top: 0;
   left: 0;
   justify-content: center;
