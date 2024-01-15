@@ -97,7 +97,7 @@ export default function Home() {
   return (
     <main className="h-screen w-screen bg-gradient-to-b from-zinc-900 to-indigo-950">
       <div className="flex h-full w-full flex-col">
-        <nav className="flex h-fit w-full flex-row items-center p-8 ">
+        <nav className="flex h-fit w-full flex-row items-center p-8">
           <h1 className="text-xl text-slate-50">Dashboard</h1>
 
           <button
@@ -112,14 +112,22 @@ export default function Home() {
             href="/interests"
             className="cursor-pointer rounded-xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition duration-300 hover:bg-emerald-300"
           >
-            Choose Interests
+            Interests
           </Link>
         </nav>
-        <div className="flex h-full w-full flex-col items-center justify-center space-y-8">
-          {/* */}
 
+        {/* News Section */}
+        <div
+          className={
+            news
+              ? "hidden"
+              : "flex h-full w-full flex-col items-center justify-center space-y-8"
+          }
+          id="newsContainer"
+        >
           {/* Player Section */}
           <div
+            id="newsPlayer"
             className={
               news
                 ? "hidden"
@@ -167,7 +175,7 @@ export default function Home() {
         </div>
         <button
           onClick={() => setNews(!news)}
-          className="flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
+          className="mx-auto flex w-64 cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-4 text-lg text-indigo-900 hover:bg-emerald-300"
         >
           toggle news/music player
         </button>

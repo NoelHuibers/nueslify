@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../../utils/api";
 import { set } from "zod";
-import Background from "./Background";
 import { Placeholder } from "drizzle-orm";
 import placeholderImage from "../../../public/photos/nueslify.png";
 
@@ -22,7 +21,7 @@ const track = {
 };
 
 const Player = () => {
-  const [is_paused, setPaused] = useState(false);
+  const [is_paused, setPaused] = useState(true); // Default state should be false
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState(undefined);
   const [current_track, setTrack] = useState(track);
@@ -64,7 +63,7 @@ const Player = () => {
 
           setTrack(state.track_window.current_track);
           setPaused(state.paused);
-          setImageLoading(true);
+          setImageLoading(false);
           setNameLoading(false);
           setArtistLoading(false);
 
@@ -194,46 +193,38 @@ const Player = () => {
   } else {
     return (
       <>
-        <div className="text-container">
-          <div className="flex min-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
-            {imageLoading ? (
-              <img
-                src={placeholderImage}
-                className="now-playing__cover rounded-xl"
-                alt=""
-                style={{ width: "300px", height: "300px" }}
-              />
-            ) : (
-              <img
-                src={current_track?.album.images[0]?.url}
-                className="now-playing__cover rounded-xl"
-                alt=""
-                style={{ width: "300px", height: "300px" }}
-                onLoad={() => setImageLoading(false)}
-              />
-            )}
+        <div
+          className="left-0 top-0 flex w-screen select-none items-center justify-center space-y-8"
+          id="spotifyContainer"
+        >
+          <div
+            className="flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md"
+            id="spotifyPlayer"
+          >
+            <img
+              src={
+                imageLoading
+                  ? placeholderImage
+                  : current_track?.album.images[0]?.url
+              }
+              className="now-playing__cover rounded-xl"
+              alt=""
+              style={{ width: "300px", height: "300px" }}
+              onLoad={() => setImageLoading(false)}
+            />
 
-            <div className="now-playing__side">
-              <div className="mb-2 mt-5 select-none overflow-hidden text-ellipsis text-2xl font-bold tracking-tight text-slate-50">
+            <div
+              className="overflow-hidden whitespace-nowrap"
+              style={{ width: 300 }}
+            >
+              <div className="mb-2 mt-5 select-none truncate text-2xl font-bold tracking-tight text-slate-50">
                 {nameLoading ? "Loading Name..." : current_track?.name}
               </div>
-              <div className="mb-2 select-none overflow-hidden text-ellipsis text-2xl font-bold tracking-tight text-slate-50">
+              <div className="mb-2 mt-0 select-none truncate text-xl font-bold tracking-tight text-slate-50">
                 {artistLoading
                   ? "Loading Artist..."
                   : current_track?.artists[0]?.name}
               </div>
-
-              <div className="control-container m-5 flex items-center justify-center space-x-4">
-                {" "}
-                <button
-                  className="btn-spotify"
-                  onClick={() => {
-                    playTopTracks();
-                  }}
-                >
-                  playTopTracks
-                </button>
-              </div> */}
             </div>
             <div className="control-container m-5 flex items-center justify-center space-x-4">
               {" "}
@@ -324,10 +315,8 @@ const Player = () => {
                 </svg>
               </button>
             </div>
-            <div id="timeline" className=""></div>
           </div>
         </div>
-        {/* <Background /> */}
       </>
     );
   }
