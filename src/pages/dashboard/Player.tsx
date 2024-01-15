@@ -207,7 +207,7 @@ const Player = () => {
                   ? placeholderImage
                   : current_track?.album.images[0]?.url
               }
-              className="now-playing__cover rounded-xl"
+              className="now-playing__cover hover:contrast-85 hover:saturate-125 cursor-pointer rounded-xl shadow-lg transition-all hover:brightness-90"
               alt=""
               style={{ width: "300px", height: "300px" }}
               onLoad={() => setImageLoading(false)}
