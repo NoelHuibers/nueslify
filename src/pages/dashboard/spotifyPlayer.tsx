@@ -1,3 +1,4 @@
+//spotifyPlayer.tsx
 import React, { useState, useEffect } from "react";
 import { api } from "../../utils/api";
 import { set } from "zod";
@@ -181,10 +182,9 @@ const Player = () => {
     return (
       <>
         <div className="container">
-          <div className="main-wrapper">
-            <b>
-              {" "}
-              Instance not active. Transfer your playback using your Spotify app{" "}
+          <div className="main-wrapper flex items-center justify-center">
+            <b className="text-white">
+              Instance not active. Transfer your playback using your Spotify app
             </b>
           </div>
         </div>
