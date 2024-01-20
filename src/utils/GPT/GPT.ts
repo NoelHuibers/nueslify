@@ -9,7 +9,7 @@ export type Segment = {
 }
 
 export type Music = {
-    title: string,
+    title?: string,
     artistNames: string[],
     id: string
 }

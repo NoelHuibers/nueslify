@@ -66,11 +66,11 @@ const request = async (requestMessage: ChatCompletionMessageParam) => {
     return completion.choices[0]
 }
 
-const segmentDescription = (segment: Segment, isNext: Boolean = true) => {
+const segmentDescription = (segment: Segment, isNext = true) => {
     if (segment.segmentKind === "music") {
         const content = getMusicContent(segment)!
-        const song = isNext ? content[0] : content[content.length - 1]
-        return "the song \"" + song?.title + "\" by " + song?.artistNames
+        const song = (isNext ? content[0] : content[content.length - 1])!
+        return "the song \"" + song.title + "\" by " + song.artistNames.toString()
     } else if (segment.segmentKind === "news") {
         return "a news report"
     } else {

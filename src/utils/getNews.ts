@@ -8,7 +8,7 @@ type NewsItem = {
   shareURL: string;
   ressort?: string; // Optional field, adjust as necessary
   details?: string;
-  detailsContent?: any; // You might want to define a more specific type here
+  detailsContent?: string; // You might want to define a more specific type here
 };
 
 // Define the type for the API response
@@ -32,12 +32,13 @@ async function getNews(): Promise<NewsItem[]> {
     }));
 
     // Fetch details for each news item
-    const detailsPromises = result.map(item => 
+    const detailsPromises = result.map(item =>
       item.details ? axios.get(item.details) : Promise.resolve(null)
     );
 
     const detailsResponses = await Promise.all(detailsPromises);
 
+    /* eslint-disable*/
     // Process and append the detailed content to the news items
     const newsWithDetails = result.map((item, index) => {
       const detailsContent = detailsResponses[index]?.data.content
@@ -47,6 +48,7 @@ async function getNews(): Promise<NewsItem[]> {
         .join('');
       return { ...item, detailsContent }; // Append the processed details to each item
     });
+    /* eslint-enable*/
 
 
     return newsWithDetails;

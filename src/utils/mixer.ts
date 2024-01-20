@@ -57,7 +57,6 @@ const getContentForNewMusicSegment = async (accessToken: string) => {
     const nextSongs = await getSongs(accessToken)
     return nextSongs.map((song) => {
         const music: Music = {
-            title: song.name,
             artistNames: song.artistNames ? song.artistNames : [],
             id: song.id
         }

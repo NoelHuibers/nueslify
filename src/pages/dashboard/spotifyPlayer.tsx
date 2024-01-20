@@ -7,25 +7,16 @@ import placeholderImage from "../../../public/photos/nueslify.png";
 
 declare global {
   interface Window {
-    Spotify: any;
+    Spotify: typeof Spotify;
     onSpotifyWebPlaybackSDKReady: () => void;
   }
 }
 
-const track = {
-  name: "",
-  id: "",
-  album: {
-    images: [{ url: "" }],
-  },
-  artists: [{ name: "" }],
-};
-
 const Player = () => {
   const [is_paused, setPaused] = useState(true); // Default state should be false
   const [is_active, setActive] = useState(false);
-  const [player, setPlayer] = useState(undefined);
-  const [current_track, setTrack] = useState(track);
+  const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
+  const [current_track, setTrack] = useState<Spotify.Track | undefined>(undefined);
   const [previousTracksLength, setPreviousTracksLength] = useState(0);
 
   const accessToken = api.playback.playback.useQuery();
@@ -42,7 +33,7 @@ const Player = () => {
       const initializeSpotifyPlayer = () => {
         const player = new window.Spotify.Player({
           name: "Nueslify Web Player",
-          getOAuthToken: (cb: any) => {
+          getOAuthToken: cb => {
             cb(accessToken.data);
           },
         });
@@ -50,41 +41,38 @@ const Player = () => {
         setPlayer(player);
 
         // Setup event listeners
-        player.addListener("ready", ({ device_id }: any) => {
-          console.log("Ready with Device ID", device_id);
-          transferPlaybackHere(device_id);
+        player.addListener("ready", (playbackInstance) => {
+          console.log("Ready with Device ID", playbackInstance.device_id);
+          transferPlaybackHere(playbackInstance.device_id);
           setActive(true);
         });
 
         // Connect to the player!
-        player.connect();
+        void player.connect()
+          .then((success) => console.log("Succesfully connected to the player: ", success));
 
-        player.addListener("player_state_changed", (state: any) => {
-          if (!state || !state.track_window) return;
-
-          setTrack(state.track_window.current_track);
-          setPaused(state.paused);
+        player.addListener("player_state_changed", (playbackState) => {
+          setTrack(playbackState.track_window.current_track);
+          setPaused(playbackState.paused);
           setImageLoading(false);
           setNameLoading(false);
           setArtistLoading(false);
 
-          setTrack(state.track_window.current_track);
-          setPaused(state.paused);
+          setTrack(playbackState.track_window.current_track);
+          setPaused(playbackState.paused);
         });
 
-        let debounceTimer: any;
+        let debounceTimer: NodeJS.Timeout;
         let lastTrackName = "";
 
-        player.addListener("player_state_changed", (state: any) => {
-          if (!state || !state.track_window) return;
-
+        player.addListener("player_state_changed", (playbackState) => {
           clearTimeout(debounceTimer);
 
           debounceTimer = setTimeout(() => {
-            const current = state.track_window.previous_tracks.length;
+            const current = playbackState.track_window.previous_tracks.length;
 
             if (current !== 0) {
-              const currentTrackName = state.track_window.current_track.name;
+              const currentTrackName = playbackState.track_window.current_track.name;
 
               if (lastTrackName !== "" && lastTrackName !== currentTrackName) {
                 console.log(`Track "${lastTrackName}" ended`);
@@ -115,7 +103,7 @@ const Player = () => {
   }, [accessToken.data]);
 
   const playSong = (songId: string) => {
-    fetch(`https://api.spotify.com/v1/me/player/play`, {
+    void fetch(`https://api.spotify.com/v1/me/player/play`, {
       method: "PUT",
       body: JSON.stringify({ uris: [`spotify:track:${songId}`] }),
       headers: {
@@ -150,7 +138,7 @@ const Player = () => {
   };
 
   const AddItemToPlaybackQueue = (songId: string) => {
-    fetch(`https://api.spotify.com/v1/me/player/queue`, {
+    void fetch(`https://api.spotify.com/v1/me/player/queue`, {
       method: "POST",
       body: JSON.stringify({ uris: [`spotify:track:${songId}`] }),
       headers: {
@@ -203,9 +191,7 @@ const Player = () => {
           >
             <img
               src={
-                imageLoading
-                  ? placeholderImage
-                  : current_track?.album.images[0]?.url
+                current_track?.album.images[0]?.url
               }
               className="now-playing__cover hover:contrast-85 hover:saturate-125 cursor-pointer rounded-xl shadow-lg transition-all hover:brightness-90"
               alt=""
@@ -231,7 +217,7 @@ const Player = () => {
               <button
                 className="btn-spotify"
                 onClick={() => {
-                  player.previousTrack().then(() => {
+                  void player?.previousTrack().then(() => {
                     console.log("Skipped to previous track!");
                   });
                 }}
@@ -253,7 +239,7 @@ const Player = () => {
               <button
                 className="btn-spotify"
                 onClick={() => {
-                  player.togglePlay();
+                  void player?.togglePlay();
                 }}
               >
                 {is_paused ? (
@@ -284,7 +270,7 @@ const Player = () => {
               <button
                 className="btn-spotify"
                 onClick={() => {
-                  player.nextTrack().then(() => {
+                  void player?.nextTrack().then(() => {
                     console.log("Skipped to next track!");
                   });
                 }}

@@ -19,8 +19,9 @@ type ExternalUrls = {
 
 type Track = {
   id: string;
+  name: string;
   artistNames?: string[];
-  artists: Artist[];
+  artists?: Artist[];
 };
 
 type Artist = {
@@ -66,13 +67,14 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
     );*/
     const responseBody = response.data;
     const simplifiedTracks: Track[] = responseBody.items.map(
-      ({ id }: Track) => ({
+      ({ id, name }: Track) => ({
         id: "spotify:track:" + id,
+        name: "spotify:name:" + name
       }),
     );
 
     simplifiedTracks.forEach((track) => {
-      track.artistNames = track.artists.map((artist) => artist.name);
+      track.artistNames = track.artists?.map((artist) => artist.name);
     });
 
     return simplifiedTracks;
