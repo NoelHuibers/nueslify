@@ -59,8 +59,8 @@ export default function Home() {
 
           <button
             className="duration-30 mx-auto mr-1 rounded-xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
-            onClick={() => {
-              signOut({ callbackUrl: "/" });
+            onClick={async () => {
+              await signOut({ callbackUrl: "/" });
             }}
           >
             <p className="text-xl">Logout</p>

@@ -29,8 +29,8 @@ export default function Home() {
           Sign Up
         </Link>
         <button
-          onClick={() => {
-            signIn("spotify", { callbackUrl: "/dashboard" });
+          onClick={async () => {
+            await signIn("spotify", { callbackUrl: "/dashboard" });
           }}
           className="cursor-pointer rounded-2xl bg-indigo-200 px-8 py-4 text-xl font-bold text-indigo-900 transition duration-300 hover:bg-emerald-300"
         >
