@@ -1,11 +1,10 @@
-// FavoritesSelectionPage.tsx
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ZodType, z } from "zod";
+import { type ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { countryList } from "./countries"; // Import the countryList
+import CountrySelect from "./countries";
 
 type FormData = {
   name: string;
@@ -29,7 +28,7 @@ const genresList: Genre[] = [
   { name: "Sports", image: "/photos/sports.jpg" },
 ];
 
-const FavoritesSelectionPage: React.FC = () => {
+export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
   const handleGenreClick = (genre: string) => {
@@ -79,7 +78,7 @@ const FavoritesSelectionPage: React.FC = () => {
                 <div className="">
                   <label
                     htmlFor="username"
-                    className="block flex items-center text-sm font-medium leading-6 text-white"
+                    className="flex items-center text-sm font-medium leading-6 text-white"
                   >
                     Username
                     {errors.name && (
@@ -105,7 +104,7 @@ const FavoritesSelectionPage: React.FC = () => {
                 <div className="">
                   <label
                     htmlFor="age"
-                    className="block flex items-center text-sm font-medium leading-6 text-white"
+                    className="flex items-center text-sm font-medium leading-6 text-white"
                   >
                     Age
                     {errors.age && (
@@ -119,7 +118,7 @@ const FavoritesSelectionPage: React.FC = () => {
                       <input
                         type="number"
                         {...register("age", { valueAsNumber: true })}
-                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                        className="flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                         placeholder="25"
                       />
                     </div>
@@ -131,7 +130,7 @@ const FavoritesSelectionPage: React.FC = () => {
                 <div className="">
                   <label
                     htmlFor="country"
-                    className="block flex items-center text-sm font-medium leading-6 text-white"
+                    className="flex items-center text-sm font-medium leading-6 text-white"
                   >
                     Country
                     {errors.country && (
@@ -147,12 +146,7 @@ const FavoritesSelectionPage: React.FC = () => {
                         {...register("country")}
                         className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                       >
-                        <option value="">choose your country</option>
-                        {countryList.map((country) => (
-                          <option key={country} value={country}>
-                            {country}
-                          </option>
-                        ))}
+                        <CountrySelect />
                       </select>
                     </div>
                   </div>
@@ -252,7 +246,7 @@ const FavoritesSelectionPage: React.FC = () => {
                 </Link>
                 <button
                   type="submit"
-                  className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-sm text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Save
                 </button>
@@ -443,6 +437,4 @@ const FavoritesSelectionPage: React.FC = () => {
       `}</style>
     </main>
   );
-};
-
-export default FavoritesSelectionPage;
+}

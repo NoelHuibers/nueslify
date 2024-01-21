@@ -1,9 +1,6 @@
 //spotifyPlayer.tsx
 import React, { useState, useEffect } from "react";
 import { api } from "../../utils/api";
-import { set } from "zod";
-import { Placeholder } from "drizzle-orm";
-import placeholderImage from "../../../public/photos/nueslify.png";
 
 declare global {
   interface Window {
@@ -16,7 +13,9 @@ const Player = () => {
   const [is_paused, setPaused] = useState(true); // Default state should be false
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
-  const [current_track, setTrack] = useState<Spotify.Track | undefined>(undefined);
+  const [current_track, setTrack] = useState<Spotify.Track | undefined>(
+    undefined,
+  );
   const [previousTracksLength, setPreviousTracksLength] = useState(0);
 
   const accessToken = api.playback.playback.useQuery();
@@ -33,7 +32,7 @@ const Player = () => {
       const initializeSpotifyPlayer = () => {
         const player = new window.Spotify.Player({
           name: "Nueslify Web Player",
-          getOAuthToken: cb => {
+          getOAuthToken: (cb) => {
             cb(accessToken.data);
           },
         });
@@ -48,8 +47,11 @@ const Player = () => {
         });
 
         // Connect to the player!
-        void player.connect()
-          .then((success) => console.log("Succesfully connected to the player: ", success));
+        void player
+          .connect()
+          .then((success) =>
+            console.log("Succesfully connected to the player: ", success),
+          );
 
         player.addListener("player_state_changed", (playbackState) => {
           setTrack(playbackState.track_window.current_track);
@@ -72,7 +74,8 @@ const Player = () => {
             const current = playbackState.track_window.previous_tracks.length;
 
             if (current !== 0) {
-              const currentTrackName = playbackState.track_window.current_track.name;
+              const currentTrackName =
+                playbackState.track_window.current_track.name;
 
               if (lastTrackName !== "" && lastTrackName !== currentTrackName) {
                 console.log(`Track "${lastTrackName}" ended`);
@@ -190,9 +193,7 @@ const Player = () => {
             id="spotifyPlayer"
           >
             <img
-              src={
-                current_track?.album.images[0]?.url
-              }
+              src={current_track?.album.images[0]?.url}
               className="now-playing__cover hover:contrast-85 hover:saturate-125 cursor-pointer rounded-xl shadow-lg transition-all hover:brightness-90"
               alt=""
               style={{ width: "300px", height: "300px" }}

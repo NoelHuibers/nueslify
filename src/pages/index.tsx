@@ -1,10 +1,8 @@
 import { signIn, useSession } from "next-auth/react";
-
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useEffect } from "react";
-import { redirect } from "next/dist/server/api-utils";
 
 export default function Home() {
   const { status } = useSession();
