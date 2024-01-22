@@ -60,6 +60,7 @@ export const authOptions: NextAuthOptions = {
             "streaming",
             "user-read-private",
           ].join(" "),
+          show_dialog: true,
         },
       },
     }),

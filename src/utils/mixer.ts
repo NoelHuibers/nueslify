@@ -5,6 +5,8 @@ import {
   createStart,
 } from "./GPT/OpenAIGPT";
 import getTopTracks from "~/utils/getTopTracks";
+import { db } from "~/server/db";
+import { news } from "~/server/db/schema";
 
 const mixer = async (currentSegment: Segment | null, accessToken: string) => {
   console.log("called mixer function");
@@ -32,10 +34,12 @@ const mixer = async (currentSegment: Segment | null, accessToken: string) => {
     currentSegment?.segmentKind === "music"
   ) {
     // Get news from Db => Make to TTS => return transition: string/mp3 + news: mp3
-    const news =
-      "Langer newsstring, alle Infos die du jemals möchtest, wie cool ist das denn!";
 
-    const newsSegment = await createNewsSummary(news);
+    const newsContent = await getNews();
+
+    const newsSegment = await createNewsSummary(
+      newsContent?.topline ? newsContent?.topline : "",
+    );
     const transitionSegment = await createTransition(
       currentSegment,
       newsSegment,
@@ -102,5 +106,11 @@ function getRandom<T>(arr: T[], n: number): T[] {
 
   return result;
 }
+
+const getNews = async () => {
+  const newsS = await db.select().from(news);
+  const randomNews = newsS[Math.floor(Math.random() * newsS.length)];
+  return randomNews;
+};
 
 export default mixer;

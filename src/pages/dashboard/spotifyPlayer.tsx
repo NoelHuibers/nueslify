@@ -204,7 +204,9 @@ const Player = () => {
               <Image
                 src={albumImage}
                 alt="Album cover"
-                className="hover:contrast-85 hover:saturate-125 h-80 w-80 rounded-lg shadow-lg transition-all hover:brightness-90"
+                width={320}
+                height={320}
+                className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
                 onLoad={() => setImageLoading(false)}
               />
             </div>
