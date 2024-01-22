@@ -19,6 +19,8 @@ const Player = () => {
   );
   const [previousTracksLength, setPreviousTracksLength] = useState(0);
 
+  const [albumImage, setAlbumImage] = useState("");
+
   const accessToken = api.playback.playback.useQuery();
 
   const topTracks = api.spotify.topTracks.useQuery();
@@ -62,6 +64,11 @@ const Player = () => {
           setArtistLoading(false);
 
           setTrack(playbackState.track_window.current_track);
+          setAlbumImage(
+            playbackState.track_window.current_track.album.images[0]?.url
+              ? playbackState.track_window.current_track.album.images[0]?.url
+              : "",
+          );
           setPaused(playbackState.paused);
         });
 
@@ -193,19 +200,14 @@ const Player = () => {
             className="flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md"
             id="spotifyPlayer"
           >
-            <Image
-              src={
-                current_track?.album.images[0]?.url
-                  ? current_track?.album.images[0]?.url
-                  : "/cover.png"
-              }
-              alt="Album cover"
-              layout="fill"
-              objectFit="cover"
-              className="now-playing__cover hover:contrast-85 hover:saturate-125 cursor-pointer rounded-xl shadow-lg transition-all hover:brightness-90"
-              onLoad={() => setImageLoading(false)}
-            />
-
+            <div className="h-80 w-80">
+              <Image
+                src={albumImage}
+                alt="Album cover"
+                className="hover:contrast-85 hover:saturate-125 h-80 w-80 rounded-lg shadow-lg transition-all hover:brightness-90"
+                onLoad={() => setImageLoading(false)}
+              />
+            </div>
             <div
               className="overflow-hidden whitespace-nowrap"
               style={{ width: 300 }}
@@ -220,13 +222,10 @@ const Player = () => {
               </div>
             </div>
             <div className="control-container m-5 flex items-center justify-center space-x-4">
-              {" "}
               <button
                 className="btn-spotify"
-                onClick={() => {
-                  void player?.previousTrack().then(() => {
-                    console.log("Skipped to previous track!");
-                  });
+                onClick={async () => {
+                  await player?.previousTrack();
                 }}
               >
                 <svg
@@ -245,8 +244,8 @@ const Player = () => {
               </button>
               <button
                 className="btn-spotify"
-                onClick={() => {
-                  void player?.togglePlay();
+                onClick={async () => {
+                  await player?.togglePlay();
                 }}
               >
                 {is_paused ? (
@@ -276,10 +275,8 @@ const Player = () => {
               </button>
               <button
                 className="btn-spotify"
-                onClick={() => {
-                  void player?.nextTrack().then(() => {
-                    console.log("Skipped to next track!");
-                  });
+                onClick={async () => {
+                  await player?.nextTrack();
                 }}
               >
                 <svg

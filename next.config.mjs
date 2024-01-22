@@ -20,6 +20,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ["i.scdn.co"],
+  },
 };
 
 const pwa = withPWA({

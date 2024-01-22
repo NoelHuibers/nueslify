@@ -55,13 +55,11 @@ const NewsPlayer = () => {
             "flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md"
           }
         >
-          <div className="">
+          <div>
             <Image
               src="/cover.png"
               alt="Album cover"
-              height={300}
-              width={300}
-              className="hover:contrast-85 hover:saturate-125 cursor-pointer rounded-lg shadow-lg transition-all hover:brightness-90"
+              className="hover:contrast-85 hover:saturate-125 h-80 w-80 rounded-lg shadow-lg transition-all hover:brightness-90"
             />
           </div>
           <div
