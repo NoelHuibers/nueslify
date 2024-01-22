@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { Segment } from "~/utils/GPT/GPT";
+import type { Segment } from "~/utils/GPT/GPT";
 import mixer from "~/utils/mixer";
 import { refreshSpotifyToken } from "~/utils/getTopTracks";
 

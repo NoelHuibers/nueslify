@@ -1,6 +1,7 @@
 //spotifyPlayer.tsx
 import React, { useState, useEffect } from "react";
 import { api } from "../../utils/api";
+import Image from "next/image";
 
 declare global {
   interface Window {
@@ -192,11 +193,16 @@ const Player = () => {
             className="flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md"
             id="spotifyPlayer"
           >
-            <img
-              src={current_track?.album.images[0]?.url}
+            <Image
+              src={
+                current_track?.album.images[0]?.url
+                  ? current_track?.album.images[0]?.url
+                  : "/cover.png"
+              }
+              alt="Album cover"
+              layout="fill"
+              objectFit="cover"
               className="now-playing__cover hover:contrast-85 hover:saturate-125 cursor-pointer rounded-xl shadow-lg transition-all hover:brightness-90"
-              alt=""
-              style={{ width: "300px", height: "300px" }}
               onLoad={() => setImageLoading(false)}
             />
 

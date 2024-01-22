@@ -1,15 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
-import Image from "next/image";
 import Link from "next/link";
-
-//import { IoPlayCircle } from "react-icons/io5";
-
-import { RiPlayFill } from "react-icons/ri";
-import { IoMdPause } from "react-icons/io";
-import { useQuery } from "@tanstack/react-query";
 import SpotifyPlayer from "./spotifyPlayer";
 import NewsPlayer from "./newsPlayer";
 
