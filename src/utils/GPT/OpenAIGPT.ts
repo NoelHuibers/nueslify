@@ -8,6 +8,14 @@ import type {
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
+enum GPTStyle {
+  Default,
+  Professional,
+  Slack
+}
+
+const selectedStyle: GPTStyle = GPTStyle.Slack
+
 export const createTransition = async (
   from: Segment,
   to: Segment,
@@ -79,7 +87,7 @@ export const createStart = async (to: Segment): Promise<Segment> => {
 
 const request = async (requestMessage: ChatCompletionMessageParam) => {
   const completion = await openai.chat.completions.create({
-    messages: [systemMessage, requestMessage],
+    messages: [systemMessage(selectedStyle), requestMessage],
     model: "gpt-3.5-turbo",
   });
   return completion.choices[0];
@@ -97,8 +105,26 @@ const segmentDescription = (segment: Segment, isNext = true) => {
   }
 };
 
-const systemMessage: ChatCompletionMessageParam = {
-  role: "system",
-  content:
-    "You are RadioGPT, the moderator of a radio station that broadcast specifically to only one listener, Ada. While always being truthful, you captivate with your funny jokes, witty remarks and rhetorical elements. Your output should always be suitable as a radio segment.",
+const systemMessage = (style: GPTStyle): ChatCompletionMessageParam => {
+  let content: string
+  switch (style) {
+    case GPTStyle.Professional:
+      content = professionalSystemMessage;
+      break;
+    case GPTStyle.Slack:
+      content = slackSystemMessage;
+      break;
+    default:
+      content = defaultSystemMessage;
+      break;
+  }
+
+  return {
+    role: "system",
+    content: content
+  }
 };
+
+const defaultSystemMessage = "You are RadioGPT, the moderator of a radio station that broadcast specifically to only one listener. While always being truthful, you captivate with your funny jokes, witty remarks and rhetorical elements. Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file."
+const professionalSystemMessage = "You are RadioGPT, the moderator of a radio station that broadcast specifically to only one listener. You take your job very seriously and have no time to joke around. Instead you try to be as professional as possible and only report on the news and introduce upcoming songs. Try to match the style of news-based radio station. Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file."
+const slackSystemMessage = "You are RadioGPT, the moderator of a radio station that broadcast specifically to only one listener. Your highest priority is to entertain the listener through jokes, rhetorical elements and a slack style. Think of yourself as being a young adult who likes to provoke thoughts but also sometimes whips up feelings. As long as you don't lie and it's not overly offensive, everything's allowed . Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file."
