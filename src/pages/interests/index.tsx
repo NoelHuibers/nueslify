@@ -11,6 +11,7 @@ type FormData = {
   age: number;
   country: string;
   musicNewsAmount: number;
+  style: string;
   categories: string[];
 };
 
@@ -28,8 +29,11 @@ const genresList: Genre[] = [
   { name: "Sports", image: "/photos/sports.jpg" },
 ];
 
+const gptStyleOptions = ["default", "slack", "professional"];
+
 export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+  const [selectedStyle, setSelectedStyle] = useState<string>("default");
 
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
@@ -51,6 +55,7 @@ export default function Home() {
       .max(100, "You must be at most 100 years old"),
     country: z.string().min(1, "Please select a country"),
     musicNewsAmount: z.number(),
+    style: z.string(),
     categories: z.array(z.string()),
   });
 
@@ -178,83 +183,107 @@ export default function Home() {
                 </div>
               </div>
 
-              <h1 className="appFont mt-10 text-3xl font-semibold leading-7 text-white">
-                Your Taste
-              </h1>
-              <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                <div className="sm:col-span-4">
+              <div className="mt-10">
+                <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
+                  Host Style
+                </h1>
+                <div className="mt-2">
                   <label
-                    htmlFor="musicNewsAmount"
+                    htmlFor="style"
                     className="block text-sm font-medium leading-6 text-white"
                   >
-                    Select your favorite news genres
+                    Select the style of your personal radio host
                   </label>
+                  <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                    <select className="dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                      value={selectedStyle}
+                      onChange={(event) => setSelectedStyle(event.target.value)}>
+                      {gptStyleOptions.map((option) => (
+                        <option key={option} value={option}>
+                          {option}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
-              <div className="genres-container">
-                {genresList.map((genre) => (
-                  <div
-                    key={genre.name}
-                    className={`genre-button ${
-                      selectedGenres.includes(genre.name) ? "selected" : ""
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      id={genre.name}
-                      {...register("categories", { required: true })}
-                      value={genre.name}
-                      checked={selectedGenres.includes(genre.name)}
-                      onChange={() => handleGenreClick(genre.name)}
-                      style={{
-                        position: "absolute",
-                        opacity: 0,
-                        pointerEvents: "none",
-                      }}
-                    />
-                    <label htmlFor={genre.name}>
-                      <div className="relative h-32 w-32">
-                        <Image
-                          src={genre.image}
-                          alt={genre.name}
-                          layout="fill"
-                          objectFit="cover"
-                          sizes="(max-width: 640px) 100vw, (max-width: 750px) 50vw, 33.3vw"
-                          className="rounded"
-                        />
-                        {selectedGenres.includes(genre.name) && (
-                          <div className="indicator">
-                            <div className="checkmark">
-                              <div className="checkmark_stem"></div>
-                              <div className="checkmark_kick"></div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      <p className="font-bold text-white">{genre.name}</p>
-                    </label>
-                  </div>
-                ))}
-              </div>
+            </div>
 
-              <div className="mb-2 mt-6 flex items-center justify-center gap-x-6">
-                <Link
-                  href="../dashboard"
-                  className="transition-duration-1000 text-xl font-bold leading-6 text-white"
+            <h1 className="appFont mt-10 text-3xl font-semibold leading-7 text-white">
+              Your Taste
+            </h1>
+            <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+              <div className="sm:col-span-4">
+                <label
+                  htmlFor="musicNewsAmount"
+                  className="block text-sm font-medium leading-6 text-white"
                 >
-                  Cancel
-                </Link>
-                <button
-                  type="submit"
-                  className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Save
-                </button>
+                  Select your favorite news genres
+                </label>
               </div>
+            </div>
+            <div className="genres-container">
+              {genresList.map((genre) => (
+                <div
+                  key={genre.name}
+                  className={`genre-button ${selectedGenres.includes(genre.name) ? "selected" : ""
+                    }`}
+                >
+                  <input
+                    type="checkbox"
+                    id={genre.name}
+                    {...register("categories", { required: true })}
+                    value={genre.name}
+                    checked={selectedGenres.includes(genre.name)}
+                    onChange={() => handleGenreClick(genre.name)}
+                    style={{
+                      position: "absolute",
+                      opacity: 0,
+                      pointerEvents: "none",
+                    }}
+                  />
+                  <label htmlFor={genre.name}>
+                    <div className="relative h-32 w-32">
+                      <Image
+                        src={genre.image}
+                        alt={genre.name}
+                        layout="fill"
+                        objectFit="cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 750px) 50vw, 33.3vw"
+                        className="rounded"
+                      />
+                      {selectedGenres.includes(genre.name) && (
+                        <div className="indicator">
+                          <div className="checkmark">
+                            <div className="checkmark_stem"></div>
+                            <div className="checkmark_kick"></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <p className="font-bold text-white">{genre.name}</p>
+                  </label>
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-2 mt-6 flex items-center justify-center gap-x-6">
+              <Link
+                href="../dashboard"
+                className="transition-duration-1000 text-xl font-bold leading-6 text-white"
+              >
+                Cancel
+              </Link>
+              <button
+                type="submit"
+                className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Save
+              </button>
             </div>
           </div>
         </form>
-      </div>
+      </div >
 
       <style jsx>{`
         .label-text {
@@ -435,6 +464,6 @@ export default function Home() {
           display: block;
         }
       `}</style>
-    </main>
+    </main >
   );
 }
