@@ -28,7 +28,7 @@ const SegmentSchema = z
 export const mixerRouter = createTRPCRouter({
   mixer: protectedProcedure
     .input(SegmentSchema)
-    .query(async ({ input, ctx }) => {
+    .mutation(async ({ input, ctx }) => {
       const segment = input as Segment | null;
       const accessToken = await refreshSpotifyToken(ctx.session.user.id);
       const data = await mixer(segment, accessToken);

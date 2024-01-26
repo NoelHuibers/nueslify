@@ -9,7 +9,6 @@ import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
 
 const mixer = async (currentSegment: Segment | null, accessToken: string) => {
-  console.log("called mixer function");
   if (currentSegment !== null && currentSegment?.segmentKind === "news") {
     // return transition: string/mp3 + x musicids id[]
     const newsSegment: Segment = {
@@ -52,12 +51,16 @@ const mixer = async (currentSegment: Segment | null, accessToken: string) => {
       segmentKind: "music",
       content: await getContentForNewMusicSegment(accessToken),
     };
-
-    console.log(musicSegment);
-
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
 
-    const transitionSegment = await createStart(musicSegment);
+    // const transitionSegment = await createStart(musicSegment);
+
+    const transitionSegment: Segment = {
+      segmentKind: "transition",
+      content: {
+        content: "Willkommen bei den guten Nachrichten",
+      },
+    };
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   }

@@ -56,7 +56,6 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
 };
 
 export const createStart = async (to: Segment): Promise<Segment> => {
-  console.log("create start");
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
     content:

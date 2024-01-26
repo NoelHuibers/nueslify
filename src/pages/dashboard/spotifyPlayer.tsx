@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-const Player = () => {
+const Player = (props: { musicIds: string[] | undefined }) => {
   const [is_paused, setPaused] = useState(true); // Default state should be false
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
@@ -19,11 +19,9 @@ const Player = () => {
   );
   const [previousTracksLength, setPreviousTracksLength] = useState(0);
 
-  const [albumImage, setAlbumImage] = useState("");
+  const [albumImage, setAlbumImage] = useState<string | undefined>(undefined);
 
   const accessToken = api.playback.playback.useQuery();
-
-  const topTracks = api.spotify.topTracks.useQuery();
 
   const [imageLoading, setImageLoading] = useState(true);
   const [nameLoading, setNameLoading] = useState(true);
@@ -50,27 +48,32 @@ const Player = () => {
         });
 
         // Connect to the player!
-        void player
-          .connect()
-          .then((success) =>
-            console.log("Succesfully connected to the player: ", success),
-          );
+        void player.connect().then((_) => {
+          player.addListener("player_state_changed", (playbackState) => {
+            setTrack(playbackState.track_window.current_track);
+            setPaused(playbackState.paused);
+            setImageLoading(false);
+            setNameLoading(false);
+            setArtistLoading(false);
 
-        player.addListener("player_state_changed", (playbackState) => {
-          setTrack(playbackState.track_window.current_track);
-          setPaused(playbackState.paused);
-          setImageLoading(false);
-          setNameLoading(false);
-          setArtistLoading(false);
-
-          setTrack(playbackState.track_window.current_track);
-          setAlbumImage(
-            playbackState.track_window.current_track.album.images[0]?.url
-              ? playbackState.track_window.current_track.album.images[0]?.url
-              : "",
-          );
-          setPaused(playbackState.paused);
+            setTrack(playbackState.track_window.current_track);
+            setAlbumImage(
+              playbackState.track_window.current_track.album.images[0]?.url
+                ? playbackState.track_window.current_track.album.images[0]?.url
+                : "",
+            );
+            setPaused(playbackState.paused);
+          });
         });
+
+        // TO-DO: This returns errors and only works sometimes
+        if (props.musicIds !== undefined && props.musicIds[0] !== undefined) {
+          void playSong(props.musicIds[0]).then(async () => {
+            for (let i = 1; i < props.musicIds!.length; ++i) {
+              await AddItemToPlaybackQueue(props.musicIds![i]!);
+            }
+          });
+        }
 
         let debounceTimer: NodeJS.Timeout;
         let lastTrackName = "";
@@ -93,7 +96,6 @@ const Player = () => {
 
             // Update the state using setPreviousTracksLength
             setPreviousTracksLength(current);
-            console.log(current);
           }, 1000); // Adjust the delay as needed
         });
       };
@@ -113,51 +115,29 @@ const Player = () => {
     }
   }, [accessToken.data]);
 
-  const playSong = (songId: string) => {
-    void fetch(`https://api.spotify.com/v1/me/player/play`, {
+  const playSong = async (songId: string) => {
+    await fetch(`https://api.spotify.com/v1/me/player/play`, {
       method: "PUT",
-      body: JSON.stringify({ uris: [`spotify:track:${songId}`] }),
+      body: JSON.stringify({ uris: [`${songId}`] }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken.data}`,
       },
     });
+
+    console.log(songId + "is the new song");
   };
 
-  const playTopTracks = () => {
-    // Extracting the track IDs from topTracks
-    const trackIds = topTracks.data?.map((track) => track.id);
-    console.log(trackIds);
-
-    // Constructing the uris array without adding "spotify:track:" again
-    const uris = trackIds?.map((id) => id);
-
-    fetch(`https://api.spotify.com/v1/me/player/play`, {
-      method: "PUT",
-      body: JSON.stringify({
-        uris: uris,
-        shuffle: true,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken.data}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
-  };
-
-  const AddItemToPlaybackQueue = (songId: string) => {
-    void fetch(`https://api.spotify.com/v1/me/player/queue`, {
+  const AddItemToPlaybackQueue = async (songId: string) => {
+    await fetch(`https://api.spotify.com/v1/me/player/queue`, {
       method: "POST",
-      body: JSON.stringify({ uris: [`spotify:track:${songId}`] }),
+      body: JSON.stringify({ uris: [`${songId}`] }),
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken.data}`,
       },
     });
-    console.log({ songId } && "added");
+    console.log(songId + " added to the que");
   };
 
   const transferPlaybackHere = (device_id: string) => {
@@ -192,23 +172,19 @@ const Player = () => {
   } else {
     return (
       <>
-        <div
-          className="left-0 top-0 flex w-screen select-none items-center justify-center space-y-8"
-          id="spotifyContainer"
-        >
-          <div
-            className="flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md"
-            id="spotifyPlayer"
-          >
+        <div className="left-0 top-0 flex w-screen select-none items-center justify-center space-y-8">
+          <div className="flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
             <div className="h-80 w-80">
-              <Image
-                src={albumImage}
-                alt="Album cover"
-                width={320}
-                height={320}
-                className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
-                onLoad={() => setImageLoading(false)}
-              />
+              {albumImage ? (
+                <Image
+                  src={albumImage}
+                  alt="Album cover"
+                  width={320}
+                  height={320}
+                  className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
+                  onLoad={() => setImageLoading(false)}
+                />
+              ) : null}
             </div>
             <div
               className="overflow-hidden whitespace-nowrap"
@@ -225,7 +201,6 @@ const Player = () => {
             </div>
             <div className="control-container m-5 flex items-center justify-center space-x-4">
               <button
-                className="btn-spotify"
                 onClick={async () => {
                   await player?.previousTrack();
                 }}
@@ -288,14 +263,14 @@ const Player = () => {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g clip-path="url(#clip0_42_51)">
+                  <g>
                     <path
                       d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z"
                       fill="#E1E1E6"
                     ></path>
                   </g>
                   <defs>
-                    <clipPath id="clip0_42_51">
+                    <clipPath>
                       <rect
                         width="28.8089"
                         height="28.8089"

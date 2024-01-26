@@ -1,28 +1,30 @@
 // NewsPlayer.js
 import { useEffect, useRef, useState } from "react";
-import { api } from "~/utils/api";
 import Image from "next/image";
+import type { News, Transition } from "~/utils/GPT/GPT";
 
-const NewsPlayer = () => {
+const NewsPlayer = (props: {
+  transition: Transition | undefined;
+  news: News | undefined;
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const audioData = api.tts.ttsNew.useQuery();
+  const audiodata = props.news?.content;
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
 
   useEffect(() => {
-    if (sourceRef.current && audioData.data !== undefined) {
-      const arrayBuffer = new ArrayBuffer(audioData.data.length);
+    if (sourceRef.current && audiodata !== undefined) {
+      const arrayBuffer = new ArrayBuffer(audiodata.length);
       const uint8Array = new Uint8Array(arrayBuffer);
-      for (let i = 0; i < audioData.data.length; i++) {
-        uint8Array[i] = audioData.data.charCodeAt(i) & 0xff;
+      for (let i = 0; i < audiodata.length; i++) {
+        uint8Array[i] = audiodata.charCodeAt(i) & 0xff;
       }
       const blob = new Blob([arrayBuffer], { type: "audio/mp3" });
       const blobUrl = URL.createObjectURL(blob);
       sourceRef.current.src = blobUrl;
     }
-  }, [audioData.data]);
+  }, [audiodata]);
 
   const handlePlay = async () => {
     setIsPlaying(true);
@@ -59,7 +61,9 @@ const NewsPlayer = () => {
             <Image
               src="/cover.png"
               alt="Album cover"
-              className="hover:contrast-85 hover:saturate-125 h-80 w-80 rounded-lg shadow-lg transition-all hover:brightness-90"
+              width={320}
+              height={320}
+              className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
             />
           </div>
           <div
@@ -149,14 +153,14 @@ const NewsPlayer = () => {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_42_51)">
+                <g>
                   <path
                     d="M27.1426 13.7397L16.5154 7.38149C16.2525 7.22152 15.9514 7.13509 15.6437 7.13123C15.336 7.12737 15.0329 7.20622 14.766 7.35955C14.4765 7.52815 14.2368 7.77036 14.0711 8.0616C13.9055 8.35284 13.8199 8.68272 13.823 9.01775V13.4657L3.65435 7.3798C3.39144 7.21983 3.0904 7.13341 2.78268 7.12955C2.47495 7.12568 2.17183 7.20454 1.905 7.35786C1.61547 7.52646 1.37571 7.76867 1.21008 8.05991C1.04445 8.35115 0.958845 8.68103 0.961955 9.01606V21.4512C0.958745 21.7863 1.0443 22.1163 1.20994 22.4076C1.37558 22.699 1.61538 22.9413 1.905 23.1099C2.17183 23.2632 2.47495 23.3421 2.78268 23.3382C3.0904 23.3344 3.39144 23.2479 3.65435 23.088L13.823 16.9993V21.4489C13.8194 21.7844 13.9048 22.1149 14.0704 22.4066C14.2361 22.6984 14.4761 22.9411 14.766 23.1099C15.0329 23.2632 15.336 23.3421 15.6437 23.3382C15.9514 23.3344 16.2525 23.2479 16.5154 23.088L27.1426 16.7298C27.3953 16.5715 27.6035 16.3516 27.7479 16.0908C27.8923 15.83 27.968 15.5368 27.968 15.2387C27.968 14.9406 27.8923 14.6473 27.7479 14.3865C27.6035 14.1257 27.3953 13.9058 27.1426 13.7476V13.7397Z"
                     fill="#E1E1E6"
                   ></path>
                 </g>
                 <defs>
-                  <clipPath id="clip0_42_51">
+                  <clipPath>
                     <rect
                       width="28.8089"
                       height="28.8089"

@@ -5,6 +5,7 @@ import { api } from "~/utils/api";
 import Link from "next/link";
 import SpotifyPlayer from "./spotifyPlayer";
 import NewsPlayer from "./newsPlayer";
+import { Transition, type News } from "~/utils/GPT/GPT";
 
 export default function Home() {
   const { status } = useSession();
@@ -15,27 +16,38 @@ export default function Home() {
     }
   }, [status, router]);
 
-  const [news, setNews] = useState(true);
-  // useEffect(() => {
-  //   if (newData.data !== undefined) {
-  //     if (newData.data.newsSegment !== undefined) {
-  //       setNews(false);
-  //     }
-  //     if (newData.data.musicIds !== undefined) {
-  //       setMusicIds(newData.data.musicIds);
-  //       setNews(true);
-  //     }
-  //   }
-  // }, [newData.data]);
+  const [musicPlaying, setMusicPlaying] = useState(false);
+  const [music, setMusic] = useState<string[] | undefined>(undefined);
+  const [lastSong, setLastSong] = useState(true);
+  const [news, setNews] = useState<News | undefined>(undefined);
+  const [transition, setTransition] = useState<Transition | undefined>(
+    undefined,
+  );
 
-  // const gptData = api.gpt.gptAnswer.useQuery();
+  const mixer = api.mixer.mixer.useMutation();
 
-  const spotifyTracks = api.spotify.topTracks.useQuery();
   useEffect(() => {
-    if (spotifyTracks.data !== undefined) {
-      console.log(spotifyTracks.data);
+    if (mixer.data === undefined && mixer.isLoading === false) {
+      mixer.mutate();
     }
-  });
+    if (mixer.data !== undefined) {
+      if (mixer.data.musicIds !== undefined) {
+        console.log(mixer.data.musicIds);
+        setMusic(mixer.data.musicIds);
+        setMusicPlaying(true);
+        setLastSong(false);
+      } else if (mixer.data.newsSegment !== undefined) {
+        setNews(mixer.data.newsSegment.content as News);
+      }
+      setTransition(mixer.data.transitionSegment.content as Transition);
+    }
+  }, [mixer.data]);
+
+  useEffect(() => {
+    if (lastSong) {
+      // mixer.mutate(mixer.data);
+    }
+  }, [lastSong]);
 
   // function askGPT() {
   //   console.log(gptData.data?.binaryString);
@@ -66,19 +78,19 @@ export default function Home() {
           </Link>
         </nav>
 
-        <div>{news ? <SpotifyPlayer /> : <NewsPlayer />}</div>
+        <div>
+          {musicPlaying ? (
+            <SpotifyPlayer musicIds={music} />
+          ) : (
+            <NewsPlayer transition={transition} news={news} />
+          )}
+        </div>
         <button
-          onClick={() => setNews(!news)}
+          onClick={() => setMusicPlaying(!musicPlaying)}
           className="m-2 mx-auto flex w-64 cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-4 text-lg text-indigo-900 hover:bg-emerald-300"
         >
           toggle news/music player
         </button>
-        {/* <button
-            onClick={() => askGPT()}
-            className="width-fit flex cursor-pointer items-center justify-center rounded-full bg-indigo-200 p-6 text-xl text-indigo-900 hover:bg-emerald-300"
-          >
-            ask the ai
-          </button> */}
       </div>
     </main>
   );
