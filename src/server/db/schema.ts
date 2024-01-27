@@ -45,6 +45,12 @@ export const users = mysqlTable("user", {
     fsp: 3,
   }).default(sql`CURRENT_TIMESTAMP(3)`),
   image: varchar("image", { length: 511 }),
+  age: int("age"),
+  country: varchar("country", { length: 255 }),
+  musicNewsBalance: int("musicNewsBalance"),
+  hostStyle: varchar("hostStyle", { length: 255 }),
+  musicTerm: varchar("musicTerm", { length: 255 }),
+  categories: varchar("categories", { length: 1024 }),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

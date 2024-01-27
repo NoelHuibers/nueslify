@@ -5,13 +5,15 @@ import { type ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CountrySelect from "./countries";
+import { api } from "~/utils/api";
 
 type FormData = {
-  name: string;
+  //name: string;
   age: number;
   country: string;
   musicNewsAmount: number;
-  style: string;
+  hostStyle: string;
+  musicTerm: string;
   categories: string[];
 };
 
@@ -29,11 +31,17 @@ const genresList: Genre[] = [
   { name: "Sports", image: "/photos/sports.jpg" },
 ];
 
-const gptStyleOptions = ["default", "slack", "professional"];
+const gptStyleOptions = ["Default", "Slack", "Professional"];
+const musicTermOptions = [
+  "Your Current Music Favorities",
+  "Your Recent Music Favorites",
+  "All-Time Music Favorites",
+];
 
 export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [selectedStyle, setSelectedStyle] = useState<string>("default");
+
+  const saveData = api.interests.interests.useMutation();
 
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
@@ -48,14 +56,15 @@ export default function Home() {
   };
 
   const schema: ZodType<FormData> = z.object({
-    name: z.string().min(2, "Name must be at least 2 characters"),
+    //name: z.string().min(2, "Name must be at least 2 characters"),
     age: z
       .number()
       .min(10, "You must be at least 10 years old")
       .max(100, "You must be at most 100 years old"),
     country: z.string().min(1, "Please select a country"),
     musicNewsAmount: z.number(),
-    style: z.string(),
+    hostStyle: z.string(),
+    musicTerm: z.string(),
     categories: z.array(z.string()),
   });
 
@@ -67,6 +76,14 @@ export default function Home() {
 
   const submitData = (data: FormData) => {
     console.log("it worked", data);
+    saveData.mutate({
+      age: data.age,
+      country: data.country,
+      musicNewsAmount: data.musicNewsAmount,
+      hostStyle: data.hostStyle,
+      musicTerm: data.musicTerm,
+      //categories: data.categories,
+    });
   };
 
   return (
@@ -79,6 +96,7 @@ export default function Home() {
                 Your Profile
               </h1>
 
+              {/*
               <div className="mt-2">
                 <div className="">
                   <label
@@ -104,6 +122,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+              */}
 
               <div className="mt-5">
                 <div className="">
@@ -182,27 +201,58 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="mt-10">
-                <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
-                  Host Style
-                </h1>
-                <div className="mt-2">
-                  <label
-                    htmlFor="style"
-                    className="block text-sm font-medium leading-6 text-white"
-                  >
-                    Select the style of your personal radio host
-                  </label>
+            <div className="mt-10">
+              <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
+                Your Host
+              </h1>
+              <div className="mt-2">
+                <label
+                  htmlFor="host"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Select your radio host style
+                </label>
+                <div className="">
                   <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                     <select
-                      className="dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
-                      value={selectedStyle}
-                      onChange={(event) => setSelectedStyle(event.target.value)}
+                      id="styleDropdown"
+                      {...register("hostStyle")}
+                      className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                     >
-                      {gptStyleOptions.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
+                      {gptStyleOptions.map((options) => (
+                        <option key={options} value={options}>
+                          {options}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
+                Your Music
+              </h1>
+              <div className="mt-2">
+                <label
+                  htmlFor="musicTerm"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Select which favourites you want to listen to
+                </label>
+                <div className="">
+                  <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                    <select
+                      id="musicTermDropdown"
+                      {...register("musicTerm")}
+                      className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                    >
+                      {musicTermOptions.map((options) => (
+                        <option key={options} value={options}>
+                          {options}
                         </option>
                       ))}
                     </select>
@@ -279,7 +329,7 @@ export default function Home() {
               </Link>
               <button
                 type="submit"
-                className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Save
               </button>

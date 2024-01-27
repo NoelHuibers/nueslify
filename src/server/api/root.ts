@@ -1,6 +1,7 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { playbackRouter } from "~/server/api/routers/playback";
 import { mixerRouter } from "./routers/mixer";
+import { interestsRouter } from "./routers/interests";
 
 /**
  * This is the primary router for your server.
@@ -10,6 +11,7 @@ import { mixerRouter } from "./routers/mixer";
 export const appRouter = createTRPCRouter({
   playback: playbackRouter,
   mixer: mixerRouter,
+  interests: interestsRouter,
 });
 
 // export type definition of API
