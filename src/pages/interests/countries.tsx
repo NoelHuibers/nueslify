@@ -251,9 +251,15 @@ const countrylist: string[] = [
 const CountrySelect = () => {
   return (
     <>
-      <option value="">choose your country</option>
+      <option value="" className="bg-[#10b981] text-white">
+        choose your country
+      </option>
       {countrylist.map((country) => (
-        <option key={country} value={country}>
+        <option
+          key={country}
+          value={country}
+          className="bg-[#10b981] text-white"
+        >
           {country}
         </option>
       ))}
