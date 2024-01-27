@@ -33,7 +33,6 @@ const gptStyleOptions = ["default", "slack", "professional"];
 
 export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [selectedStyle, setSelectedStyle] = useState<string>("default");
 
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
@@ -182,23 +181,25 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="mt-10">
-                <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
-                  Host Style
-                </h1>
-                <div className="mt-2">
-                  <label
-                    htmlFor="style"
-                    className="block text-sm font-medium leading-6 text-white"
-                  >
-                    Select the style of your personal radio host
-                  </label>
+            <div className="mt-10">
+              <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
+                Your Host
+              </h1>
+              <div className="mt-2">
+                <label
+                  htmlFor="host"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Select your radio host style
+                </label>
+                <div className="">
                   <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
                     <select
-                      className="dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
-                      value={selectedStyle}
-                      onChange={(event) => setSelectedStyle(event.target.value)}
+                      id="styleDropdown"
+                      {...register("style")}
+                      className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                     >
                       {gptStyleOptions.map((option) => (
                         <option key={option} value={option}>
@@ -279,7 +280,7 @@ export default function Home() {
               </Link>
               <button
                 type="submit"
-                className="transition-duration-600 rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md bg-indigo-200 px-3 py-2 text-xl font-bold text-indigo-900 hover:bg-emerald-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Save
               </button>
