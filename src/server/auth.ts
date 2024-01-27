@@ -59,6 +59,7 @@ export const authOptions: NextAuthOptions = {
             "user-top-read",
             "streaming",
             "user-read-private",
+            "user-modify-playback-state",
           ].join(" "),
           show_dialog: true,
         },

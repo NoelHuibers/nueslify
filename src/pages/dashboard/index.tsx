@@ -5,7 +5,7 @@ import { api } from "~/utils/api";
 import Link from "next/link";
 import SpotifyPlayer from "./spotifyPlayer";
 import NewsPlayer from "./newsPlayer";
-import { Transition, type News } from "~/utils/GPT/GPT";
+import type { Transition, News } from "~/utils/GPT/GPT";
 
 export default function Home() {
   const { status } = useSession();
@@ -27,7 +27,11 @@ export default function Home() {
   const mixer = api.mixer.mixer.useMutation();
 
   useEffect(() => {
-    if (mixer.data === undefined && mixer.isLoading === false) {
+    if (
+      mixer.data === undefined &&
+      mixer.isLoading === false &&
+      (mixer !== null || undefined)
+    ) {
       mixer.mutate();
     }
     if (mixer.data !== undefined) {
@@ -41,7 +45,7 @@ export default function Home() {
       }
       setTransition(mixer.data.transitionSegment.content as Transition);
     }
-  }, [mixer.data]);
+  }, [mixer, mixer.data]);
 
   useEffect(() => {
     if (lastSong) {

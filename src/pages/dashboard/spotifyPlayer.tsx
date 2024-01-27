@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { api } from "../../utils/api";
 import Image from "next/image";
+import axios from "axios";
 
 declare global {
   interface Window {
@@ -18,6 +19,8 @@ const Player = (props: { musicIds: string[] | undefined }) => {
     undefined,
   );
   const [previousTracksLength, setPreviousTracksLength] = useState(0);
+
+  const [deviceId, setDeviceId] = useState<string | undefined>(undefined);
 
   const [albumImage, setAlbumImage] = useState<string | undefined>(undefined);
 
@@ -43,8 +46,13 @@ const Player = (props: { musicIds: string[] | undefined }) => {
         // Setup event listeners
         player.addListener("ready", (playbackInstance) => {
           console.log("Ready with Device ID", playbackInstance.device_id);
-          transferPlaybackHere(playbackInstance.device_id);
-          setActive(true);
+          void transferPlaybackHere(
+            playbackInstance.device_id,
+            accessToken.data,
+          ).then(() => {
+            setDeviceId(playbackInstance.device_id);
+            setActive(true);
+          });
         });
 
         // Connect to the player!
@@ -65,15 +73,6 @@ const Player = (props: { musicIds: string[] | undefined }) => {
             setPaused(playbackState.paused);
           });
         });
-
-        // TO-DO: This returns errors and only works sometimes
-        if (props.musicIds !== undefined && props.musicIds[0] !== undefined) {
-          void playSong(props.musicIds[0]).then(async () => {
-            for (let i = 1; i < props.musicIds!.length; ++i) {
-              await AddItemToPlaybackQueue(props.musicIds![i]!);
-            }
-          });
-        }
 
         let debounceTimer: NodeJS.Timeout;
         let lastTrackName = "";
@@ -115,47 +114,20 @@ const Player = (props: { musicIds: string[] | undefined }) => {
     }
   }, [accessToken.data]);
 
-  const playSong = async (songId: string) => {
-    await fetch(`https://api.spotify.com/v1/me/player/play`, {
-      method: "PUT",
-      body: JSON.stringify({ uris: [`${songId}`] }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken.data}`,
-      },
-    });
-
-    console.log(songId + "is the new song");
-  };
-
-  const AddItemToPlaybackQueue = async (songId: string) => {
-    await fetch(`https://api.spotify.com/v1/me/player/queue`, {
-      method: "POST",
-      body: JSON.stringify({ uris: [`${songId}`] }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken.data}`,
-      },
-    });
-    console.log(songId + " added to the que");
-  };
-
-  const transferPlaybackHere = (device_id: string) => {
-    fetch("https://api.spotify.com/v1/me/player", {
-      method: "PUT",
-      body: JSON.stringify({ device_ids: [device_id], play: true }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken.data}`, // Your Spotify access token
-      },
-    })
-      .then((response) => {
-        console.log("Transfer Playback response", response);
-      })
-      .catch((error) => {
-        console.error("Transfer Playback error", error);
-      });
-  };
+  useEffect(() => {
+    if (accessToken.data !== undefined && deviceId !== undefined) {
+      if (props.musicIds?.[0] !== undefined) {
+        void queSong(props.musicIds[0], accessToken.data, deviceId).then(
+          async () => {
+            for (let i = 1; i < props.musicIds!.length; ++i) {
+              await queSong(props.musicIds![i]!, accessToken.data, deviceId);
+            }
+            await player?.nextTrack();
+          },
+        );
+      }
+    }
+  }, [props.musicIds, deviceId, accessToken.data]);
 
   if (!is_active) {
     return (
@@ -286,6 +258,59 @@ const Player = (props: { musicIds: string[] | undefined }) => {
         </div>
       </>
     );
+  }
+};
+
+const queSong = async (
+  songId: string,
+  accessToken: string,
+  deviceId?: string,
+) => {
+  try {
+    let url = `https://api.spotify.com/v1/me/player/queue?uri=${encodeURIComponent(
+      songId,
+    )}`;
+
+    if (deviceId) {
+      url += `&device_id=${encodeURIComponent(deviceId)}`;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    const response = await axios.post(url, null, { headers });
+
+    if (response.status === 204) {
+      console.log("Song added to queue successfully.");
+    } else if (response.status === 202) {
+      console.log("Song is accepted and being processed.");
+    } else {
+      console.log("Response status:", response.status);
+    }
+  } catch (error) {
+    console.error("Error adding song to queue:", error);
+  }
+};
+
+const transferPlaybackHere = async (device_id: string, accessToken: string) => {
+  try {
+    const response = await axios.put(
+      "https://api.spotify.com/v1/me/player",
+      {
+        device_ids: [device_id],
+        play: true,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log("Transfer Playback response", response);
+  } catch (error) {
+    console.error("Transfer Playback error", error);
   }
 };
 
