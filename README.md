@@ -23,42 +23,48 @@ npm run dev
 - [x] PWA Configuration
 - [x] Datenbankanbindung (Userdata)
 - [x] Token aktualisieren
+- [ ] Mixer Frontend
+- [ ] Skip/Back Button
+
+- [ ] Auth Signup
 
 **Basti**
 
 - [x] Ansprechen der Spotify API Bsp.: Letzten Song abspielen (Lieblingssongs Playlist spotify)
 - [x] URIs der Playlists bekommen
-- [ ] TTS Research (Andere Provider/Günstigere Alternativen/Lokal)
+- [x] TTS Research (Andere Provider/Günstigere Alternativen/Lokal)
+- [ ] LLMs tauschen (Settings) LangChain
+
+**Anton**
+
+- [ ] News speichern
+- [ ] Responsivness Frontend
 
 **Anton & Peter**
 
-- [ ] News herbekommen (Webcrawlen/API): Irgendwas
+- [x] News herbekommen (Webcrawlen/API): Irgendwas
 - [x] Text To Speech
-- [ ] Init Buttons
+- [x] Init Buttons
 - [ ] Interests in Datenbank speichern
+- [ ] Video
 
 **Gabriel**
 
 - [x] LLM anbinden
+- [x] Übergänge? Ein Vorgefertigten
+- [ ] Interests in Mixer einbinden
 - [ ] Userdata von der Datenbank anfragen darauf den Prompt anpassen
 
 **Gabriel & Noel**
 
-- [ ] Mixer
+- [x] Mixer backend
 
 **Offen**
 
-- [ ] Skip Button
-- [ ] Upvote/Downvote
-- [ ] News Text speichern
-- [ ] Übergänge? Ein Vorgefertigten
-- [ ] LLMs tauschen (Settings)
-- [ ] Andere Features
-- [ ] Dokumentation
+- [ ] Dokumentation (+ Databasedumb)
+- [ ] Slides
 
 ## Termine
 
-03.01: Team Meeting (TBD)
-22.01: Individual Help
-29.01: Individual Help
-08.02: Abgabe
+05.02 19:00: Abgabe vorbereiten (Meeting)
+08.02: Vorstellen

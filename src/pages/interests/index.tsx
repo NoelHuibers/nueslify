@@ -195,9 +195,11 @@ export default function Home() {
                     Select the style of your personal radio host
                   </label>
                   <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
-                    <select className="dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                    <select
+                      className="dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
                       value={selectedStyle}
-                      onChange={(event) => setSelectedStyle(event.target.value)}>
+                      onChange={(event) => setSelectedStyle(event.target.value)}
+                    >
                       {gptStyleOptions.map((option) => (
                         <option key={option} value={option}>
                           {option}
@@ -226,8 +228,9 @@ export default function Home() {
               {genresList.map((genre) => (
                 <div
                   key={genre.name}
-                  className={`genre-button ${selectedGenres.includes(genre.name) ? "selected" : ""
-                    }`}
+                  className={`genre-button ${
+                    selectedGenres.includes(genre.name) ? "selected" : ""
+                  }`}
                 >
                   <input
                     type="checkbox"
@@ -283,7 +286,7 @@ export default function Home() {
             </div>
           </div>
         </form>
-      </div >
+      </div>
 
       <style jsx>{`
         .label-text {
@@ -464,6 +467,6 @@ export default function Home() {
           display: block;
         }
       `}</style>
-    </main >
+    </main>
   );
 }

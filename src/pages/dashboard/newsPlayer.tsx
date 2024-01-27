@@ -78,9 +78,7 @@ const NewsPlayer = (props: {
             </div>
           </div>
 
-          {/* Button */}
           <div className="control-container m-5 flex items-center justify-center space-x-4">
-            {" "}
             <button
               className="btn-spotify"
               // onClick={() => {

@@ -69,7 +69,7 @@ async function getTopTracks(accessToken: string): Promise<Track[]> {
     const simplifiedTracks: Track[] = responseBody.items.map(
       ({ id, name }: Track) => ({
         id: "spotify:track:" + id,
-        name: "spotify:name:" + name
+        name: "spotify:name:" + name,
       }),
     );
 
