@@ -5,14 +5,6 @@ import Image from "next/image";
 import axios from "axios";
 import Player from "./players";
 
-type SpotifyPlayOptions = {
-  device_id?: string;
-  context_uri?: string;
-  uris?: string[];
-  offset?: { position?: number; uri?: string };
-  position_ms?: number;
-};
-
 declare global {
   interface Window {
     Spotify: typeof Spotify;
@@ -137,12 +129,12 @@ const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
     }
   }, [props.musicIds, deviceId, accessToken.data]);
 
-  if (player && is_active) {
+  if (player && is_active && albumImage) {
     return (
       <Player
         image={
           <Image
-            src={albumImage ? albumImage : ""}
+            src={albumImage}
             alt="Album cover"
             width={320}
             height={320}
