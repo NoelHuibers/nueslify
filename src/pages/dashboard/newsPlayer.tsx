@@ -43,26 +43,31 @@ const NewsPlayer = (props: {
   };
 
   return (
-    <Player
-      image={
-        <Image
-          src="/cover.png"
-          alt="Album cover"
-          width={320}
-          height={320}
-          className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
-        />
-      }
-      trackname="Titel"
-      artistname="Nueslify"
-      previousTrack={() => {
-        return;
-      }}
-      pauseTrack={handlePause}
-      nextTrack={() => {
-        return;
-      }}
-    />
+    <>
+      <Player
+        image={
+          <Image
+            src="/cover.png"
+            alt="Album cover"
+            width={320}
+            height={320}
+            className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
+          />
+        }
+        trackname="Titel"
+        artistname="Nueslify"
+        previousTrack={() => {
+          return;
+        }}
+        pauseTrack={handlePause}
+        nextTrack={() => {
+          return;
+        }}
+      />
+      <audio ref={audioRef} className="hidden">
+        <source ref={sourceRef} className="hidden" />
+      </audio>
+    </>
   );
 };
 
