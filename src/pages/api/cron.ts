@@ -10,15 +10,12 @@ export default async function handler(
   const newNews = await getNews();
   await Promise.all(
     newNews.map((item) =>
-      db
-        .insert(news)
-        .values({
-          ressort: item.ressort ? item.ressort : "none",
-          topline: item.title,
-          shareurl: item.shareURL,
-          firstline: item.firstSentence,
-        })
-        .execute(),
+      db.insert(news).values({
+        ressort: item.ressort ? item.ressort : "none",
+        topline: item.title,
+        shareurl: item.shareURL,
+        firstline: item.firstSentence,
+      }),
     ),
   );
 

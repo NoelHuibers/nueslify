@@ -28,8 +28,7 @@ export const interestsRouter = createTRPCRouter({
           musicTerm: input.musicTerm,
           //categories: input.categories,
         })
-        .where(eq(users.id, ctx.session.user.id))
-        .execute();
+        .where(eq(users.id, ctx.session.user.id));
 
       return { success: true, message: "Interests updated successfully" };
     }),
