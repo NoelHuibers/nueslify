@@ -4,6 +4,14 @@ import { api } from "../../utils/api";
 import Image from "next/image";
 import axios from "axios";
 
+type SpotifyPlayOptions = {
+  device_id?: string;
+  context_uri?: string;
+  uris?: string[];
+  offset?: { position?: number; uri?: string };
+  position_ms?: number;
+};
+
 declare global {
   interface Window {
     Spotify: typeof Spotify;
@@ -117,12 +125,11 @@ const Player = (props: { musicIds: string[] | undefined }) => {
   useEffect(() => {
     if (accessToken.data !== undefined && deviceId !== undefined) {
       if (props.musicIds?.[0] !== undefined) {
-        void queSong(props.musicIds[0], accessToken.data, deviceId).then(
+        void playSong(props.musicIds[0], accessToken.data, deviceId).then(
           async () => {
             for (let i = 1; i < props.musicIds!.length; ++i) {
               await queSong(props.musicIds![i]!, accessToken.data, deviceId);
             }
-            await player?.nextTrack();
           },
         );
       }
@@ -290,6 +297,36 @@ const queSong = async (
     }
   } catch (error) {
     console.error("Error adding song to queue:", error);
+  }
+};
+
+const playSong = async (
+  songId: string,
+  accessToken: string,
+  deviceId?: string,
+) => {
+  try {
+    let endpoint = "https://api.spotify.com/v1/me/player/play";
+
+    if (deviceId) {
+      endpoint += `?device_id=${encodeURIComponent(deviceId)}`;
+    }
+
+    await axios.put(
+      endpoint,
+      {
+        uris: [songId],
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log("First song plays");
+  } catch (error) {
+    console.error("Error starting first song:", error);
   }
 };
 
