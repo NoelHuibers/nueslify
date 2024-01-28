@@ -8,9 +8,13 @@ import getTopTracks from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
 
-const mixer = async (currentSegment: Segment | null, accessToken: string) => {
-  if (currentSegment !== null && currentSegment?.segmentKind === "news") {
-    // return transition: string/mp3 + x musicids id[]
+const mixer = async (
+  title: string | undefined,
+  artistNames: string[] | undefined,
+  newscontent: string | undefined,
+  accessToken: string,
+) => {
+  if (newscontent) {
     const newsSegment: Segment = {
       segmentKind: "news",
       content: {
@@ -28,13 +32,19 @@ const mixer = async (currentSegment: Segment | null, accessToken: string) => {
     const transitionSegment = await createTransition(newsSegment, musicSegment);
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
-  } else if (
-    currentSegment !== null &&
-    currentSegment?.segmentKind === "music"
-  ) {
-    // Get news from Db => Make to TTS => return transition: string/mp3 + news: mp3
-
+  } else if (artistNames && title) {
     const newsContent = await getNews();
+
+    const currentSegment: Segment = {
+      segmentKind: "music",
+      content: [
+        {
+          artistNames: artistNames,
+          id: "",
+          title: title,
+        },
+      ],
+    };
 
     const newsSegment = await createNewsSummary(
       newsContent?.topline ? newsContent?.topline : "",
@@ -46,11 +56,11 @@ const mixer = async (currentSegment: Segment | null, accessToken: string) => {
 
     return { transitionSegment, newsSegment };
   } else {
-    //We start for the first time
     const musicSegment: Segment = {
       segmentKind: "music",
       content: await getContentForNewMusicSegment(accessToken),
     };
+
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
 
     const transitionSegment = await createStart(musicSegment);

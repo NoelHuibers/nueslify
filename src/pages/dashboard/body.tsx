@@ -43,10 +43,18 @@ const Body = () => {
     }
   }, [lastSong]);
 
+  const refetch = (title: string, artistnames: string[]) => {
+    mutate({ title: title, artistNames: artistnames });
+  };
+
   return (
     <>
       {musicPlaying ? (
-        <SpotifyPlayer musicIds={music} />
+        <SpotifyPlayer
+          musicIds={music}
+          setMusicPlaying={() => handleMusicPlaying()}
+          refetchNews={(title, artistnames) => refetch(title, artistnames)}
+        />
       ) : (
         <NewsPlayer
           transition={transition}

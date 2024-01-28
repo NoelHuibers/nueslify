@@ -12,8 +12,13 @@ declare global {
   }
 }
 
-const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
-  const [is_paused, setPaused] = useState(true); // Default state should be false
+const Spotifyplayer = (props: {
+  musicIds: string[] | undefined;
+  setMusicPlaying: () => void;
+  refetchNews: (title: string, artistnames: string[]) => void;
+}) => {
+  const [songAmount, setSongAmount] = useState<number | undefined>(undefined);
+  const [is_paused, setPaused] = useState(true);
   const [is_active, setActive] = useState(false);
   const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
   const [current_track, setTrack] = useState<Spotify.Track | undefined>(
@@ -30,6 +35,12 @@ const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
   const [imageLoading, setImageLoading] = useState(true);
   const [nameLoading, setNameLoading] = useState(true);
   const [artistLoading, setArtistLoading] = useState(true);
+
+  useEffect(() => {
+    if (props.musicIds !== undefined) {
+      setSongAmount(props.musicIds.length);
+    }
+  }, [props.musicIds]);
 
   useEffect(() => {
     // Function to initialize the player
@@ -90,24 +101,25 @@ const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
 
               if (lastTrackName !== "" && lastTrackName !== currentTrackName) {
                 console.log(`Track "${lastTrackName}" ended`);
+                setSongAmount((previous) => {
+                  if (previous !== undefined) {
+                    return previous - 1;
+                  } else {
+                    return undefined;
+                  }
+                });
               }
               lastTrackName = currentTrackName;
             }
-
-            // Update the state using setPreviousTracksLength
             setPreviousTracksLength(current);
-          }, 1000); // Adjust the delay as needed
+          }, 0);
         });
       };
 
-      // Load Spotify SDK script and initialize player
       if (window.Spotify) {
         initializeSpotifyPlayer();
       } else {
-        // Attach to window onSpotifyWebPlaybackSDKReady
         window.onSpotifyWebPlaybackSDKReady = initializeSpotifyPlayer;
-
-        // Load the Spotify SDK script
         const scriptTag = document.createElement("script");
         scriptTag.src = "https://sdk.scdn.co/spotify-player.js";
         document.head.appendChild(scriptTag);
@@ -128,6 +140,38 @@ const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
       }
     }
   }, [props.musicIds, deviceId, accessToken.data]);
+
+  useEffect(() => {
+    if (songAmount === 0) {
+      console.log("Switching to news");
+      player
+        ?.togglePlay()
+        .then(() => {
+          props.setMusicPlaying();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    if (songAmount === 1) {
+      const artists = current_track?.artists.map((artist) => {
+        return artist.name;
+      });
+      if (current_track?.name && artists) {
+        props.refetchNews(current_track.name, artists);
+      }
+    }
+  }, [songAmount]);
+
+  const nextTrack = async () => {
+    if (player && songAmount == 1) {
+      console.log("Switching to news");
+      await player.togglePlay();
+      props.setMusicPlaying();
+    } else if (player) {
+      await player.nextTrack();
+    }
+  };
 
   if (player && is_active && albumImage) {
     return (
@@ -153,21 +197,28 @@ const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
           await player.togglePlay();
         }}
         nextTrack={async () => {
-          await player.nextTrack();
+          await nextTrack();
         }}
       />
     );
   } else {
     return (
-      <>
-        <div className="container">
-          <div className="main-wrapper flex items-center justify-center">
-            <b className="text-white">
-              Instance not active. Transfer your playback using your Spotify app
-            </b>
-          </div>
-        </div>
-      </>
+      <Player
+        image={
+          <div className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90" />
+        }
+        trackname="Loading"
+        artistname="Loading"
+        previousTrack={() => {
+          return;
+        }}
+        togglePlay={() => {
+          return;
+        }}
+        nextTrack={() => {
+          return;
+        }}
+      />
     );
   }
 };

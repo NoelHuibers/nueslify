@@ -56,6 +56,18 @@ const NewsPlayer = (props: {
     }
   };
 
+  const skip = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = audioRef.current.duration;
+    }
+  };
+
+  const goToBeginning = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+    }
+  };
+
   return (
     <>
       <Player
@@ -68,18 +80,16 @@ const NewsPlayer = (props: {
             className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
           />
         }
-        trackname="Titel"
+        trackname="Your Radiohost"
         artistname="Nueslify"
-        previousTrack={() => {
-          return;
-        }}
+        previousTrack={() => goToBeginning()}
         togglePlay={() => togglePlay()}
-        nextTrack={() => {
-          return;
-        }}
+        nextTrack={() => skip()}
       />
       <audio ref={audioRef} controls hidden autoPlay>
-        <source src={audiodata} ref={sourceRef} type="audio/mpeg" />
+        {audiodata ? (
+          <source src={audiodata} ref={sourceRef} type="audio/mpeg" />
+        ) : null}
       </audio>
     </>
   );
