@@ -8,6 +8,8 @@ import getTopTracks from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
 
+import runLLM from "~/utils/GPT/langchain";
+
 const mixer = async (
   title: string | undefined,
   artistNames: string[] | undefined,
