@@ -5,6 +5,7 @@ import type {
   ChatCompletionMessageParam,
   ChatCompletionUserMessageParam,
 } from "openai/resources/index.mjs";
+import { textoSpeech } from "../ttsFunc";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
@@ -20,7 +21,6 @@ export const createTransition = async (
   from: Segment,
   to: Segment,
 ): Promise<Segment> => {
-  console.log("create transition");
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
     content:
@@ -31,7 +31,6 @@ export const createTransition = async (
       " . Create a suitable and short transition between the two segments.",
   };
   return request(requestMessage).then((answer) => {
-    console.log("received answer:", answer);
     return {
       segmentKind: "transition",
       content: {
@@ -71,16 +70,22 @@ export const createStart = async (to: Segment): Promise<Segment> => {
       segmentDescription(to),
   };
 
-  return request(requestMessage).then((answer) => {
-    console.log("received answer:", answer);
-    return {
-      segmentKind: "transition",
-      content: {
-        content: answer?.message.content
-          ? answer?.message.content
-          : "Next up: " + segmentDescription(to),
-      },
-    };
+  return new Promise<Segment>((resolve, reject) => {
+    request(requestMessage)
+      .then(async (answer) => {
+        const speech = await textoSpeech(
+          answer?.message.content ? answer?.message.content : "",
+        );
+        resolve({
+          segmentKind: "transition",
+          content: {
+            content: speech,
+          },
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 

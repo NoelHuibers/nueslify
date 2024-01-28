@@ -149,7 +149,7 @@ const Spotifyplayer = (props: { musicIds: string[] | undefined }) => {
         previousTrack={async () => {
           await player.previousTrack();
         }}
-        pauseTrack={async () => {
+        togglePlay={async () => {
           await player.togglePlay();
         }}
         nextTrack={async () => {

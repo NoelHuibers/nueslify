@@ -1,44 +1,53 @@
 import OpenAI from "openai";
-import fs from "fs";
 import { env } from "~/env.mjs";
-import { promisify } from "util";
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
-export async function textoSpeech(text: string) {
-  // For Actual usage:
-
+export function textoSpeech(text: string) {
   // const mp3 = await openai.audio.speech.create({
   //   model: "tts-1",
   //   voice: "fable",
-  //   input:
-  //     text,
+  //   input: text,
   // });
 
-  // For Mockdata:
+  // const buffer = Buffer.from(await mp3.arrayBuffer());
 
-  const filePath =
-    env.NODE_ENV === "production" ? "/speech.mp3" : "./public/speech.mp3";
-  const mp3 = await readMp3File(filePath);
+  const name = "Test3.mp3";
 
-  const buffer = Buffer.from(await mp3.arrayBuffer());
-  const binaryString = buffer.toString("binary");
-  return binaryString;
+  // uploadBufferToS3("nueslify", name, buffer)
+  //   .then((response) => console.log("Upload erfolgreich:", response))
+  //   .catch((error) => console.error("Fehler beim Upload:", error));
+  return "https://nueslify.s3.eu-central-1.amazonaws.com/" + name;
 }
 
-async function readMp3File(filePath: string): Promise<Response> {
-  const readFileAsync = promisify(fs.readFile);
+const s3 = new S3Client([
+  {
+    region: env.AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
+  },
+]);
+
+async function uploadBufferToS3(
+  bucketName: string,
+  key: string,
+  buffer: Buffer,
+) {
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+    Body: buffer,
+  };
+
   try {
-    const buffer = await readFileAsync(filePath);
-
-    const arrayBuffer = buffer.buffer.slice(
-      buffer.byteOffset,
-      buffer.byteOffset + buffer.byteLength,
-    );
-
-    return new Response(arrayBuffer);
+    const response = await s3.send(new PutObjectCommand(params));
+    console.log("Datei erfolgreich hochgeladen:", response);
+    return response;
   } catch (error) {
-    console.error("Error reading .mp3 file:", error);
+    console.error("Fehler beim Hochladen der Datei:", error);
     throw error;
   }
 }

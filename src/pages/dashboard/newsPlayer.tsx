@@ -7,38 +7,52 @@ import Player from "./players";
 const NewsPlayer = (props: {
   transition: Transition | undefined;
   news: News | undefined;
+  setMusicPlaying: () => void;
 }) => {
-  const audiodata = props.news?.content;
+  const { transition, news, setMusicPlaying } = props;
+  const audiodata = transition?.content;
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
 
   useEffect(() => {
-    if (sourceRef.current && audiodata !== undefined) {
-      const arrayBuffer = new ArrayBuffer(audiodata.length);
-      const uint8Array = new Uint8Array(arrayBuffer);
-      for (let i = 0; i < audiodata.length; i++) {
-        uint8Array[i] = audiodata.charCodeAt(i) & 0xff;
-      }
-      const blob = new Blob([arrayBuffer], { type: "audio/mp3" });
-      const blobUrl = URL.createObjectURL(blob);
-      sourceRef.current.src = blobUrl;
+    if (sourceRef.current && audiodata && audioRef.current) {
+      sourceRef.current.src = audiodata;
+      audioRef.current.load();
     }
   }, [audiodata]);
 
-  const handlePlay = async () => {
+  useEffect(() => {
     if (audioRef.current) {
-      try {
-        await audioRef.current.play();
-      } catch (error) {
-        console.log("Playback was not possible");
-      }
-    }
-  };
+      const audio = audioRef.current;
 
-  const handlePause = () => {
+      const handleAudioEnd = () => {
+        setMusicPlaying();
+        console.log("Wiedergabe beendet");
+      };
+
+      if (audio) {
+        audio.addEventListener("ended", handleAudioEnd);
+      }
+      return () => {
+        if (audio) {
+          audio.removeEventListener("ended", handleAudioEnd);
+        }
+      };
+    }
+  }, [setMusicPlaying]);
+
+  const togglePlay = async () => {
     if (audioRef.current) {
-      audioRef.current.pause();
+      if (audioRef.current.paused) {
+        try {
+          await audioRef.current.play();
+        } catch (error) {
+          console.log("Playback was not possible");
+        }
+      } else {
+        audioRef.current.pause();
+      }
     }
   };
 
@@ -59,13 +73,13 @@ const NewsPlayer = (props: {
         previousTrack={() => {
           return;
         }}
-        pauseTrack={handlePause}
+        togglePlay={() => togglePlay()}
         nextTrack={() => {
           return;
         }}
       />
-      <audio ref={audioRef} className="hidden">
-        <source ref={sourceRef} className="hidden" />
+      <audio ref={audioRef} controls hidden autoPlay>
+        <source src={audiodata} ref={sourceRef} type="audio/mpeg" />
       </audio>
     </>
   );

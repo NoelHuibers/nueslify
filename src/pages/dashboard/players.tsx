@@ -5,12 +5,12 @@ const Player = (props: {
   trackname: string;
   artistname: string;
   previousTrack: () => void;
-  pauseTrack: () => void;
+  togglePlay: () => void;
   nextTrack: () => void;
 }) => {
   const [is_paused, setIsPaused] = useState(false);
   const handlePause = () => {
-    props.pauseTrack();
+    props.togglePlay();
     setIsPaused(!is_paused);
   };
 

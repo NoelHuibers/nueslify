@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NewsPlayer from "./newsPlayer";
 import SpotifyPlayer from "./spotifyPlayer";
-import { News, Transition } from "~/utils/GPT/GPT";
+import type { News, Transition } from "~/utils/GPT/GPT";
 import { api } from "~/utils/api";
 
 const Body = () => {
@@ -12,6 +12,11 @@ const Body = () => {
   const [transition, setTransition] = useState<Transition | undefined>(
     undefined,
   );
+
+  const handleMusicPlaying = () => {
+    setMusicPlaying(!musicPlaying);
+    console.log("Music Playing: " + musicPlaying);
+  };
 
   const { mutate, data } = api.mixer.mixer.useMutation();
 
@@ -24,7 +29,6 @@ const Body = () => {
       if (data.musicIds !== undefined) {
         console.log(data.musicIds);
         setMusic(data.musicIds);
-        setMusicPlaying(true);
         setLastSong(false);
       } else if (data.newsSegment !== undefined) {
         setNews(data.newsSegment.content as News);
@@ -44,7 +48,11 @@ const Body = () => {
       {musicPlaying ? (
         <SpotifyPlayer musicIds={music} />
       ) : (
-        <NewsPlayer transition={transition} news={news} />
+        <NewsPlayer
+          transition={transition}
+          news={news}
+          setMusicPlaying={() => handleMusicPlaying()}
+        />
       )}
     </>
   );

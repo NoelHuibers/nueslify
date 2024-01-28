@@ -53,14 +53,7 @@ const mixer = async (currentSegment: Segment | null, accessToken: string) => {
     };
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
 
-    // const transitionSegment = await createStart(musicSegment);
-
-    const transitionSegment: Segment = {
-      segmentKind: "transition",
-      content: {
-        content: "Willkommen bei den guten Nachrichten",
-      },
-    };
+    const transitionSegment = await createStart(musicSegment);
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   }
