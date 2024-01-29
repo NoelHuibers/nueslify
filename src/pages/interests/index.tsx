@@ -95,7 +95,7 @@ export default function Home() {
       });
 
       // Redirect to the dashboard page on success
-      router.push("../dashboard");
+      await router.push("../dashboard");
     } catch (error) {
       console.error("Fehler beim Speichern der Daten:", error);
     }
