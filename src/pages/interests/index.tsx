@@ -5,7 +5,7 @@ import { type ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 //import CountrySelect from "./countries";
-import StateSelect from "./bundesländer";
+import StateSelect from "./bundeslaender";
 import { api } from "~/utils/api";
 import { useRouter } from "next/router";
 
