@@ -72,8 +72,8 @@ export const createStart = async (to: Segment): Promise<Segment> => {
 
   return new Promise<Segment>((resolve, reject) => {
     request(requestMessage)
-      .then(async (answer) => {
-        const speech = await textoSpeech(
+      .then((answer) => {
+        const speech = textoSpeech(
           answer?.message.content ? answer?.message.content : "",
         );
         resolve({
