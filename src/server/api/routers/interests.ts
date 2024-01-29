@@ -9,8 +9,10 @@ export const interestsRouter = createTRPCRouter({
     .input(
       z.object({
         age: z.number().min(18).max(100),
-        country: z.string(),
+        //country: z.string(),
+        state: z.string(),
         musicNewsAmount: z.number().min(0).max(100),
+        ai: z.string(),
         hostStyle: z.string(),
         musicTerm: z.string(),
         //categories: z.string(),
@@ -22,8 +24,10 @@ export const interestsRouter = createTRPCRouter({
         .update(users)
         .set({
           age: input.age,
-          country: input.country,
+          //country: input.country,
+          state: input.state,
           musicNewsBalance: input.musicNewsAmount,
+          ai: input.ai,
           hostStyle: input.hostStyle,
           musicTerm: input.musicTerm,
           //categories: input.categories,

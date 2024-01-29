@@ -4,14 +4,18 @@ import Link from "next/link";
 import { type ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CountrySelect from "./countries";
+//import CountrySelect from "./countries";
+import StateSelect from "./bundesländer";
 import { api } from "~/utils/api";
+import { useRouter } from "next/router";
 
 type FormData = {
   //name: string;
   age: number;
-  country: string;
+  //country: string;
+  state: string;
   musicNewsAmount: number;
+  ai: string;
   hostStyle: string;
   musicTerm: string;
   categories: string[];
@@ -23,12 +27,12 @@ interface Genre {
 }
 
 const genresList: Genre[] = [
-  { name: "Technology", image: "/photos/technology.jpg" },
-  { name: "Science", image: "/photos/science.jpg" },
-  { name: "Business", image: "/photos/business.jpg" },
-  { name: "Entertainment", image: "/photos/entertainment.jpg" },
-  { name: "Health", image: "/photos/health.jpg" },
-  { name: "Sports", image: "/photos/sports.jpg" },
+  { name: "Inland", image: "/photos/inland.jpg" },
+  { name: "Ausland", image: "/photos/ausland.jpg" },
+  { name: "Wirtschaft", image: "/photos/business.jpg" },
+  { name: "Sport", image: "/photos/sports.jpg" },
+  { name: "Investigativ", image: "/photos/investigativ.jpg" },
+  { name: "Faktenfinder", image: "/photos/faktenfinder.jpg" },
 ];
 
 const gptStyleOptions = ["Default", "Slack", "Professional"];
@@ -37,11 +41,13 @@ const musicTermOptions = [
   "Your Recent Music Favorites",
   "All-Time Music Favorites",
 ];
+const aiOptions = ["OpenAI", "Google Gemini"];
 
 export default function Home() {
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
 
   const saveData = api.interests.interests.useMutation();
+  const router = useRouter();
 
   const handleGenreClick = (genre: string) => {
     setSelectedGenres((prevGenres) => {
@@ -59,10 +65,12 @@ export default function Home() {
     //name: z.string().min(2, "Name must be at least 2 characters"),
     age: z
       .number()
-      .min(10, "You must be at least 10 years old")
+      .min(18, "You must be at least 18 years old")
       .max(100, "You must be at most 100 years old"),
-    country: z.string().min(1, "Please select a country"),
+    //country: z.string().min(1, "Please select a country"),
+    state: z.string().min(1, "Please select a state"),
     musicNewsAmount: z.number(),
+    ai: z.string(),
     hostStyle: z.string(),
     musicTerm: z.string(),
     categories: z.array(z.string()),
@@ -74,16 +82,23 @@ export default function Home() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const submitData = (data: FormData) => {
-    console.log("it worked", data);
-    saveData.mutate({
-      age: data.age,
-      country: data.country,
-      musicNewsAmount: data.musicNewsAmount,
-      hostStyle: data.hostStyle,
-      musicTerm: data.musicTerm,
-      //categories: data.categories,
-    });
+  const submitData = async (data: FormData) => {
+    try {
+      console.log("it worked", data);
+      await saveData.mutateAsync({
+        age: data.age,
+        state: data.state,
+        musicNewsAmount: data.musicNewsAmount,
+        ai: data.ai,
+        hostStyle: data.hostStyle,
+        musicTerm: data.musicTerm,
+      });
+
+      // Redirect to the dashboard page on success
+      router.push("../dashboard");
+    } catch (error) {
+      console.error("Fehler beim Speichern der Daten:", error);
+    }
   };
 
   return (
@@ -93,7 +108,7 @@ export default function Home() {
           <div className="">
             <div className="">
               <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
-                Your Profile
+                Profile
               </h1>
 
               {/*
@@ -150,6 +165,7 @@ export default function Home() {
                 </div>
               </div>
 
+              {/*
               <div className="mt-5">
                 <div className="">
                   <label
@@ -176,10 +192,38 @@ export default function Home() {
                   </div>
                 </div>
               </div>
+                    */}
+
+              <div className="mt-5">
+                <div className="">
+                  <label
+                    htmlFor="state"
+                    className="flex items-center text-sm font-medium leading-6 text-white"
+                  >
+                    State
+                    {errors.state && (
+                      <span className="ml-auto flex items-center text-xs text-red-500">
+                        {errors.state.message}
+                      </span>
+                    )}
+                  </label>
+                  <div className="">
+                    <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                      <select
+                        id="stateDropdown"
+                        {...register("state")}
+                        className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                      >
+                        <StateSelect />
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div className="mt-10">
                 <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
-                  Your Balance
+                  Balance
                 </h1>
                 <div className="mt-2">
                   <label
@@ -205,7 +249,36 @@ export default function Home() {
 
             <div className="mt-10">
               <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
-                Your Host
+                AI
+              </h1>
+              <div className="mt-2">
+                <label
+                  htmlFor="ai"
+                  className="block text-sm font-medium leading-6 text-white"
+                >
+                  Select your preffered AI
+                </label>
+                <div className="">
+                  <div className="flex rounded-md  ring-1 ring-inset ring-white focus-within:ring-2 focus-within:ring-inset focus-within:ring-emerald-300 sm:max-w-md">
+                    <select
+                      id="aiDropdown"
+                      {...register("ai")}
+                      className=" dropdown block flex-1 border-0 bg-transparent py-1.5 pl-1 text-white placeholder:text-white/40 focus:ring-0 sm:text-sm sm:leading-6"
+                    >
+                      {aiOptions.map((options) => (
+                        <option key={options} value={options}>
+                          {options}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-10">
+              <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
+                Host
               </h1>
               <div className="mt-2">
                 <label
@@ -234,7 +307,7 @@ export default function Home() {
 
             <div className="mt-10">
               <h1 className="appFont mt-2 text-3xl font-semibold leading-7 text-white">
-                Your Music
+                Music
               </h1>
               <div className="mt-2">
                 <label
@@ -262,7 +335,7 @@ export default function Home() {
             </div>
 
             <h1 className="appFont mt-10 text-3xl font-semibold leading-7 text-white">
-              Your Taste
+              Taste
             </h1>
             <div className="mt-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
@@ -278,7 +351,7 @@ export default function Home() {
               {genresList.map((genre) => (
                 <div
                   key={genre.name}
-                  className={`genre-button ${
+                  className={`genre-button bg-indigo-200 ${
                     selectedGenres.includes(genre.name) ? "selected" : ""
                   }`}
                 >
@@ -296,7 +369,7 @@ export default function Home() {
                     }}
                   />
                   <label htmlFor={genre.name}>
-                    <div className="relative h-32 w-32">
+                    <div className="relative h-32 w-32 bg-indigo-200">
                       <Image
                         src={genre.image}
                         alt={genre.name}
@@ -314,7 +387,7 @@ export default function Home() {
                         </div>
                       )}
                     </div>
-                    <p className="font-bold text-white">{genre.name}</p>
+                    <p className="font-bold text-indigo-900">{genre.name}</p>
                   </label>
                 </div>
               ))}
@@ -325,7 +398,7 @@ export default function Home() {
                 href="../dashboard"
                 className="transition-duration-1000 text-xl font-bold leading-6 text-white"
               >
-                Cancel
+                Back
               </Link>
               <button
                 type="submit"
@@ -448,7 +521,6 @@ export default function Home() {
         }
 
         .genre-button {
-          background-color: #ccc;
           border-radius: 6px;
           margin: 6px;
           padding: 4px;
