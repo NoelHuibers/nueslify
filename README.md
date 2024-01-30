@@ -23,8 +23,8 @@ npm run dev
 - [x] PWA Configuration
 - [x] Datenbankanbindung (Userdata)
 - [x] Token aktualisieren
-- [ ] Mixer Frontend
-- [ ] Skip/Back Button
+- [x] Mixer Frontend
+- [x] Skip/Back Button
 
 - [ ] Auth Signup
 
@@ -33,7 +33,7 @@ npm run dev
 - [x] Ansprechen der Spotify API Bsp.: Letzten Song abspielen (Lieblingssongs Playlist spotify)
 - [x] URIs der Playlists bekommen
 - [x] TTS Research (Andere Provider/Günstigere Alternativen/Lokal)
-- [ ] LLMs tauschen (Settings) LangChain
+- [x] LLMs tauschen (Settings) LangChain
 
 **Anton**
 
@@ -45,7 +45,7 @@ npm run dev
 - [x] News herbekommen (Webcrawlen/API): Irgendwas
 - [x] Text To Speech
 - [x] Init Buttons
-- [ ] Interests in Datenbank speichern
+- [x] Interests in Datenbank speichern
 - [ ] Video
 
 **Gabriel**
