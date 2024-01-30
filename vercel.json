@@ -6,7 +6,7 @@
     }
   ],
   "functions": {
-    "pages/api/**/*": {
+    "api/*.js": {
       "maxDuration": 300
     }
   }
