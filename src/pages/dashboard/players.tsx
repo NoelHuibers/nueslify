@@ -16,8 +16,8 @@ const Player = (props: {
 
   return (
     <>
-      <div className="left-0 top-0 flex w-screen select-none items-center justify-center space-y-8">
-        <div className="flex min-w-max max-w-max select-none flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
+      <div className="left-0 top-0 flex w-screen items-center justify-center space-y-8">
+        <div className="flex min-w-max max-w-max flex-col justify-center rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
           <div className="h-80 w-80">{props.image}</div>
           <div
             className="overflow-hidden whitespace-nowrap"
