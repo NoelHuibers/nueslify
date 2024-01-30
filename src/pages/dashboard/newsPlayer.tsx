@@ -1,19 +1,27 @@
 // NewsPlayer.js
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { News, Transition } from "~/utils/GPT/GPT";
 import Player from "./players";
 
 const NewsPlayer = (props: {
-  transition: Transition | undefined;
+  transition: Transition;
   news: News | undefined;
   setMusicPlaying: () => void;
+  refetchMusic: () => void;
+  currentState: number;
+  setCurrentState: (state: number) => void;
 }) => {
-  const { transition, news, setMusicPlaying } = props;
-  const audiodata = transition?.content;
-
+  const { setMusicPlaying, refetchMusic, setCurrentState } = props;
+  const [audiodata, setAudioData] = useState<string | null>();
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
+
+  useEffect(() => {
+    if (props.transition) {
+      setAudioData(props.transition.content);
+    }
+  }, [props.transition]);
 
   useEffect(() => {
     if (sourceRef.current && audiodata && audioRef.current) {
@@ -27,8 +35,18 @@ const NewsPlayer = (props: {
       const audio = audioRef.current;
 
       const handleAudioEnd = () => {
-        setMusicPlaying();
-        console.log("Wiedergabe beendet");
+        if (props.currentState === 0) {
+          setCurrentState(1);
+          console.log("Wiedergabe der Transition zu Music beendet");
+          setMusicPlaying();
+        } else if (props.currentState === 1 && props.news) {
+          setCurrentState(2);
+          console.log("Wiedergabe der Transition zu News beendet");
+          setAudioData(props.news.content);
+        } else if (props.currentState === 2) {
+          setCurrentState(0);
+          refetchMusic();
+        }
       };
 
       if (audio) {

@@ -4,21 +4,21 @@ import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
-export function textoSpeech(text: string) {
-  // const mp3 = await openai.audio.speech.create({
-  //   model: "tts-1",
-  //   voice: "fable",
-  //   input: text,
-  // });
+export async function textoSpeech(text: string, name: "transition" | "news") {
+  const mp3 = await openai.audio.speech.create({
+    model: "tts-1",
+    voice: "fable",
+    input: text,
+  });
 
-  // const buffer = Buffer.from(await mp3.arrayBuffer());
+  const buffer = Buffer.from(await mp3.arrayBuffer());
 
-  const name = "Test3.mp3";
+  const randomNumber = Math.floor(Math.random() * 10000000);
 
-  // uploadBufferToS3("nueslify", name, buffer)
-  //   .then((response) => console.log("Upload erfolgreich:", response))
-  //   .catch((error) => console.error("Fehler beim Upload:", error));
-  return "https://nueslify.s3.eu-central-1.amazonaws.com/" + name;
+  const filename = name + "-" + Date.now() + randomNumber + ".mp3";
+
+  await uploadBufferToS3("nueslify", filename, buffer);
+  return "https://nueslify.s3.eu-central-1.amazonaws.com/" + filename;
 }
 
 const s3 = new S3Client([
@@ -44,7 +44,7 @@ async function uploadBufferToS3(
 
   try {
     const response = await s3.send(new PutObjectCommand(params));
-    console.log("Datei erfolgreich hochgeladen:", response);
+    console.log("Datei erfolgreich hochgeladen");
     return response;
   } catch (error) {
     console.error("Fehler beim Hochladen der Datei:", error);

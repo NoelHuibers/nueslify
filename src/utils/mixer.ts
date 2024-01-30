@@ -77,13 +77,14 @@ const getContentForNewMusicSegment = async (accessToken: string) => {
     const music: Music = {
       artistNames: song.artistNames ? song.artistNames : [],
       id: song.id,
+      title: song.name,
     };
     return music;
   });
 };
 
 const getSongs = async (accessToken: string) => {
-  const count = Math.floor(Math.random() * 4 + 1);
+  const count = Math.floor(Math.random() * 4 + 2);
   const topTracks = await getTopTracks(accessToken);
 
   if (topTracks.length < count) {

@@ -7,7 +7,7 @@ import { api } from "~/utils/api";
 const Body = () => {
   const [musicPlaying, setMusicPlaying] = useState(false);
   const [music, setMusic] = useState<string[] | undefined>(undefined);
-  const [lastSong, setLastSong] = useState(true);
+  const [currentState, setCurrentState] = useState(0);
   const [news, setNews] = useState<News | undefined>(undefined);
   const [transition, setTransition] = useState<Transition | undefined>(
     undefined,
@@ -29,7 +29,6 @@ const Body = () => {
       if (data.musicIds !== undefined) {
         console.log(data.musicIds);
         setMusic(data.musicIds);
-        setLastSong(false);
       } else if (data.newsSegment !== undefined) {
         setNews(data.newsSegment.content as News);
       }
@@ -37,14 +36,16 @@ const Body = () => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (lastSong) {
-      // mixer.mutate(mixer.data);
-    }
-  }, [lastSong]);
-
-  const refetch = (title: string, artistnames: string[]) => {
+  const refetchNews = (title: string, artistnames: string[]) => {
+    setCurrentState(1);
+    console.log(currentState);
     mutate({ title: title, artistNames: artistnames });
+  };
+
+  const refetchMusic = () => {
+    mutate({
+      newscontent: "My news",
+    });
   };
 
   return (
@@ -53,14 +54,21 @@ const Body = () => {
         <SpotifyPlayer
           musicIds={music}
           setMusicPlaying={() => handleMusicPlaying()}
-          refetchNews={(title, artistnames) => refetch(title, artistnames)}
+          refetchNews={(title, artistnames) => refetchNews(title, artistnames)}
         />
       ) : (
-        <NewsPlayer
-          transition={transition}
-          news={news}
-          setMusicPlaying={() => handleMusicPlaying()}
-        />
+        <>
+          {transition ? (
+            <NewsPlayer
+              currentState={currentState}
+              setCurrentState={(state) => setCurrentState(state)}
+              transition={transition}
+              news={news}
+              setMusicPlaying={() => handleMusicPlaying()}
+              refetchMusic={() => refetchMusic()}
+            />
+          ) : null}
+        </>
       )}
     </>
   );

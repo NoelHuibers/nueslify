@@ -39,6 +39,7 @@ const Spotifyplayer = (props: {
   useEffect(() => {
     if (props.musicIds !== undefined) {
       setSongAmount(props.musicIds.length);
+      console.log("Song amount set to", props.musicIds.length);
     }
   }, [props.musicIds]);
 

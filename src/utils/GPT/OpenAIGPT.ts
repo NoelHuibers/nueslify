@@ -30,15 +30,24 @@ export const createTransition = async (
       segmentDescription(to) +
       " . Create a suitable and short transition between the two segments.",
   };
-  return request(requestMessage).then((answer) => {
-    return {
-      segmentKind: "transition",
-      content: {
-        content: answer?.message.content
-          ? answer?.message.content
-          : "Next up: " + segmentDescription(to),
-      },
-    };
+
+  return new Promise<Segment>((resolve, reject) => {
+    request(requestMessage)
+      .then(async (answer) => {
+        const speech = await textoSpeech(
+          answer?.message.content ? answer?.message.content : "",
+          "transition",
+        );
+        resolve({
+          segmentKind: "transition",
+          content: {
+            content: speech,
+          },
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
@@ -49,16 +58,23 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
     content: "Create a summary for the following news: " + news,
   };
 
-  return request(requestMessage).then((answer) => {
-    console.log("received answer:", answer);
-    return {
-      segmentKind: "news",
-      content: {
-        content: answer?.message.content
-          ? answer?.message.content
-          : "News are currently not available",
-      },
-    };
+  return new Promise<Segment>((resolve, reject) => {
+    request(requestMessage)
+      .then(async (answer) => {
+        const speech = await textoSpeech(
+          answer?.message.content ? answer?.message.content : "",
+          "news",
+        );
+        resolve({
+          segmentKind: "news",
+          content: {
+            content: speech,
+          },
+        });
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 };
 
@@ -67,14 +83,16 @@ export const createStart = async (to: Segment): Promise<Segment> => {
     role: "user",
     content:
       "RadioGPT starts to air and you are the moderator. First, introduce yourself and the station and then create a suitable and short transition to " +
-      segmentDescription(to),
+      segmentDescription(to) +
+      "use a maximum of 3 sentences.",
   };
 
   return new Promise<Segment>((resolve, reject) => {
     request(requestMessage)
-      .then((answer) => {
-        const speech = textoSpeech(
+      .then(async (answer) => {
+        const speech = await textoSpeech(
           answer?.message.content ? answer?.message.content : "",
+          "transition",
         );
         resolve({
           segmentKind: "transition",
