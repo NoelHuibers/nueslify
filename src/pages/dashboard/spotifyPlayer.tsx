@@ -205,9 +205,7 @@ const Spotifyplayer = (props: {
   } else {
     return (
       <Player
-        image={
-          <div className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90" />
-        }
+        image={null}
         trackname="Loading"
         artistname="Loading"
         previousTrack={() => {
