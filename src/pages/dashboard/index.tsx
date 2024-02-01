@@ -17,7 +17,7 @@ export default function Home() {
     return null;
   }
   return (
-    <main className="h-screen w-screen bg-gradient-to-b from-zinc-900 to-indigo-950">
+    <main className="flex h-screen w-screen flex-col bg-gradient-to-b from-zinc-900 to-indigo-950">
       <Navbar />
       <Body />
     </main>
