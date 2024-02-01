@@ -5,6 +5,7 @@ import type { News, Transition } from "~/utils/GPT/GPT";
 import { api } from "~/utils/api";
 import { Skeleton } from "~/components/ui/skeleton";
 import { Card } from "~/components/ui/card";
+import Player from "./players";
 
 const Body = () => {
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -70,19 +71,20 @@ const Body = () => {
               refetchMusic={() => refetchMusic()}
             />
           ) : (
-            <div className="left-0 top-0 flex w-screen select-none items-center justify-center space-y-8">
-              <Card className="flex min-w-max max-w-max flex-col justify-center p-8 align-middle">
-                <Skeleton className="h-80 w-80" />
-                <div
-                  className="overflow-hidden whitespace-nowrap"
-                  style={{ width: 300 }}
-                >
-                  <p className="mb-2 mt-0 select-none truncate text-xl font-bold tracking-tight text-slate-50" />
-                  <p className="mb-2 mt-0 select-none truncate text-xl font-bold tracking-tight text-slate-50" />
-                </div>
-                <div className="control-container m-5 flex items-center justify-center space-x-4"></div>
-              </Card>
-            </div>
+            <Player
+              image={null}
+              trackname="Loading"
+              artistname="Loading"
+              previousTrack={() => {
+                return;
+              }}
+              togglePlay={() => {
+                return;
+              }}
+              nextTrack={() => {
+                return;
+              }}
+            />
           )}
         </>
       )}

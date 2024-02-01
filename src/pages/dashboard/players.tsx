@@ -3,9 +3,10 @@ import { FaPause } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import { BsFillSkipBackwardFill } from "react-icons/bs";
 import { BsFillSkipForwardFill } from "react-icons/bs";
+import { Skeleton } from "~/components/ui/skeleton";
 
 const Player = (props: {
-  image: React.JSX.Element;
+  image: React.JSX.Element | null;
   trackname: string;
   artistname: string;
   previousTrack: () => void;
@@ -22,7 +23,11 @@ const Player = (props: {
     <>
       <div className="left-0 top-0 flex w-screen items-center justify-center">
         <div className="flex w-max flex-col justify-center space-y-4 rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
-          <div className="h-80 w-80">{props.image}</div>
+          {props.image ? (
+            <div className="h-80 w-80">{props.image}</div>
+          ) : (
+            <Skeleton className="h-80 w-80" />
+          )}
           <div className="overflow-hidden whitespace-nowrap">
             <div className="select-none truncate text-2xl font-bold tracking-tight text-slate-50">
               {props.trackname}
