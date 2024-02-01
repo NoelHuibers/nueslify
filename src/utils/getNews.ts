@@ -16,14 +16,7 @@ type NewsItem = {
   detailsContent?: string;
 };
 
-const ressorts = [
-  "inland",
-  "ausland",
-  "wirtschaft",
-  "sport",
-  "video",
-  "investigativ",
-];
+const ressorts = ["inland", "ausland", "wirtschaft", "sport", "investigativ"];
 
 async function getNews(): Promise<NewsItem[]> {
   const newsPromises = ressorts.map(getNewsForRessortAndAllRegions);
