@@ -7,8 +7,8 @@ import { Skeleton } from "~/components/ui/skeleton";
 
 const Player = (props: {
   image: React.JSX.Element | null;
-  trackname: string;
-  artistname: string;
+  trackname: string | null;
+  artistname: string | null;
   previousTrack: () => void;
   togglePlay: () => void;
   nextTrack: () => void;
@@ -28,13 +28,21 @@ const Player = (props: {
           ) : (
             <Skeleton className="h-80 w-80" />
           )}
-          <div className="overflow-hidden whitespace-nowrap">
-            <div className="select-none truncate text-2xl font-bold tracking-tight text-slate-50">
-              {props.trackname}
-            </div>
-            <div className="select-none truncate text-xl font-bold tracking-tight text-slate-50">
-              {props.artistname}
-            </div>
+          <div className="space-y-1 overflow-hidden whitespace-nowrap">
+            {props.trackname ? (
+              <div className="select-none truncate text-2xl font-bold tracking-tight text-slate-50">
+                {props.trackname}
+              </div>
+            ) : (
+              <Skeleton className="h-8 w-40" />
+            )}
+            {props.trackname ? (
+              <div className="select-none truncate text-2xl font-bold tracking-tight text-slate-50">
+                {props.artistname}
+              </div>
+            ) : (
+              <Skeleton className="h-8 w-32" />
+            )}
           </div>
           <div className="flex items-center justify-center space-x-6 p-4 text-slate-50">
             <button onClick={props.previousTrack}>

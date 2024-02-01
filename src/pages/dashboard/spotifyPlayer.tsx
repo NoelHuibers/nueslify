@@ -206,8 +206,8 @@ const Spotifyplayer = (props: {
     return (
       <Player
         image={null}
-        trackname="Loading"
-        artistname="Loading"
+        trackname={null}
+        artistname={null}
         previousTrack={() => {
           return;
         }}
