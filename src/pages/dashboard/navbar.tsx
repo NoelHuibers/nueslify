@@ -10,12 +10,12 @@ const Navbar = () => {
       <div className="flex space-x-2">
         <Link
           href="/interests"
-          className="duration-30 rounded-xl bg-indigo-200 px-1 py-1 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
+          className="duration-30 rounded-lg bg-indigo-200 px-1 py-1 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
         >
           <IoIosSettings size={48} />
         </Link>
         <button
-          className="duration-30 rounded-xl bg-indigo-200 py-1 pl-1.5 pr-0.5 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
+          className="duration-30 rounded-lg bg-indigo-200 py-1 pl-1.5 pr-0.5 text-xl font-bold text-indigo-900 transition hover:bg-emerald-300"
           onClick={async () => {
             await signOut({ callbackUrl: "/" });
           }}
