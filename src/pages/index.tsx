@@ -17,7 +17,7 @@ export default function Home() {
     return null;
   }
   return (
-    <main className="flex h-screen flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
+    <main className="flex h-screen w-screen flex-col items-center justify-center bg-gradient-to-b from-zinc-900 to-indigo-950">
       <div className={styles.appName}>Nueslify</div>
       <div className="flex flex-row space-x-8">
         <Link
