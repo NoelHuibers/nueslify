@@ -4,6 +4,7 @@ import SpotifyPlayer from "./spotifyPlayer";
 import type { News, Transition } from "~/utils/GPT/GPT";
 import { api } from "~/utils/api";
 import Player from "./players";
+import SpotifyButton from "./sportifyButton";
 
 const Body = () => {
   const [musicPlaying, setMusicPlaying] = useState(false);
@@ -52,11 +53,14 @@ const Body = () => {
   return (
     <>
       {musicPlaying ? (
-        <SpotifyPlayer
-          musicIds={music}
-          setMusicPlaying={() => handleMusicPlaying()}
-          refetchNews={(title, artistnames) => refetchNews(title, artistnames)}
-        />
+        <div>
+          <SpotifyPlayer
+            musicIds={music}
+            setMusicPlaying={() => handleMusicPlaying()}
+            refetchNews={(title, artistnames) => refetch(title, artistnames)}
+          />
+          <SpotifyButton />
+        </div>
       ) : (
         <>
           {transition ? (
