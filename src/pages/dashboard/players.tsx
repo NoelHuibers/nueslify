@@ -21,39 +21,43 @@ const Player = (props: {
 
   return (
     <>
-      <div className="flex h-full w-full items-center justify-center">
-        <div className="p-8">
-          <div className="flex w-max flex-col justify-center space-y-4 rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
+      <div className="flex items-center justify-center">
+        <div className="p-2">
+          <div className="flex w-min flex-col justify-center space-y-4 rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
             {props.image ? (
-              <div className="h-80 w-80">{props.image}</div>
+              <div className="h-60 w-60 md:h-80 md:w-80">{props.image}</div>
             ) : (
-              <Skeleton className="h-80 w-80" />
+              <Skeleton className="h-60 w-60 md:h-80 md:w-80" />
             )}
             <div className="space-y-1 overflow-hidden whitespace-nowrap">
               {props.trackname ? (
-                <div className="select-none truncate text-2xl font-bold tracking-tight text-slate-50">
+                <div className="select-none truncate text-xl font-bold tracking-tight text-slate-50 md:text-2xl">
                   {props.trackname}
                 </div>
               ) : (
-                <Skeleton className="h-8 w-40" />
+                <Skeleton className="w-30 h-6 md:h-8 md:w-40" />
               )}
               {props.trackname ? (
-                <div className="select-none truncate text-2xl font-bold tracking-tight text-slate-50">
+                <div className="select-none truncate text-xl font-bold tracking-tight text-slate-50 md:text-2xl">
                   {props.artistname}
                 </div>
               ) : (
-                <Skeleton className="h-8 w-32" />
+                <Skeleton className="h-6 w-24 md:h-8 md:w-32" />
               )}
             </div>
             <div className="flex items-center justify-center space-x-6 p-4 text-slate-50">
               <button onClick={props.previousTrack}>
-                <BsFillSkipBackwardFill size={64} />
+                <BsFillSkipBackwardFill className="h-12 w-12 md:h-16 md:w-16" />
               </button>
               <button onClick={handlePause}>
-                {is_paused ? <FaPlay size={48} /> : <FaPause size={48} />}
+                {is_paused ? (
+                  <FaPlay className="h-8 w-8 md:h-12 md:w-12" />
+                ) : (
+                  <FaPause className="h-8 w-8 md:h-12 md:w-12" />
+                )}
               </button>
               <button onClick={props.nextTrack}>
-                <BsFillSkipForwardFill size={64} />
+                <BsFillSkipForwardFill className="h-12 w-12 md:h-16 md:w-16" />
               </button>
             </div>
           </div>

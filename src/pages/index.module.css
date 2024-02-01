@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 .appName{
-  @apply text-9xl font-black p-12 bg-gradient-to-r from-amber-500 to-emerald-500 text-transparent bg-clip-text;
+  @apply text-6xl md:text-9xl font-black p-12 bg-gradient-to-r from-amber-500 to-emerald-500 text-transparent bg-clip-text;
   font-family: 'Pacifico', sans-serif, cursive;
 }
