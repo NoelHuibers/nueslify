@@ -5,7 +5,7 @@ import { IoLogOut } from "react-icons/io5";
 
 const Navbar = () => {
   return (
-    <nav className="flex h-fit w-full items-center justify-between px-8 py-4">
+    <nav className="flex h-fit w-full items-center justify-between px-2 py-2">
       <h1 className="text-2xl text-slate-50">Nueslify</h1>
       <div className="flex space-x-2">
         <Link
