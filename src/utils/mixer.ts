@@ -9,6 +9,7 @@ import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
 
 import runLLM from "~/utils/GPT/langchain";
+import { desc, eq } from "drizzle-orm";
 
 const mixer = async (
   title: string | undefined,
@@ -49,7 +50,11 @@ const mixer = async (
     };
 
     const newsSegment = await createNewsSummary(
-      newsContent?.topline ? newsContent?.topline : "",
+      newsContent
+        ? newsContent.details
+          ? newsContent.details
+          : newsContent.firstline
+        : "",
     );
     const transitionSegment = await createTransition(
       currentSegment,
@@ -117,9 +122,25 @@ function getRandom<T>(arr: T[], n: number): T[] {
 }
 
 const getNews = async () => {
-  const newsS = await db.select().from(news);
-  const randomNews = newsS[Math.floor(Math.random() * newsS.length)];
-  return randomNews;
+  const lastId = await db
+    .select({
+      id: news.id,
+    })
+    .from(news)
+    .orderBy(desc(news.id))
+    .limit(1);
+  const lastIdNumber = lastId[0] ? lastId[0].id : 1;
+  const number = getRandomNumber(lastIdNumber);
+  const randomNews = await db
+    .select()
+    .from(news)
+    .where(eq(news.id, number))
+    .limit(1);
+  return randomNews[0];
+};
+
+const getRandomNumber = (maxId: number): number => {
+  return Math.floor(Math.random() * maxId) + 1;
 };
 
 export default mixer;

@@ -3,8 +3,6 @@ import NewsPlayer from "./newsPlayer";
 import SpotifyPlayer from "./spotifyPlayer";
 import type { News, Transition } from "~/utils/GPT/GPT";
 import { api } from "~/utils/api";
-import { Skeleton } from "~/components/ui/skeleton";
-import { Card } from "~/components/ui/card";
 import Player from "./players";
 
 const Body = () => {

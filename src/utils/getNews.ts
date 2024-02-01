@@ -1,8 +1,9 @@
-import axios from 'axios';
-import type { AxiosResponse } from 'axios';
+import axios from "axios";
+import type { AxiosResponse } from "axios";
 
 // Define the type for the news item based on the provided JSON structure
 type NewsItem = {
+  externalId: string;
   firstSentence: string;
   title: string;
   shareURL: string;
@@ -20,20 +21,23 @@ type TagesschauResponse = {
 async function getNews(): Promise<NewsItem[]> {
   try {
     const response: AxiosResponse<TagesschauResponse> = await axios.get(
-      'https://www.tagesschau.de/api2/news/?regions=2&ressort=ausland',
+      "https://www.tagesschau.de/api2/news/?regions=2&ressort=ausland",
     );
 
-    const result = response.data.news.map(({ firstSentence, title, shareURL, ressort, details }) => ({
-      firstSentence,
-      title,
-      shareURL,
-      ressort,
-      details,
-    }));
+    const result = response.data.news.map(
+      ({ firstSentence, title, shareURL, ressort, details, externalId }) => ({
+        externalId,
+        firstSentence,
+        title,
+        shareURL,
+        ressort,
+        details,
+      }),
+    );
 
     // Fetch details for each news item
-    const detailsPromises = result.map(item =>
-      item.details ? axios.get(item.details) : Promise.resolve(null)
+    const detailsPromises = result.map((item) =>
+      item.details ? axios.get(item.details) : Promise.resolve(null),
     );
 
     const detailsResponses = await Promise.all(detailsPromises);
@@ -42,19 +46,17 @@ async function getNews(): Promise<NewsItem[]> {
     // Process and append the detailed content to the news items
     const newsWithDetails = result.map((item, index) => {
       const detailsContent = detailsResponses[index]?.data.content
-        ?.filter((content: { type: string }) => content.type === 'text')
+        ?.filter((content: { type: string }) => content.type === "text")
         .map((content: { value: string }) => content.value)
         .filter((value: string) => !/<[^>]+>|href=/.test(value)) // Exclude HTML tags and hrefs
-        .join('');
+        .join("");
       return { ...item, detailsContent }; // Append the processed details to each item
     });
     /* eslint-enable*/
 
-
     return newsWithDetails;
-
   } catch (error) {
-    console.error('Error fetching news:', error);
+    console.error("Error fetching news:", error);
     throw error;
   }
 }

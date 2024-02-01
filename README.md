@@ -38,7 +38,7 @@ npm run dev
 **Anton**
 
 - [ ] News speichern
-- [ ] Responsivness Frontend
+- [x] Responsivness Frontend
 
 **Anton & Peter**
 

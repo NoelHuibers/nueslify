@@ -1,7 +1,6 @@
 import { signIn, useSession } from "next-auth/react";
 import styles from "./index.module.css";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Home() {
