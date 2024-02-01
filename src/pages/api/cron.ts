@@ -24,6 +24,7 @@ export default async function handler(
       ) {
         await db.insert(news).values({
           externalId: item.externalId,
+          regionId: item.regionId,
           ressort: item.ressort ? item.ressort : null,
           title: item.title,
           shareurl: item.shareURL,

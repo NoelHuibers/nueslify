@@ -110,15 +110,17 @@ export const news = mysqlTable(
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
     externalId: varchar("externalId", { length: 255 }).notNull(),
+    regionId: int("regionId").notNull(),
     ressort: varchar("ressort", { length: 255 }),
     title: varchar("title", { length: 255 }).notNull(),
     shareurl: varchar("shareurl", { length: 255 }).notNull(),
-    firstline: varchar("firstline", { length: 255 }).notNull(),
+    firstline: varchar("firstline", { length: 255 }),
     details: text("details"),
   },
   (news) => ({
     externalIdIndex: index("externalId_idx").on(news.externalId),
     ressortIndex: index("ressort_idx").on(news.ressort),
+    regionId: index("regionId_idx").on(news.regionId),
     title: index("topline_idx").on(news.title),
     shareurlIndex: index("shareurl_idx").on(news.shareurl),
     firstlineIndex: index("firstline_idx").on(news.firstline),
