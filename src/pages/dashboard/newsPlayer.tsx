@@ -91,8 +91,8 @@ const NewsPlayer = (props: {
       <Player
         image={
           <Image
-            src="/cover.png"
-            alt="Album cover"
+            src="/icon-512x512.png"
+            alt="Nueslify Icon"
             width={320}
             height={320}
             className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"

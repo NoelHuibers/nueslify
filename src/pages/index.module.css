@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
-@import url("https://fonts.googleapis.com/css2?family=Dosis&display=swap");
 
 .appName{
   @apply text-9xl font-black p-12 bg-gradient-to-r from-amber-500 to-emerald-500 text-transparent bg-clip-text;
