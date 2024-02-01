@@ -21,7 +21,7 @@ const Player = (props: {
 
   return (
     <>
-      <div className="left-0 top-0 flex w-screen items-center justify-center">
+      <div className="left-0 top-0 flex w-screen items-center justify-center p-8">
         <div className="flex w-max flex-col justify-center space-y-4 rounded-lg bg-slate-50 bg-opacity-10 p-8 align-middle shadow drop-shadow-2xl backdrop-blur-md">
           {props.image ? (
             <div className="h-80 w-80">{props.image}</div>
