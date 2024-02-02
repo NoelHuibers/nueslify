@@ -1,36 +1,41 @@
 export interface GPT {
-    createTransition(from: Segment, to: Segment): Promise<Segment>;
-    createNewsSummary(news: string): Promise<Segment>;
+  createTransition(from: Segment, to: Segment): Promise<Segment>;
+  createNewsSummary(news: string): Promise<Segment>;
 }
 
 export type Segment = {
-    segmentKind: 'music' | 'news' | 'transition';
-    content: Music[] | News | Transition
-}
+  segmentKind: "music" | "news" | "transition";
+  content: Music[] | News | Transition;
+};
 
 export type Music = {
-    title?: string,
-    artistNames: string[],
-    id: string
-}
+  title?: string;
+  artistNames: string[];
+  id: string;
+};
 
 export type News = {
-    content: string
-}
+  content: string;
+};
 
 export type Transition = {
-    content: string
-}
+  content: string;
+};
 
 function isMusic(segment: Segment): segment is Segment & { content: Music[] } {
-    return segment.segmentKind === "music";
+  return segment.segmentKind === "music";
 }
 
 export function getMusicContent(segment: Segment): Music[] | null {
-    if (isMusic(segment)) {
-        return segment.content as Music[];
-    }
-    return null;
+  if (isMusic(segment)) {
+    return segment.content as Music[];
+  }
+  return null;
 }
 
-export type Interest = 'technology' | 'science' | 'business' | 'entertainment' | 'health' | 'sports'
+export type Interest =
+  | "inland"
+  | "ausland"
+  | "wirtschaft"
+  | "investigativ"
+  | "sport";

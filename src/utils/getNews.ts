@@ -24,15 +24,17 @@ async function getNews(): Promise<NewsItem[]> {
   const uniqueNewsItems = newsForAllRessortsAndRegions.flat();
 
   const detailsPromises = uniqueNewsItems.map((item) =>
-    item.details ? axios.get(item.details) : Promise.resolve(),
+    item.details ? getDetails(item.details) : Promise.resolve(),
   );
   const detailsResponses = await Promise.all(detailsPromises);
 
   const newsWithDetails = uniqueNewsItems.map((item, index) => {
-    const detailsContent = detailsResponses[index]?.data.content
-      ?.filter((content: { type: string }) => content.type === "text")
+    const detailsContent = detailsResponses[index]?.content
+      ?.filter((content: { type: string }) => {
+        return ["text", "headline"].includes(content.type);
+      })
       .map((content: { value: string }) => content.value)
-      .filter((value: string) => !/<[^>]+>|href=/.test(value))
+      .filter((value: string) => !/<[^>]+>/.test(value))
       .join("");
     return { ...item, detailsContent };
   });
@@ -61,4 +63,29 @@ async function getNewsForRessortAndAllRegions(
 
   return uniqueNewsItems;
 }
+
+type DetailsContent = {
+  content: {
+    type: ContentType;
+    value: string;
+  }[];
+};
+
+type ContentType =
+  | "text"
+  | "video"
+  | "box"
+  | "headline"
+  | "related"
+  | "audio"
+  | "htmlEmbed"
+  | "image_gallery"
+  | "socialmedia"
+  | "quotation"
+  | "webview";
+
+const getDetails = async (url: string) => {
+  const response: AxiosResponse<DetailsContent> = await axios.get(url);
+  return response.data;
+};
 export default getNews;

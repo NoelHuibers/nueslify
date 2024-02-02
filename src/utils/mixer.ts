@@ -1,4 +1,9 @@
-import { type Segment, getMusicContent, type Music } from "~/utils/GPT/GPT";
+import {
+  type Segment,
+  getMusicContent,
+  type Music,
+  Interest,
+} from "~/utils/GPT/GPT";
 import {
   createTransition,
   createNewsSummary,
@@ -36,7 +41,7 @@ const mixer = async (
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   } else if (artistNames && title) {
-    const newsContent = await getNews();
+    const newsContent = await getNews(["sport"]);
 
     const currentSegment: Segment = {
       segmentKind: "music",
@@ -54,6 +59,8 @@ const mixer = async (
         ? newsContent.details
           ? newsContent.details
           : newsContent.firstline
+            ? newsContent.firstline
+            : ""
         : "",
     );
     const transitionSegment = await createTransition(
@@ -121,22 +128,22 @@ function getRandom<T>(arr: T[], n: number): T[] {
   return result;
 }
 
-const getNews = async () => {
-  const lastId = await db
-    .select({
-      id: news.id,
-    })
-    .from(news)
-    .orderBy(desc(news.id))
-    .limit(1);
-  const lastIdNumber = lastId[0] ? lastId[0].id : 1;
-  const number = getRandomNumber(lastIdNumber);
-  const randomNews = await db
-    .select()
-    .from(news)
-    .where(eq(news.id, number))
-    .limit(1);
-  return randomNews[0];
+const getNews = async (ressort: Interest[]) => {
+  const randomNewsAll = await Promise.all(
+    ressort.map(async (ressort) => {
+      return await db
+        .select()
+        .from(news)
+        .where(eq(news.ressort, ressort))
+        .orderBy(desc(news.id))
+        .limit(20);
+    }),
+  );
+
+  const randomNews = randomNewsAll.flat();
+
+  const number = getRandomNumber(randomNews.length);
+  return randomNews[number];
 };
 
 const getRandomNumber = (maxId: number): number => {
