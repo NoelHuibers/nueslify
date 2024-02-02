@@ -16,6 +16,26 @@ type NewsItem = {
   detailsContent?: string;
 };
 
+type DetailsContent = {
+  content: {
+    type: ContentType;
+    value: string;
+  }[];
+};
+
+type ContentType =
+  | "text"
+  | "video"
+  | "box"
+  | "headline"
+  | "related"
+  | "audio"
+  | "htmlEmbed"
+  | "image_gallery"
+  | "socialmedia"
+  | "quotation"
+  | "webview";
+
 const ressorts = ["inland", "ausland", "wirtschaft", "sport", "investigativ"];
 
 async function getNews(): Promise<NewsItem[]> {
@@ -63,26 +83,6 @@ async function getNewsForRessortAndAllRegions(
 
   return uniqueNewsItems;
 }
-
-type DetailsContent = {
-  content: {
-    type: ContentType;
-    value: string;
-  }[];
-};
-
-type ContentType =
-  | "text"
-  | "video"
-  | "box"
-  | "headline"
-  | "related"
-  | "audio"
-  | "htmlEmbed"
-  | "image_gallery"
-  | "socialmedia"
-  | "quotation"
-  | "webview";
 
 const getDetails = async (url: string) => {
   const response: AxiosResponse<DetailsContent> = await axios.get(url);
