@@ -43,10 +43,17 @@ type SpotifyResponse = {
   previous: string | null;
 };
 
-async function getTopTracks(accessToken: string): Promise<Track[]> {
+export type trackRange = "short_term" | "medium_term" | "long_term";
+
+async function getTopTracks(
+  accessToken: string,
+  range: trackRange,
+): Promise<Track[]> {
   try {
     const response: AxiosResponse<SpotifyResponse> = await axios.get(
-      "https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=10",
+      "https://api.spotify.com/v1/me/top/tracks?time_range=" +
+        range +
+        "&limit=25",
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

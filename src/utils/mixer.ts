@@ -9,7 +9,7 @@ import {
   createNewsSummary,
   createStart,
 } from "./GPT/OpenAIGPT";
-import getTopTracks from "~/utils/getTopTracks";
+import getTopTracks, { trackRange } from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
 import type { User } from "./getUserData";
@@ -36,6 +36,7 @@ const mixer = async (
       content: await getContentForNewMusicSegment(
         accessToken,
         user.musicNewsBalance ? user.musicNewsBalance : 50,
+        user.musicTerm,
       ),
     };
 
@@ -86,6 +87,7 @@ const mixer = async (
       content: await getContentForNewMusicSegment(
         accessToken,
         user.musicNewsBalance ? user.musicNewsBalance : 50,
+        user.musicTerm,
       ),
     };
 
@@ -100,8 +102,10 @@ const mixer = async (
 const getContentForNewMusicSegment = async (
   accessToken: string,
   musicValue: number,
+  range: string,
 ) => {
-  const nextSongs = await getSongs(accessToken, musicValue);
+  const userRange = getRange(range);
+  const nextSongs = await getSongs(accessToken, musicValue, userRange);
   return nextSongs.map((song) => {
     const music: Music = {
       artistNames: song.artistNames ? song.artistNames : [],
@@ -112,9 +116,20 @@ const getContentForNewMusicSegment = async (
   });
 };
 
-const getSongs = async (accessToken: string, musicValue: number) => {
+const getRange = (userRange: string) => {
+  if ((userRange = "Your Current Music Favorities")) return "short_term";
+  if ((userRange = "Your Recent Music Favorites")) return "medium_term";
+  if ((userRange = "All-Time Music Favorites")) return "long_term";
+  return "medium_term";
+};
+
+const getSongs = async (
+  accessToken: string,
+  musicValue: number,
+  range: trackRange,
+) => {
   const count = Math.floor(Math.random() * (musicValue / 15) + 2);
-  const topTracks = await getTopTracks(accessToken);
+  const topTracks = await getTopTracks(accessToken, range);
 
   if (topTracks.length < count) {
     return topTracks;
