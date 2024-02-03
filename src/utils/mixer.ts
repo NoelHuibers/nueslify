@@ -22,7 +22,7 @@ const mixer = async (
   artistNames: string[] | undefined,
   newscontent: string | undefined,
   accessToken: string,
-  user: User
+  user: User,
 ) => {
   if (newscontent) {
     const newsSegment: Segment = {
@@ -34,12 +34,19 @@ const mixer = async (
 
     const musicSegment: Segment = {
       segmentKind: "music",
-      content: await getContentForNewMusicSegment(accessToken),
+      content: await getContentForNewMusicSegment(
+        accessToken,
+        user.musicNewsBalance ? user.musicNewsBalance : 50,
+      ),
     };
 
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
 
-    const transitionSegment = await createTransition(newsSegment, musicSegment, user);
+    const transitionSegment = await createTransition(
+      newsSegment,
+      musicSegment,
+      user,
+    );
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   } else if (artistNames && title) {
@@ -65,19 +72,22 @@ const mixer = async (
             : ""
         : "",
       newsContent?.title ?? "News",
-      user
+      user,
     );
     const transitionSegment = await createTransition(
       currentSegment,
       newsSegment,
-      user
+      user,
     );
 
     return { transitionSegment, newsSegment };
   } else {
     const musicSegment: Segment = {
       segmentKind: "music",
-      content: await getContentForNewMusicSegment(accessToken),
+      content: await getContentForNewMusicSegment(
+        accessToken,
+        user.musicNewsBalance ? user.musicNewsBalance : 50,
+      ),
     };
 
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
@@ -88,8 +98,11 @@ const mixer = async (
   }
 };
 
-const getContentForNewMusicSegment = async (accessToken: string) => {
-  const nextSongs = await getSongs(accessToken);
+const getContentForNewMusicSegment = async (
+  accessToken: string,
+  musicValue: number,
+) => {
+  const nextSongs = await getSongs(accessToken, musicValue);
   return nextSongs.map((song) => {
     const music: Music = {
       artistNames: song.artistNames ? song.artistNames : [],
@@ -100,8 +113,8 @@ const getContentForNewMusicSegment = async (accessToken: string) => {
   });
 };
 
-const getSongs = async (accessToken: string) => {
-  const count = Math.floor(Math.random() * 4 + 2);
+const getSongs = async (accessToken: string, musicValue: number) => {
+  const count = Math.floor(Math.random() * (musicValue / 15) + 2);
   const topTracks = await getTopTracks(accessToken);
 
   if (topTracks.length < count) {
