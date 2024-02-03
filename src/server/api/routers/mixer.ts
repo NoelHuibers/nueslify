@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import mixer from "~/utils/mixer";
 import { refreshSpotifyToken } from "~/utils/getTopTracks";
+import { fetchUser } from "~/utils/getUserData";
 
 const SegmentSchema = z
   .object({
@@ -17,7 +18,8 @@ export const mixerRouter = createTRPCRouter({
     .mutation(async ({ input = {}, ctx }) => {
       const { artistNames, title, newscontent } = input;
       const accessToken = await refreshSpotifyToken(ctx.session.user.id);
-      const data = await mixer(title, artistNames, newscontent, accessToken);
+      const user = await fetchUser(ctx.session.user.id);
+      const data = await mixer(title, artistNames, newscontent, accessToken, user);
       return data;
     }),
 });

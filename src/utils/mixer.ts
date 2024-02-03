@@ -12,6 +12,7 @@ import {
 import getTopTracks from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
+import { User } from "./getUserData";
 
 import runLLM from "~/utils/GPT/langchain";
 import { desc, eq } from "drizzle-orm";
@@ -21,6 +22,7 @@ const mixer = async (
   artistNames: string[] | undefined,
   newscontent: string | undefined,
   accessToken: string,
+  user: User
 ) => {
   if (newscontent) {
     const newsSegment: Segment = {
@@ -37,7 +39,7 @@ const mixer = async (
 
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
 
-    const transitionSegment = await createTransition(newsSegment, musicSegment);
+    const transitionSegment = await createTransition(newsSegment, musicSegment, user);
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   } else if (artistNames && title) {
@@ -62,10 +64,13 @@ const mixer = async (
             ? newsContent.firstline
             : ""
         : "",
+      newsContent?.title ?? "News",
+      user
     );
     const transitionSegment = await createTransition(
       currentSegment,
       newsSegment,
+      user
     );
 
     return { transitionSegment, newsSegment };
@@ -77,7 +82,7 @@ const mixer = async (
 
     const musicIds = getMusicContent(musicSegment)?.map((track) => track.id);
 
-    const transitionSegment = await createStart(musicSegment);
+    const transitionSegment = await createStart(musicSegment, user);
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   }

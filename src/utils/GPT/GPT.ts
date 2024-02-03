@@ -15,6 +15,7 @@ export type Music = {
 };
 
 export type News = {
+  title: string;
   content: string;
 };
 
