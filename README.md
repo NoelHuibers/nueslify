@@ -25,6 +25,11 @@ npm run dev
 - [x] Token aktualisieren
 - [x] Mixer Frontend
 - [x] Skip/Back Button
+- [x] News speichern
+- [x] Responsivness Frontend
+- [ ] Spotify Richtlinien
+- [x] Interests get Current State
+- [ ] Currentstate play/pause Error
 
 - [ ] Auth Signup
 
@@ -34,11 +39,6 @@ npm run dev
 - [x] URIs der Playlists bekommen
 - [x] TTS Research (Andere Provider/Günstigere Alternativen/Lokal)
 - [x] LLMs tauschen (Settings) LangChain
-
-**Anton**
-
-- [ ] News speichern
-- [x] Responsivness Frontend
 
 **Anton & Peter**
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { type ZodType, z } from "zod";
@@ -53,7 +53,14 @@ const musicTermOptions = [
 const aiOptions = ["OpenAI", "Google Gemini"];
 
 export default function Home() {
+  const userData = api.interests.getInterests.useQuery();
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (!userData.data?.categories) return;
+    const categories: string[] = JSON.parse(userData.data?.categories);
+    setSelectedGenres(categories);
+  }, [userData.data?.categories]);
 
   const saveData = api.interests.interests.useMutation();
   const router = useRouter();
@@ -89,7 +96,20 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      age: userData.data?.age ? userData.data?.age : undefined,
+      state: userData.data?.state ? userData.data?.state : undefined,
+      musicNewsAmount: userData.data?.musicNewsBalance
+        ? userData.data?.musicNewsBalance
+        : undefined,
+      ai: userData.data?.ai,
+      hostStyle: userData.data?.hostStyle,
+      musicTerm: userData.data?.musicTerm,
+      categories: selectedGenres,
+    },
+  });
 
   const submitData = async (data: FormData) => {
     try {

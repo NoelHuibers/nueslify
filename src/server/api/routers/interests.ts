@@ -3,6 +3,7 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { users } from "~/server/db/schema";
+import { fetchUser } from "~/utils/getUserData";
 
 export const interestsRouter = createTRPCRouter({
   interests: protectedProcedure
@@ -30,10 +31,14 @@ export const interestsRouter = createTRPCRouter({
           ai: input.ai,
           hostStyle: input.hostStyle,
           musicTerm: input.musicTerm,
-          categories: JSON.stringify(input.categories)
+          categories: JSON.stringify(input.categories),
         })
         .where(eq(users.id, ctx.session.user.id));
 
       return { success: true, message: "Interests updated successfully" };
     }),
+  getInterests: protectedProcedure.query(async ({ ctx }) => {
+    const user = await fetchUser(ctx.session.user.id);
+    return user;
+  }),
 });
