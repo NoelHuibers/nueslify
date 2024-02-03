@@ -6,16 +6,14 @@ import type {
   ChatCompletionUserMessageParam,
 } from "openai/resources/index.mjs";
 import { textoSpeech } from "../ttsFunc";
-import { db } from "~/server/db";
-import { users } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { User } from "../getUserData";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
 enum GPTStyle {
-  Default,
-  Professional,
-  Slack,
+  Default = "Default",
+  Professional = "Professional",
+  Slack = "Slack",
 }
 
 const selectedStyle: GPTStyle = GPTStyle.Slack;
@@ -23,6 +21,7 @@ const selectedStyle: GPTStyle = GPTStyle.Slack;
 export const createTransition = async (
   from: Segment,
   to: Segment,
+  user: User
 ): Promise<Segment> => {
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
@@ -35,7 +34,7 @@ export const createTransition = async (
   };
 
   return new Promise<Segment>((resolve, reject) => {
-    request(requestMessage)
+    request(requestMessage, user)
       .then(async (answer) => {
         const speech = await textoSpeech(
           answer?.message.content ? answer?.message.content : "",
@@ -54,7 +53,7 @@ export const createTransition = async (
   });
 };
 
-export const createNewsSummary = async (news: string): Promise<Segment> => {
+export const createNewsSummary = async (news: string, title: string, user: User): Promise<Segment> => {
   console.log("create news summary");
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
@@ -62,7 +61,7 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
   };
 
   return new Promise<Segment>((resolve, reject) => {
-    request(requestMessage)
+    request(requestMessage, user)
       .then(async (answer) => {
         const speech = await textoSpeech(
           answer?.message.content ? answer?.message.content : "",
@@ -72,6 +71,7 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
           segmentKind: "news",
           content: {
             content: speech,
+            title: title
           },
         });
       })
@@ -81,8 +81,7 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
   });
 };
 
-export const createStart = async (to: Segment): Promise<Segment> => {
-  fetchUser()
+export const createStart = async (to: Segment, user: User): Promise<Segment> => {
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
     content:
@@ -92,7 +91,7 @@ export const createStart = async (to: Segment): Promise<Segment> => {
   };
 
   return new Promise<Segment>((resolve, reject) => {
-    request(requestMessage)
+    request(requestMessage, user)
       .then(async (answer) => {
         const speech = await textoSpeech(
           answer?.message.content ? answer?.message.content : "",
@@ -111,22 +110,13 @@ export const createStart = async (to: Segment): Promise<Segment> => {
   });
 };
 
-const request = async (requestMessage: ChatCompletionMessageParam) => {
+const request = async (requestMessage: ChatCompletionMessageParam, user: User) => {
   const completion = await openai.chat.completions.create({
-    messages: [systemMessage(selectedStyle), requestMessage],
+    messages: [systemMessage(user), requestMessage],
     model: "gpt-3.5-turbo",
   });
   return completion.choices[0];
 };
-
-const fetchUser = async () => {
-  const user = await db
-    .select()
-    .from(users)
-    .where(eq(users.id, 'c3c5abbc-2e6a-4fc4-a6cd-440dc10f1303'))
-    .limit(1);
-  return user;
-}
 
 const segmentDescription = (segment: Segment, isNext = true) => {
   if (segment.segmentKind === "music") {
@@ -140,17 +130,17 @@ const segmentDescription = (segment: Segment, isNext = true) => {
   }
 };
 
-const systemMessage = (style: GPTStyle): ChatCompletionMessageParam => {
+const systemMessage = (user: User): ChatCompletionMessageParam => {
   let content: string;
-  switch (style) {
-    case GPTStyle.Professional:
-      content = professionalSystemMessage;
+  switch (user.hostStyle) {
+    case GPTStyle.Professional.valueOf():
+      content = professionalSystemMessage + userDescription(user);
       break;
-    case GPTStyle.Slack:
-      content = slackSystemMessage;
+    case GPTStyle.Slack.valueOf():
+      content = slackSystemMessage + userDescription(user);
       break;
     default:
-      content = defaultSystemMessage;
+      content = defaultSystemMessage + userDescription(user);
       break;
   }
 
@@ -159,6 +149,14 @@ const systemMessage = (style: GPTStyle): ChatCompletionMessageParam => {
     content: content,
   };
 };
+
+const userDescription = (user: User) => {
+  const name = "The name of your listener is " + user.name + ". "
+  const age = "Your listerner is " + user.age + " years old. "
+  const state = "Your listener lives in the German state of " + user.state + ". "
+  const interests = "Your listerner stated the following interests: " + user.categories
+  return name + age + state + interests
+}
 
 const defaultSystemMessage =
   "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. While always being truthful, you captivate with your funny jokes, witty remarks and rhetorical elements. Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file.";
