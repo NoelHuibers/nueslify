@@ -15,7 +15,7 @@ export const interestsRouter = createTRPCRouter({
         ai: z.string(),
         hostStyle: z.string(),
         musicTerm: z.string(),
-        //categories: z.string(),
+        categories: z.array(z.string()),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -30,7 +30,7 @@ export const interestsRouter = createTRPCRouter({
           ai: input.ai,
           hostStyle: input.hostStyle,
           musicTerm: input.musicTerm,
-          //categories: input.categories,
+          categories: JSON.stringify(input.categories)
         })
         .where(eq(users.id, ctx.session.user.id));
 

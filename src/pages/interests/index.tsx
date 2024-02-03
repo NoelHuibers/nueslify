@@ -101,6 +101,7 @@ export default function Home() {
         ai: data.ai,
         hostStyle: data.hostStyle,
         musicTerm: data.musicTerm,
+        categories: data.categories,
       });
 
       // Redirect to the dashboard page on success

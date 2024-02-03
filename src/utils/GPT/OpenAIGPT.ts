@@ -6,6 +6,9 @@ import type {
   ChatCompletionUserMessageParam,
 } from "openai/resources/index.mjs";
 import { textoSpeech } from "../ttsFunc";
+import { db } from "~/server/db";
+import { users } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
@@ -79,6 +82,7 @@ export const createNewsSummary = async (news: string): Promise<Segment> => {
 };
 
 export const createStart = async (to: Segment): Promise<Segment> => {
+  fetchUser()
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
     content:
@@ -114,6 +118,15 @@ const request = async (requestMessage: ChatCompletionMessageParam) => {
   });
   return completion.choices[0];
 };
+
+const fetchUser = async () => {
+  const user = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, 'c3c5abbc-2e6a-4fc4-a6cd-440dc10f1303'))
+    .limit(1);
+  return user;
+}
 
 const segmentDescription = (segment: Segment, isNext = true) => {
   if (segment.segmentKind === "music") {
