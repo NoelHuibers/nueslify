@@ -4,19 +4,20 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { env } from "~/env.mjs";
 
-type model = "openAI" | "gemini";
+export type model = "openAI" | "gemini";
 
 const prompt = ChatPromptTemplate.fromMessages([
-  ["system", "You are Nueslify, a radio host"],
-  ["human", "{input}"],
+  ["system", "{systemInput}"],
+  ["human", "{humanInput}"],
 ]);
 
-const runLLM = async (content: string, model: model) => {
+export const runLLM = async (system: string, user: string, model: model) => {
   let chatModel: ChatOpenAI | ChatGoogleGenerativeAI;
 
   if (model == "openAI") {
     chatModel = new ChatOpenAI({
       openAIApiKey: env.OPENAI_API_KEY,
+      modelName: "gpt-3.5-turbo",
     });
   } else if (model == "gemini") {
     chatModel = new ChatGoogleGenerativeAI({
@@ -32,12 +33,11 @@ const runLLM = async (content: string, model: model) => {
   const llmChain = prompt.pipe(chatModel).pipe(outputParser);
 
   const res = await llmChain.invoke({
-    input: content,
+    systemInput: system,
+    humanInput: user,
   });
 
   console.log(res);
 
   return res;
 };
-
-export default runLLM;
