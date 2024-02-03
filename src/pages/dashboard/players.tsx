@@ -12,11 +12,10 @@ const Player = (props: {
   previousTrack: () => void;
   togglePlay: () => void;
   nextTrack: () => void;
+  isPaused: boolean;
 }) => {
-  const [is_paused, setIsPaused] = useState(false);
   const handlePause = () => {
     props.togglePlay();
-    setIsPaused(!is_paused);
   };
 
   return (
@@ -38,7 +37,7 @@ const Player = (props: {
                 <Skeleton className="w-30 h-6 md:h-8 md:w-40" />
               )}
               {props.trackname ? (
-                <div className="select-none truncate text-xl font-bold tracking-tight text-slate-50 md:text-2xl">
+                <div className="w-80 select-none truncate text-xl font-bold tracking-tight text-slate-50 md:text-2xl">
                   {props.artistname}
                 </div>
               ) : (
@@ -50,7 +49,7 @@ const Player = (props: {
                 <BsFillSkipBackwardFill className="h-12 w-12 md:h-16 md:w-16" />
               </button>
               <button onClick={handlePause}>
-                {is_paused ? (
+                {props.isPaused ? (
                   <FaPlay className="h-8 w-8 md:h-12 md:w-12" />
                 ) : (
                   <FaPause className="h-8 w-8 md:h-12 md:w-12" />

@@ -15,6 +15,7 @@ const NewsPlayer = (props: {
 }) => {
   const { setMusicPlaying, refetchMusic, setCurrentState } = props;
   const [audiodata, setAudioData] = useState<string | null>();
+  const [isPaused, setIsPaused] = useState(true);
   const [newsTitle, setNewsTitle] = useState("Your AI Radio");
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
@@ -66,12 +67,14 @@ const NewsPlayer = (props: {
   const togglePlay = async () => {
     if (audioRef.current) {
       if (audioRef.current.paused) {
+        setIsPaused(false);
         try {
           await audioRef.current.play();
         } catch (error) {
           console.log("Playback was not possible");
         }
       } else {
+        setIsPaused(true);
         audioRef.current.pause();
       }
     }
@@ -92,6 +95,7 @@ const NewsPlayer = (props: {
   return (
     <>
       <Player
+        isPaused={isPaused}
         image={
           <Image
             src="/icon-512x512.png"

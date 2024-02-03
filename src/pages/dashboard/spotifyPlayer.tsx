@@ -4,7 +4,6 @@ import { api } from "../../utils/api";
 import Image from "next/image";
 import axios from "axios";
 import Player from "./players";
-import { memoryUsage } from "process";
 
 declare global {
   interface Window {
@@ -192,6 +191,7 @@ const Spotifyplayer = (props: {
         artistname={
           current_track?.artists[0]?.name ? current_track?.artists[0]?.name : ""
         }
+        isPaused={is_paused}
         previousTrack={async () => {
           await player.previousTrack();
         }}
@@ -206,6 +206,7 @@ const Spotifyplayer = (props: {
   } else {
     return (
       <Player
+        isPaused={true}
         image={null}
         trackname={null}
         artistname={null}

@@ -70,6 +70,7 @@ const Body = () => {
             />
           ) : (
             <Player
+              isPaused={true}
               image={null}
               trackname={null}
               artistname={null}
