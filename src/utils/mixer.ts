@@ -8,7 +8,7 @@ import {
   createTransition,
   createNewsSummary,
   createStart,
-} from "./GPT/OpenAIGPT";
+} from "./GPT/GPTFactory";
 import getTopTracks, { trackRange } from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";

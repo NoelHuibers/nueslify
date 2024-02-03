@@ -1,14 +1,7 @@
 import { type Segment, getMusicContent } from "~/utils/GPT/GPT";
-import OpenAI from "openai";
-import { env } from "~/env.mjs";
-import type {
-  ChatCompletionMessageParam,
-  ChatCompletionUserMessageParam,
-} from "openai/resources/index.mjs";
 import { textoSpeech } from "../ttsFunc";
 import type { User } from "../getUserData";
-
-const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
+import { runLLM, model } from "~/utils/GPT/langchain";
 
 enum GPTStyle {
   Default = "Default",
@@ -21,21 +14,20 @@ export const createTransition = async (
   to: Segment,
   user: User,
 ): Promise<Segment> => {
-  const requestMessage: ChatCompletionUserMessageParam = {
-    role: "user",
-    content:
+  console.log("create transition");
+
+  const requestMessage =
       "Your previous segment was" +
       segmentDescription(from, false) +
       ", the next segment is " +
       segmentDescription(to) +
-      " . Create a suitable and short transition between the two segments.",
-  };
+      " . Create a suitable and short transition between the two segments.";
 
   return new Promise<Segment>((resolve, reject) => {
     request(requestMessage, user)
       .then(async (answer) => {
         const speech = await textoSpeech(
-          answer?.message.content ? answer?.message.content : "",
+          answer,
           "transition",
         );
         resolve({
@@ -57,16 +49,13 @@ export const createNewsSummary = async (
   user: User,
 ): Promise<Segment> => {
   console.log("create news summary");
-  const requestMessage: ChatCompletionUserMessageParam = {
-    role: "user",
-    content: "Create a summary for the following news: " + news,
-  };
+  const requestMessage = "Create a summary for the following news: " + news
 
   return new Promise<Segment>((resolve, reject) => {
     request(requestMessage, user)
       .then(async (answer) => {
         const speech = await textoSpeech(
-          answer?.message.content ? answer?.message.content : "",
+          answer,
           "news",
         );
         resolve({
@@ -87,19 +76,16 @@ export const createStart = async (
   to: Segment,
   user: User,
 ): Promise<Segment> => {
-  const requestMessage: ChatCompletionUserMessageParam = {
-    role: "user",
-    content:
-      "Nueslify starts to air and you are the moderator. First, introduce yourself and the station and then create a suitable and short transition to " +
+  console.log("create start");
+  const requestMessage = "Nueslify starts to air and you are the moderator. First, introduce yourself and the station and then create a suitable and short transition to " +
       segmentDescription(to) +
-      "use a maximum of 3 sentences.",
-  };
+      "use a maximum of 3 sentences.";
 
   return new Promise<Segment>((resolve, reject) => {
     request(requestMessage, user)
       .then(async (answer) => {
         const speech = await textoSpeech(
-          answer?.message.content ? answer?.message.content : "",
+          answer,
           "transition",
         );
         resolve({
@@ -116,14 +102,19 @@ export const createStart = async (
 };
 
 const request = async (
-  requestMessage: ChatCompletionMessageParam,
+  requestMessage: string,
   user: User,
 ) => {
-  const completion = await openai.chat.completions.create({
-    messages: [systemMessage(user), requestMessage],
-    model: "gpt-3.5-turbo",
-  });
-  return completion.choices[0];
+  let model: model
+  if (user.ai == "OpenAI") {
+    model = "openAI"
+  } else {
+    model = "gemini"
+  }
+
+  console.log("sending request using model: " + model);
+  const completion = await runLLM(systemMessage(user), requestMessage, model)
+  return completion
 };
 
 const segmentDescription = (segment: Segment, isNext = true) => {
@@ -138,39 +129,41 @@ const segmentDescription = (segment: Segment, isNext = true) => {
   }
 };
 
-const systemMessage = (user: User): ChatCompletionMessageParam => {
+const systemMessage = (user: User) => {
   let content: string;
   switch (user.hostStyle) {
     case GPTStyle.Professional.valueOf():
+      console.log("using professional style");
       content = professionalSystemMessage + userDescription(user);
       break;
     case GPTStyle.Slack.valueOf():
+      console.log("using slack style");
       content = slackSystemMessage + userDescription(user);
       break;
     default:
+      console.log("using default style");
       content = defaultSystemMessage + userDescription(user);
       break;
   }
 
-  return {
-    role: "system",
-    content: content,
-  };
+  return content
 };
 
 const userDescription = (user: User) => {
   const name = "The name of your listener is " + user.name + ". ";
-  const age = "Your listerner is " + user.age + " years old. ";
+  const age = "Your listener is " + user.age + " years old. ";
   const state =
     "Your listener lives in the German state of " + user.state + ". ";
   const interests =
-    "Your listerner stated the following interests: " + user.categories;
+    "Your listener stated the following interests: " + user.categories;
   return name + age + state + interests;
 };
 
+const instructions = "Your output should always be spoken content only. Make sure to never use any kind of comments, instructions, stage directions or editorial notes like for example *song begins to play* or [Nueslify's signature jingle plays] in your output but only spoken language! If you include such kind of comments the radio station will have to close and many people will loose their jobs! The language of your program is English.";
+
 const defaultSystemMessage =
-  "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. While always being truthful, you captivate with your funny jokes, witty remarks and rhetorical elements. Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file.";
+  "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. While always being truthful, you captivate with your funny jokes, witty remarks and rhetorical elements." + instructions;
 const professionalSystemMessage =
-  "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. You take your job very seriously and have no time to joke around. Instead you try to be as professional as possible and only report on the news and introduce upcoming songs. Try to match the style of news-based radio station. Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file.";
+  "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. You take your job very seriously and have no time to joke around. Instead you try to be as professional as possible and only report on the news and introduce upcoming songs. Try to match the style of news-based radio station." + instructions;
 const slackSystemMessage =
-  "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. Your highest priority is to entertain the listener through jokes, rhetorical elements and a slack style. Think of yourself as being a young adult who likes to provoke thoughts but also sometimes whips up feelings. As long as you don't lie and it's not overly offensive, everything's allowed . Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file.";
+  "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. Your highest priority is to entertain the listener through jokes, rhetorical elements and a slack style. Think of yourself as being a young adult who likes to provoke thoughts but also sometimes whips up feelings. As long as you don't lie and it's not overly offensive, everything's allowed." + instructions;
