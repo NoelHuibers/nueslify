@@ -50,7 +50,7 @@ const mixer = async (
 
     return { transitionSegment, musicIds: musicIds ? musicIds : [] };
   } else if (artistNames && title) {
-    const newsContent = await getNews(["sport"]);
+    const newsContent = await getNews(JSON.parse(user.categories) as string[]);
 
     const currentSegment: Segment = {
       segmentKind: "music",
@@ -160,7 +160,20 @@ function getRandom<T>(arr: T[], n: number): T[] {
   return result;
 }
 
-const getNews = async (ressort: Interest[]) => {
+const getRandomNews = async () => {
+  const randomNews = await db
+    .select()
+    .from(news)
+    .orderBy(desc(news.id))
+    .limit(20);
+  const number = getRandomNumber(randomNews.length);
+  return randomNews[number];
+};
+
+const getNews = async (ressort: string[]) => {
+  if (ressort.length === 0) {
+    return await getRandomNews();
+  }
   const randomNewsAll = await Promise.all(
     ressort.map(async (ressort) => {
       return await db

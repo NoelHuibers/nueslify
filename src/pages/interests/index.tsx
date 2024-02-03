@@ -260,7 +260,7 @@ export default function Home() {
                     Select how much music/news you want to listen to
                   </label>
                   <div className="range-input ml-4 mr-4 text-white">
-                    <span className="appFont">music</span>
+                    <span className="appFont">news</span>
                     <input
                       type="range"
                       {...register("musicNewsAmount", { valueAsNumber: true })}
@@ -268,7 +268,7 @@ export default function Home() {
                       max="100"
                       className="slider w-full"
                     />
-                    <span className="appFont">news</span>
+                    <span className="appFont">music</span>
                   </div>
                 </div>
               </div>
