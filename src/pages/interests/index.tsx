@@ -35,6 +35,15 @@ const genresList: Genre[] = [
   { name: "Faktenfinder", image: "/photos/faktenfinder.jpg" },
 ];
 
+const genreTranslations: Record<string, string> = {
+  Inland: "Domestic",
+  Ausland: "Foreign",
+  Wirtschaft: "Economy",
+  Sport: "Sports",
+  Investigativ: "Investigative",
+  Faktenfinder: "Fact Finder",
+};
+
 const gptStyleOptions = ["Default", "Slack", "Professional"];
 const musicTermOptions = [
   "Your Current Music Favorities",
@@ -372,7 +381,7 @@ export default function Home() {
                     <div className="relative h-32 w-32 bg-indigo-200">
                       <Image
                         src={genre.image}
-                        alt={genre.name}
+                        alt={genreTranslations[genre.name] ?? genre.name} // Use translation or default to German if not found
                         layout="fill"
                         objectFit="cover"
                         sizes="(max-width: 640px) 100vw, (max-width: 750px) 50vw, 33.3vw"
@@ -387,7 +396,9 @@ export default function Home() {
                         </div>
                       )}
                     </div>
-                    <p className="font-bold text-indigo-900">{genre.name}</p>
+                    <p className="font-bold text-indigo-900">
+                      {genreTranslations[genre.name] ?? genre.name}
+                    </p>
                   </label>
                 </div>
               ))}
