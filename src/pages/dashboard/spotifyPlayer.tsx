@@ -4,6 +4,7 @@ import { api } from "../../utils/api";
 import Image from "next/image";
 import axios from "axios";
 import Player from "./players";
+import { memoryUsage } from "process";
 
 declare global {
   interface Window {
@@ -126,7 +127,7 @@ const Spotifyplayer = (props: {
         document.head.appendChild(scriptTag);
       }
     }
-  }, [accessToken.data]);
+  }, [accessToken.data, props.musicIds]);
 
   useEffect(() => {
     if (accessToken.data !== undefined && deviceId !== undefined) {
