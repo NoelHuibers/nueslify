@@ -24,17 +24,12 @@ const Spotifyplayer = (props: {
   const [current_track, setTrack] = useState<Spotify.Track | undefined>(
     undefined,
   );
-  const [previousTracksLength, setPreviousTracksLength] = useState(0);
 
   const [deviceId, setDeviceId] = useState<string | undefined>(undefined);
 
   const [albumImage, setAlbumImage] = useState<string | undefined>(undefined);
 
   const accessToken = api.playback.playback.useQuery();
-
-  const [imageLoading, setImageLoading] = useState(true);
-  const [nameLoading, setNameLoading] = useState(true);
-  const [artistLoading, setArtistLoading] = useState(true);
 
   useEffect(() => {
     if (props.musicIds !== undefined) {
@@ -73,10 +68,6 @@ const Spotifyplayer = (props: {
           player.addListener("player_state_changed", (playbackState) => {
             setTrack(playbackState.track_window.current_track);
             setPaused(playbackState.paused);
-            setImageLoading(false);
-            setNameLoading(false);
-            setArtistLoading(false);
-
             setTrack(playbackState.track_window.current_track);
             setAlbumImage(
               playbackState.track_window.current_track.album.images[0]?.url
@@ -112,7 +103,6 @@ const Spotifyplayer = (props: {
               }
               lastTrackName = currentTrackName;
             }
-            setPreviousTracksLength(current);
           }, 0);
         });
       };
@@ -184,7 +174,6 @@ const Spotifyplayer = (props: {
             width={320}
             height={320}
             className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
-            onLoad={() => setImageLoading(false)}
           />
         }
         trackname={current_track?.name ? current_track?.name : ""}

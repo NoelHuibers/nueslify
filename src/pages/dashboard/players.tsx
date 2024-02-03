@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FaPause } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import { BsFillSkipBackwardFill } from "react-icons/bs";

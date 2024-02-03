@@ -14,7 +14,7 @@ type FormData = {
   age: number;
   //country: string;
   state: string;
-  musicNewsAmount: number;
+  musicNewsBalance: number;
   ai: string;
   hostStyle: string;
   musicTerm: string;
@@ -77,7 +77,7 @@ export default function Home() {
       .max(100, "You must be at most 100 years old"),
     //country: z.string().min(1, "Please select a country"),
     state: z.string().min(1, "Please select a state"),
-    musicNewsAmount: z.number(),
+    musicNewsBalance: z.number(),
     ai: z.string(),
     hostStyle: z.string(),
     musicTerm: z.string(),
@@ -97,9 +97,9 @@ export default function Home() {
       return {
         age: userData.age ? userData.age : 0,
         state: userData.state ? userData.state : "",
-        musicNewsAmount: userData.musicNewsBalance
+        musicNewsBalance: userData.musicNewsBalance
           ? userData.musicNewsBalance
-          : 50,
+          : 0,
         ai: userData.ai,
         hostStyle: userData.hostStyle,
         musicTerm: userData.musicTerm,
@@ -110,11 +110,11 @@ export default function Home() {
 
   const submitData = async (data: FormData) => {
     try {
-      console.log("it worked", data);
+      console.log(data.musicNewsBalance);
       await saveData.mutateAsync({
         age: data.age,
         state: data.state,
-        musicNewsAmount: data.musicNewsAmount,
+        musicNewsBalance: data.musicNewsBalance,
         ai: data.ai,
         hostStyle: data.hostStyle,
         musicTerm: data.musicTerm,
@@ -263,7 +263,7 @@ export default function Home() {
                     <span className="appFont">news</span>
                     <input
                       type="range"
-                      {...register("musicNewsAmount", { valueAsNumber: true })}
+                      {...register("musicNewsBalance", { valueAsNumber: true })}
                       min="0"
                       max="100"
                       className="slider w-full"

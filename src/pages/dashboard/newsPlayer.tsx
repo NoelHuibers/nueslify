@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { News, Transition } from "~/utils/GPT/GPT";
 import Player from "./players";
-import { set } from "zod";
 
 const NewsPlayer = (props: {
   transition: Transition;
@@ -31,7 +30,7 @@ const NewsPlayer = (props: {
       sourceRef.current.src = audiodata;
       audioRef.current.load();
       setIsPaused(false);
-      audioRef.current.play();
+      void audioRef.current.play();
     }
   }, [audiodata]);
 

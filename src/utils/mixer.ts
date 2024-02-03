@@ -1,15 +1,10 @@
-import {
-  type Segment,
-  getMusicContent,
-  type Music,
-  type Interest,
-} from "~/utils/GPT/GPT";
+import { type Segment, getMusicContent, type Music } from "~/utils/GPT/GPT";
 import {
   createTransition,
   createNewsSummary,
   createStart,
 } from "./GPT/GPTFactory";
-import getTopTracks, { trackRange } from "~/utils/getTopTracks";
+import getTopTracks, { type trackRange } from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
 import type { User } from "./getUserData";
@@ -86,7 +81,7 @@ const mixer = async (
       segmentKind: "music",
       content: await getContentForNewMusicSegment(
         accessToken,
-        user.musicNewsBalance ? user.musicNewsBalance : 50,
+        user.musicNewsBalance ? user.musicNewsBalance : 0,
         user.musicTerm,
       ),
     };
@@ -117,9 +112,13 @@ const getContentForNewMusicSegment = async (
 };
 
 const getRange = (userRange: string) => {
-  if ((userRange = "Your Current Music Favorities")) return "short_term";
-  if ((userRange = "Your Recent Music Favorites")) return "medium_term";
-  if ((userRange = "All-Time Music Favorites")) return "long_term";
+  if (userRange === "Your Current Music Favorities") {
+    return "short_term";
+  } else if (userRange === "Your Recent Music Favorites") {
+    return "medium_term";
+  } else if (userRange === "All-Time Music Favorites") {
+    return "long_term";
+  }
   return "medium_term";
 };
 
@@ -128,7 +127,9 @@ const getSongs = async (
   musicValue: number,
   range: trackRange,
 ) => {
+  console.log(musicValue);
   const count = Math.floor(Math.random() * (musicValue / 15) + 2);
+  console.log(count);
   const topTracks = await getTopTracks(accessToken, range);
 
   if (topTracks.length < count) {
