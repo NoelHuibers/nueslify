@@ -43,9 +43,9 @@ const Body = () => {
     mutate({ title: title, artistNames: artistnames });
   };
 
-  const refetchMusic = () => {
+  const refetchMusic = (newsTitle: string | undefined) => {
     mutate({
-      newscontent: "My news",
+      newsTitle: newsTitle,
     });
   };
 
@@ -66,7 +66,7 @@ const Body = () => {
               transition={transition}
               news={news}
               setMusicPlaying={() => handleMusicPlaying()}
-              refetchMusic={() => refetchMusic()}
+              refetchMusic={(newsTitle) => refetchMusic(newsTitle)}
             />
           ) : (
             <Player

@@ -3,17 +3,19 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import type { News, Transition } from "~/utils/GPT/GPT";
 import Player from "./players";
+import { set } from "zod";
 
 const NewsPlayer = (props: {
   transition: Transition;
   news: News | undefined;
   setMusicPlaying: () => void;
-  refetchMusic: () => void;
+  refetchMusic: (newsTitle: string | undefined) => void;
   currentState: number;
   setCurrentState: (state: number) => void;
 }) => {
   const { setMusicPlaying, refetchMusic, setCurrentState } = props;
   const [audiodata, setAudioData] = useState<string | null>();
+  const [newsTitle, setNewsTitle] = useState("Your AI Radio");
   const audioRef = useRef<HTMLAudioElement>(null);
   const sourceRef = useRef<HTMLSourceElement>(null);
 
@@ -42,10 +44,11 @@ const NewsPlayer = (props: {
         } else if (props.currentState === 1 && props.news) {
           setCurrentState(2);
           console.log("Wiedergabe der Transition zu News beendet");
+          setNewsTitle(props.news.title);
           setAudioData(props.news.content);
         } else if (props.currentState === 2) {
           setCurrentState(0);
-          refetchMusic();
+          refetchMusic(props.news?.content ? props.news.content : undefined);
         }
       };
 
@@ -98,8 +101,8 @@ const NewsPlayer = (props: {
             className="hover:contrast-85 hover:saturate-125 rounded-lg shadow-lg transition-all hover:brightness-90"
           />
         }
-        trackname="Your Radiohost"
-        artistname="Nueslify"
+        trackname="Nueslify"
+        artistname={newsTitle}
         previousTrack={() => goToBeginning()}
         togglePlay={() => togglePlay()}
         nextTrack={() => skip()}

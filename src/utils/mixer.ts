@@ -19,15 +19,15 @@ import { desc, eq } from "drizzle-orm";
 const mixer = async (
   title: string | undefined,
   artistNames: string[] | undefined,
-  newscontent: string | undefined,
+  newsTitle: string | undefined,
   accessToken: string,
   user: User,
 ) => {
-  if (newscontent) {
+  if (newsTitle) {
     const newsSegment: Segment = {
       segmentKind: "news",
       content: {
-        content: "Tolle Nachrichten aus aller Welt",
+        content: newsTitle,
       },
     };
 
@@ -179,7 +179,7 @@ const getNews = async (ressort: string[]) => {
       return await db
         .select()
         .from(news)
-        .where(eq(news.ressort, ressort))
+        .where(eq(news.ressort, ressort.toLowerCase()))
         .orderBy(desc(news.id))
         .limit(20);
     }),
