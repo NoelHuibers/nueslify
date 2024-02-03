@@ -27,9 +27,9 @@ npm run dev
 - [x] Skip/Back Button
 - [x] News speichern
 - [x] Responsivness Frontend
-- [ ] Spotify Richtlinien
 - [x] Interests get Current State
-- [ ] Currentstate play/pause Error
+- [x] Currentstate play/pause Error
+- [ ] Spotify Richtlinien
 
 - [ ] Auth Signup
 
@@ -52,12 +52,12 @@ npm run dev
 
 - [x] LLM anbinden
 - [x] Übergänge? Ein Vorgefertigten
-- [ ] Interests in Mixer einbinden
-- [ ] Userdata von der Datenbank anfragen darauf den Prompt anpassen
+- [x] Userdata von der Datenbank anfragen darauf den Prompt anpassen
 
 **Gabriel & Noel**
 
 - [x] Mixer backend
+- [x] Interests in Mixer einbinden
 
 **Offen**
 
