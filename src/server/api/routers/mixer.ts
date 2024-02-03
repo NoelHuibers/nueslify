@@ -19,7 +19,13 @@ export const mixerRouter = createTRPCRouter({
       const { artistNames, title, newscontent } = input;
       const accessToken = await refreshSpotifyToken(ctx.session.user.id);
       const user = await fetchUser(ctx.session.user.id);
-      const data = await mixer(title, artistNames, newscontent, accessToken, user);
+      const data = await mixer(
+        title,
+        artistNames,
+        newscontent,
+        accessToken,
+        user,
+      );
       return data;
     }),
 });

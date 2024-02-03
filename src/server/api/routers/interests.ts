@@ -37,7 +37,7 @@ export const interestsRouter = createTRPCRouter({
 
       return { success: true, message: "Interests updated successfully" };
     }),
-  getInterests: protectedProcedure.query(async ({ ctx }) => {
+  getInterests: protectedProcedure.mutation(async ({ ctx }) => {
     const user = await fetchUser(ctx.session.user.id);
     return user;
   }),

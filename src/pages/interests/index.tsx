@@ -32,7 +32,6 @@ const genresList: Genre[] = [
   { name: "Wirtschaft", image: "/photos/business.jpg" },
   { name: "Sport", image: "/photos/sports.jpg" },
   { name: "Investigativ", image: "/photos/investigativ.jpg" },
-  { name: "Faktenfinder", image: "/photos/faktenfinder.jpg" },
 ];
 
 const genreTranslations: Record<string, string> = {
@@ -41,7 +40,6 @@ const genreTranslations: Record<string, string> = {
   Wirtschaft: "Economy",
   Sport: "Sports",
   Investigativ: "Investigative",
-  Faktenfinder: "Fact Finder",
 };
 
 const gptStyleOptions = ["Default", "Slack", "Professional"];
@@ -53,14 +51,8 @@ const musicTermOptions = [
 const aiOptions = ["OpenAI", "Google Gemini"];
 
 export default function Home() {
-  const userData = api.interests.getInterests.useQuery();
+  const getInterests = api.interests.getInterests.useMutation();
   const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-
-  useEffect(() => {
-    if (!userData.data?.categories) return;
-    const categories: string[] = JSON.parse(userData.data?.categories);
-    setSelectedGenres(categories);
-  }, [userData.data?.categories]);
 
   const saveData = api.interests.interests.useMutation();
   const router = useRouter();
@@ -98,17 +90,23 @@ export default function Home() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      age: userData.data?.age ? userData.data?.age : undefined,
-      state: userData.data?.state ? userData.data?.state : undefined,
-      musicNewsAmount: userData.data?.musicNewsBalance
-        ? userData.data?.musicNewsBalance
-        : undefined,
-      ai: userData.data?.ai,
-      hostStyle: userData.data?.hostStyle,
-      musicTerm: userData.data?.musicTerm,
-      categories: selectedGenres,
+
+    defaultValues: async () => {
+      const userData = await getInterests.mutateAsync();
+      setSelectedGenres(JSON.parse(userData.categories));
+      return {
+        age: userData.age ? userData.age : 0,
+        state: userData.state ? userData.state : "",
+        musicNewsAmount: userData.musicNewsBalance
+          ? userData.musicNewsBalance
+          : 50,
+        ai: userData.ai,
+        hostStyle: userData.hostStyle,
+        musicTerm: userData.musicTerm,
+        categories: JSON.parse(userData.categories),
+      };
     },
+    //*eslint-enable
   });
 
   const submitData = async (data: FormData) => {
