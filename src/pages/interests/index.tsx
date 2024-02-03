@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { type ZodType, z } from "zod";
@@ -93,7 +93,7 @@ export default function Home() {
 
     defaultValues: async () => {
       const userData = await getInterests.mutateAsync();
-      setSelectedGenres(JSON.parse(userData.categories));
+      setSelectedGenres(JSON.parse(userData.categories) as string[]);
       return {
         age: userData.age ? userData.age : 0,
         state: userData.state ? userData.state : "",
@@ -103,10 +103,9 @@ export default function Home() {
         ai: userData.ai,
         hostStyle: userData.hostStyle,
         musicTerm: userData.musicTerm,
-        categories: JSON.parse(userData.categories),
+        categories: JSON.parse(userData.categories) as string[],
       };
     },
-    //*eslint-enable
   });
 
   const submitData = async (data: FormData) => {

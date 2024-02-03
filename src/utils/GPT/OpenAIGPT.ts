@@ -6,7 +6,7 @@ import type {
   ChatCompletionUserMessageParam,
 } from "openai/resources/index.mjs";
 import { textoSpeech } from "../ttsFunc";
-import { User } from "../getUserData";
+import type { User } from "../getUserData";
 
 const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY });
 
@@ -16,12 +16,10 @@ enum GPTStyle {
   Slack = "Slack",
 }
 
-const selectedStyle: GPTStyle = GPTStyle.Slack;
-
 export const createTransition = async (
   from: Segment,
   to: Segment,
-  user: User
+  user: User,
 ): Promise<Segment> => {
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
@@ -53,7 +51,11 @@ export const createTransition = async (
   });
 };
 
-export const createNewsSummary = async (news: string, title: string, user: User): Promise<Segment> => {
+export const createNewsSummary = async (
+  news: string,
+  title: string,
+  user: User,
+): Promise<Segment> => {
   console.log("create news summary");
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
@@ -71,7 +73,7 @@ export const createNewsSummary = async (news: string, title: string, user: User)
           segmentKind: "news",
           content: {
             content: speech,
-            title: title
+            title: title,
           },
         });
       })
@@ -81,7 +83,10 @@ export const createNewsSummary = async (news: string, title: string, user: User)
   });
 };
 
-export const createStart = async (to: Segment, user: User): Promise<Segment> => {
+export const createStart = async (
+  to: Segment,
+  user: User,
+): Promise<Segment> => {
   const requestMessage: ChatCompletionUserMessageParam = {
     role: "user",
     content:
@@ -110,7 +115,10 @@ export const createStart = async (to: Segment, user: User): Promise<Segment> => 
   });
 };
 
-const request = async (requestMessage: ChatCompletionMessageParam, user: User) => {
+const request = async (
+  requestMessage: ChatCompletionMessageParam,
+  user: User,
+) => {
   const completion = await openai.chat.completions.create({
     messages: [systemMessage(user), requestMessage],
     model: "gpt-3.5-turbo",
@@ -151,12 +159,14 @@ const systemMessage = (user: User): ChatCompletionMessageParam => {
 };
 
 const userDescription = (user: User) => {
-  const name = "The name of your listener is " + user.name + ". "
-  const age = "Your listerner is " + user.age + " years old. "
-  const state = "Your listener lives in the German state of " + user.state + ". "
-  const interests = "Your listerner stated the following interests: " + user.categories
-  return name + age + state + interests
-}
+  const name = "The name of your listener is " + user.name + ". ";
+  const age = "Your listerner is " + user.age + " years old. ";
+  const state =
+    "Your listener lives in the German state of " + user.state + ". ";
+  const interests =
+    "Your listerner stated the following interests: " + user.categories;
+  return name + age + state + interests;
+};
 
 const defaultSystemMessage =
   "You are Nueslify, the moderator of a radio station that broadcast specifically to only one listener. While always being truthful, you captivate with your funny jokes, witty remarks and rhetorical elements. Your output should always be suitable as a radio segment, that later gets converted with OpenAIs TTS into a listenable audio file.";

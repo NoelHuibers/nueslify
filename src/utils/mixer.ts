@@ -2,7 +2,7 @@ import {
   type Segment,
   getMusicContent,
   type Music,
-  Interest,
+  type Interest,
 } from "~/utils/GPT/GPT";
 import {
   createTransition,
@@ -12,9 +12,8 @@ import {
 import getTopTracks from "~/utils/getTopTracks";
 import { db } from "~/server/db";
 import { news } from "~/server/db/schema";
-import { User } from "./getUserData";
+import type { User } from "./getUserData";
 
-import runLLM from "~/utils/GPT/langchain";
 import { desc, eq } from "drizzle-orm";
 
 const mixer = async (
