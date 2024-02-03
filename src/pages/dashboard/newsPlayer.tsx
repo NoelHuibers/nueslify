@@ -30,6 +30,8 @@ const NewsPlayer = (props: {
     if (sourceRef.current && audiodata && audioRef.current) {
       sourceRef.current.src = audiodata;
       audioRef.current.load();
+      setIsPaused(false);
+      audioRef.current.play();
     }
   }, [audiodata]);
 
@@ -111,7 +113,7 @@ const NewsPlayer = (props: {
         togglePlay={() => togglePlay()}
         nextTrack={() => skip()}
       />
-      <audio ref={audioRef} controls hidden autoPlay>
+      <audio ref={audioRef} controls hidden>
         {audiodata ? (
           <source src={audiodata} ref={sourceRef} type="audio/mpeg" />
         ) : null}
