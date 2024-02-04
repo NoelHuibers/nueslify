@@ -39,8 +39,15 @@ const Body = () => {
 
   const refetchNews = (title: string, artistnames: string[]) => {
     setCurrentState(1);
-    console.log(currentState);
-    mutate({ title: title, artistNames: artistnames });
+    console.log("Refetching news");
+    mutate(
+      { title: title, artistNames: artistnames },
+      {
+        onSuccess: () => {
+          console.log("News done");
+        },
+      },
+    );
   };
 
   const refetchMusic = (newsTitle: string | undefined) => {
