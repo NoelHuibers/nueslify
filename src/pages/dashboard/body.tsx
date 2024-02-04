@@ -57,7 +57,9 @@ const Body = () => {
           <SpotifyPlayer
             musicIds={music}
             setMusicPlaying={() => handleMusicPlaying()}
-            refetchNews={(title, artistnames) => refetch(title, artistnames)}
+            refetchNews={(title, artistnames) =>
+              refetchNews(title, artistnames)
+            }
           />
           <SpotifyButton />
         </div>
