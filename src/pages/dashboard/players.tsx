@@ -29,14 +29,14 @@ const Player = (props: {
             )}
             <div className="space-y-1 overflow-hidden whitespace-nowrap">
               {props.trackname ? (
-                <div className="select-none truncate text-xl font-bold tracking-tight text-slate-50 md:text-2xl">
+                <div className="w-60 select-none truncate text-xl font-bold tracking-tight text-slate-50 md:w-80 md:text-2xl">
                   {props.trackname}
                 </div>
               ) : (
                 <Skeleton className="w-30 h-6 md:h-8 md:w-40" />
               )}
               {props.trackname ? (
-                <div className="w-80 select-none truncate text-xl font-bold tracking-tight text-slate-50 md:text-2xl">
+                <div className="w-60 select-none truncate text-xl font-bold tracking-tight text-slate-50 md:w-80 md:text-2xl">
                   {props.artistname}
                 </div>
               ) : (
