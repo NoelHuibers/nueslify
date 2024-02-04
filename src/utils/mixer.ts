@@ -127,9 +127,7 @@ const getSongs = async (
   musicValue: number,
   range: trackRange,
 ) => {
-  console.log(musicValue);
   const count = Math.floor(Math.random() * (musicValue / 15) + 2);
-  console.log(count);
   const topTracks = await getTopTracks(accessToken, range);
 
   if (topTracks.length < count) {
