@@ -3,11 +3,19 @@ import { news } from "~/server/db/schema";
 import getNews from "~/utils/getNews";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { eq } from "drizzle-orm";
+import { env } from "~/env.mjs";
 
 export default async function handler(
-  _request: NextApiRequest,
+  request: NextApiRequest,
   response: NextApiResponse,
 ) {
+  // @ts-expect-error "Next.js specific for Cronjob security"
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const authHeader = request.headers.get("Authorization");
+  if (!env.CRON_SECRET || authHeader !== `Bearer ${env.CRON_SECRET}`) {
+    return response.status(401).json({ success: false });
+  }
+
   const newNews = await getNews();
   await Promise.all(
     newNews.map(async (item) => {

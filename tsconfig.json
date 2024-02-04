@@ -36,7 +36,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts"
-, "src/pages/api/news/cron.js"  ],
+    ".next/types/**/*.ts",
+    "src/pages/api/news/cron.js"  ],
   "exclude": ["node_modules"]
 }

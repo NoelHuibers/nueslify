@@ -30,6 +30,7 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_REGION: z.string(),
     GOOGLE_API_KEY: z.string(),
+    CRON_SECRET: z.string(),
   },
 
   /**
@@ -57,6 +58,7 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
     AWS_REGION: process.env.AWS_REGION,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    CRON_SECRET: process.env.CRON_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
