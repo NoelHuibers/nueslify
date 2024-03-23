@@ -3,7 +3,6 @@ import { news } from "~/server/db/schema";
 import getNews from "~/utils/getNews";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { eq } from "drizzle-orm";
-import { env } from "~/env.mjs";
 
 export default async function handler(
   request: NextApiRequest,
