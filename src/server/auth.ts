@@ -10,7 +10,7 @@ import SpotifyProvider from "next-auth/providers/spotify";
 import { env } from "~/env.mjs";
 import { db } from "~/server/db";
 import { type Adapter } from "next-auth/adapters";
-import { sqliteTable } from "drizzle-orm/sqlite-core";
+import { createTable } from "./db/schema";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
-  adapter: DrizzleAdapter(db, sqliteTable) as Adapter,
+  adapter: DrizzleAdapter(db, createTable) as Adapter,
   providers: [
     SpotifyProvider({
       clientId: env.SPOTIFY_CLIENT_ID,
