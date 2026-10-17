@@ -1,12 +1,13 @@
-import { type Config } from "drizzle-kit";
-import { env } from "~/env.mjs";
+import process from "node:process";
+import { defineConfig } from "drizzle-kit";
 
-export default {
+const url = process.env["DATABASE_URL"] ?? "file:.data/dev.db";
+const authToken = process.env["DATABASE_AUTH_TOKEN"];
+
+export default defineConfig({
+  out: "./drizzle",
   schema: "./src/server/db/schema.ts",
-  driver: "turso",
-  dbCredentials: {
-    url: env.TURSO_DATABASE_URL,
-    authToken: env.TURSO_AUTH_TOKEN,
-  },
-  tablesFilter: ["nueslify_*"],
-} satisfies Config;
+  dialect: "turso",
+  dbCredentials: authToken ? { url, authToken } : { url },
+  casing: "snake_case",
+});

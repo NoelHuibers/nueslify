@@ -1,0 +1,176 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true, "defaultBranch": "main" },
+  "files": {
+    "ignoreUnknown": true,
+    "includes": [
+      "**",
+      "!**/routeTree.gen.ts",
+      "!drizzle",
+      // Vendored, unmodifiable brand assets (Spotify logos) and static files.
+      "!public"
+    ]
+  },
+  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "lineWidth": 100 },
+  "javascript": {
+    "formatter": { "quoteStyle": "double", "semicolons": "always", "trailingCommas": "all" }
+  },
+  "css": { "parser": { "cssModules": false, "tailwindDirectives": true } },
+  "assist": { "enabled": true, "actions": { "source": { "organizeImports": "on" } } },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      // Every rule Biome has, every group at error severity. The handful of exceptions are
+      // documented in the first override below.
+      "preset": "all",
+      "a11y": "error",
+      "complexity": "error",
+      "correctness": "error",
+      "performance": "error",
+      "security": "error",
+      "style": "error",
+      "suspicious": "error",
+      "nursery": {
+        "useSortedClasses": {
+          "level": "error",
+          "fix": "safe",
+          "options": { "functions": ["cn", "cva"] }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            // `void promise` is how we mark intentionally un-awaited promises (event handlers).
+            "noVoid": "off",
+            // Contradicts TypeScript's `noPropertyAccessFromIndexSignature` (process.env["X"]).
+            "useLiteralKeys": "off",
+            "noExcessiveLinesPerFunction": {
+              "level": "error",
+              "options": { "maxLines": 120, "skipBlankLines": true }
+            }
+          },
+          "correctness": {
+            // Rules for other frameworks (Qwik, Solid) that the "all" preset switches on.
+            "useQwikValidLexicalScope": "off",
+            "noSolidDestructuredProps": "off"
+          },
+          "performance": {
+            "useSolidForComponent": "off",
+            // Next.js rule (`next/image`); plain <img> with explicit size + lazy loading is right here.
+            "noImgElement": "off",
+            // The React Compiler memoizes inline callbacks; manual useCallback would be noise.
+            "noJsxPropsBind": "off"
+          },
+          "style": {
+            "noExcessiveLinesPerFile": {
+              "level": "error",
+              "options": { "maxLines": 300, "skipBlankLines": true }
+            },
+            // Next.js rule; TanStack Start's root route renders <head> itself.
+            "noHeadElement": "off",
+            // Conditional rendering in JSX is built on ternaries; `noNestedTernary` stays on.
+            "noTernary": "off",
+            // The UI is English-only; this rule exists to force i18n message catalogues.
+            "noJsxLiterals": "off",
+            // Sizes, timeouts and limits read better inline; meaningful values are named constants.
+            "noMagicNumbers": "off",
+            // TanStack file routes export `Route` before the components it references.
+            "useExportsLast": "off",
+            "useConsistentTypeDefinitions": { "level": "error", "options": { "style": "type" } },
+            "useNamingConvention": {
+              "level": "error",
+              "options": {
+                "strictCase": false,
+                "conventions": [
+                  {
+                    // External contracts: env vars (SCREAMING_CASE), Spotify/tagesschau JSON
+                    // (snake_case), HTTP methods in route handlers (GET/POST).
+                    "selector": { "kind": "objectLiteralProperty" },
+                    "formats": ["camelCase", "CONSTANT_CASE", "snake_case", "PascalCase"]
+                  },
+                  {
+                    // Includes PascalCase for third-party globals such as `MusicKit` and `YT`.
+                    "selector": { "kind": "typeProperty" },
+                    "formats": ["camelCase", "CONSTANT_CASE", "snake_case", "PascalCase"]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      // Server code runs on Node: Node built-ins and `process` are expected there.
+      "includes": [
+        "src/server/**",
+        "src/routes/api/**",
+        "scripts/**",
+        "test/**",
+        "e2e/**",
+        "*.config.ts"
+      ],
+      "linter": { "rules": { "correctness": { "noNodejsModules": "off" } } }
+    },
+    {
+      // The only places allowed to read process.env directly.
+      "includes": ["src/server/env.ts", "src/server/logger.ts", "*.config.ts", "test/**", "e2e/**"],
+      "linter": { "rules": { "style": { "noProcessEnv": "off" } } }
+    },
+    {
+      // Tooling configs must default-export.
+      "includes": ["*.config.ts"],
+      "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
+    },
+    {
+      // TanStack Router file conventions: `$.ts`, `_app.tsx`, `__root.tsx`, and route modules that
+      // export `Route` while keeping their page component private (the router plugin handles HMR).
+      "includes": ["src/routes/**"],
+      "linter": {
+        "rules": {
+          "style": { "useFilenamingConvention": "off", "useComponentExportOnlyModules": "off" }
+        }
+      }
+    },
+    {
+      // Binary formats, hashing and PRNGs are bit twiddling by nature.
+      "includes": ["src/lib/wav.ts", "src/lib/async.ts", "src/server/http.ts"],
+      "linter": { "rules": { "suspicious": { "noBitwiseOperators": "off" } } }
+    },
+    {
+      // Generated by the shadcn CLI. Formatted and type-checked like everything else, but kept
+      // close to upstream so `shadcn add` updates stay diffable.
+      "includes": ["src/components/ui/**"],
+      "linter": {
+        "rules": {
+          "performance": { "noNamespaceImport": "off" },
+          "security": { "noSecrets": "off" },
+          "style": {
+            "noImplicitBoolean": "off",
+            "noNestedTernary": "off",
+            "useComponentExportOnlyModules": "off"
+          },
+          "a11y": { "useSemanticElements": "off", "noLabelWithoutControl": "off" }
+        }
+      }
+    },
+    {
+      "includes": ["**/*.test.ts", "**/*.test.tsx", "e2e/**", "test/**"],
+      "linter": {
+        "rules": {
+          // Inline regex assertions and async mock implementations are idiomatic in tests.
+          "complexity": { "noExcessiveLinesPerFunction": "off" },
+          "performance": { "useTopLevelRegex": "off" },
+          "style": { "noNonNullAssertion": "off" },
+          "security": { "noSecrets": "off" },
+          "suspicious": { "useAwait": "off" }
+        }
+      }
+    }
+  ]
+}

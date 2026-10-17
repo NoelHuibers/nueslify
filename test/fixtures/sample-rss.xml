@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Beispiel</title>
+    <item>
+      <title>Junge Union: Johannes Winkel als Vorsitzender wiedergewählt</title>
+      <link>https://www.example.de/politik/deutschland/junge-union-winkel-a-1.html?utm_source=rss&amp;id=7#ref=rss</link>
+      <description><![CDATA[<p>Johannes Winkel bleibt Chef der Jungen Union &ndash; mit seinem <b>besten</b> Ergebnis.</p>]]></description>
+      <category>Politik</category>
+      <pubDate>Sat, 17 Oct 2026 09:00:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>Teaser only in content</title>
+      <link>https://www.example.de/wirtschaft/boerse-1.html</link>
+      <description></description>
+      <content:encoded><![CDATA[<p>Der DAX hat am Freitag deutlich zugelegt, getrieben von Technologiewerten.</p>]]></content:encoded>
+      <dc:date>2026-10-17T08:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>Video: Was heute wichtig ist</title>
+      <link>https://www.example.de/video/heute-1.html</link>
+      <description>Ein Video.</description>
+      <pubDate>Sat, 17 Oct 2026 08:30:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>Liveblog Nahost: Die Entwicklungen im Überblick</title>
+      <link>https://www.example.de/ausland/nahost-1.html</link>
+      <description>Alle Entwicklungen.</description>
+      <pubDate>Sat, 17 Oct 2026 08:31:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>CDU-Verbot beantragt</title>
+      <link>https://www.example.de/politik/cdu-1.html</link>
+      <description>Ein satirischer Text.</description>
+      <category>Satire</category>
+      <pubDate>Sat, 17 Oct 2026 08:32:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>From the future</title>
+      <link>https://www.example.de/sport/zukunft-1.html</link>
+      <description>Clock skew should not keep this on top forever.</description>
+      <pubDate>Sat, 17 Oct 2099 08:00:00 +0200</pubDate>
+    </item>
+    <item>
+      <title>No date</title>
+      <link>https://www.example.de/no-date.html</link>
+      <description>Dropped.</description>
+    </item>
+    <item>
+      <title>No link</title>
+      <description>Dropped.</description>
+      <pubDate>Sat, 17 Oct 2026 08:00:00 +0200</pubDate>
+    </item>
+  </channel>
+</rss>

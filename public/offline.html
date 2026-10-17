@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Offline · Nueslify</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, sans-serif;
+        color: #eef2ff;
+        background: linear-gradient(to bottom, #18181b, #1e1b4b);
+        text-align: center;
+        padding: 1.5rem;
+      }
+      img {
+        border-radius: 1rem;
+      }
+      button {
+        margin-top: 1rem;
+        border: 0;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1.5rem;
+        font: inherit;
+        font-weight: 600;
+        background: #c7d2fe;
+        color: #312e81;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/icon-192x192.png" width="96" height="96" alt="" />
+      <h1>You're off the air</h1>
+      <p>Nueslify needs a connection to fetch fresh news. Check your network and try again.</p>
+      <button type="button" onclick="location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

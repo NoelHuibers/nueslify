@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "id": "qZKm30M",
+      "title": "Mambo-Roger Montiel",
+      "duration": 166,
+      "permalink": "/djrogermontiel/mambo-roger-montiel",
+      "is_streamable": true,
+      "genre": "Electronic",
+      "user": {
+        "id": "92Rm3X2",
+        "name": "Roger Montiel",
+        "handle": "djrogermontiel"
+      },
+      "artwork": {
+        "150x150": "https://audius-discovery-3.altego.net/content/baeaaaiqsec3emxlfrmqo5t3m72bz7zb7vuin2zmfkrfuqhdsygmbppd3ynfgo/150x150.jpg",
+        "480x480": "https://audius-discovery-3.altego.net/content/baeaaaiqsec3emxlfrmqo5t3m72bz7zb7vuin2zmfkrfuqhdsygmbppd3ynfgo/480x480.jpg",
+        "1000x1000": "https://audius-discovery-3.altego.net/content/baeaaaiqsec3emxlfrmqo5t3m72bz7zb7vuin2zmfkrfuqhdsygmbppd3ynfgo/1000x1000.jpg",
+        "mirrors": [
+          "https://v.monophonic.digital",
+          "https://audius-creator-7.theblueprint.xyz",
+          "https://audius-discovery-1.altego.net"
+        ]
+      }
+    },
+    {
+      "id": "amvQrAg",
+      "title": "LOSING MY MIND (Ft Daniel Fowler)",
+      "duration": 202,
+      "permalink": "/Chrylo/losing-my-mind-ft-daniel-fowler",
+      "is_streamable": true,
+      "genre": "Electronic",
+      "user": {
+        "id": "no4Mm",
+        "name": "Chrylo",
+        "handle": "Chrylo"
+      },
+      "artwork": {
+        "150x150": "https://audius-creator-14.theblueprint.xyz/content/baeaaaiqsebrmpbibcxj6qw2bhjix5e5coqvt3a2lzfseu5mbig4fqw4rtf24m/150x150.jpg",
+        "480x480": "https://audius-creator-14.theblueprint.xyz/content/baeaaaiqsebrmpbibcxj6qw2bhjix5e5coqvt3a2lzfseu5mbig4fqw4rtf24m/480x480.jpg",
+        "1000x1000": "https://audius-creator-14.theblueprint.xyz/content/baeaaaiqsebrmpbibcxj6qw2bhjix5e5coqvt3a2lzfseu5mbig4fqw4rtf24m/1000x1000.jpg",
+        "mirrors": [
+          "https://v.monophonic.digital",
+          "https://audius-content-14.figment.io",
+          "https://audius-content-13.figment.io"
+        ]
+      }
+    },
+    {
+      "id": "QxZVQzW",
+      "title": "DIVIDEND",
+      "duration": 115,
+      "permalink": "/madtek/dividend",
+      "is_streamable": true,
+      "genre": "Electronic",
+      "user": {
+        "id": "RN8j2PX",
+        "name": "MADTEK",
+        "handle": "madtek"
+      },
+      "artwork": {
+        "150x150": "https://v.monophonic.digital/content/baeaaaiqseczgokytia6nhnuphp5iofgvbqkgvewpryasvpggfydwyqhgu2cva/150x150.jpg",
+        "480x480": "https://v.monophonic.digital/content/baeaaaiqseczgokytia6nhnuphp5iofgvbqkgvewpryasvpggfydwyqhgu2cva/480x480.jpg",
+        "1000x1000": "https://v.monophonic.digital/content/baeaaaiqseczgokytia6nhnuphp5iofgvbqkgvewpryasvpggfydwyqhgu2cva/1000x1000.jpg",
+        "mirrors": [
+          "https://val015.open-audio-validator.com",
+          "https://val007.open-audio-validator.com",
+          "https://audius.rickyrombo.com"
+        ]
+      }
+    },
+    {
+      "id": "notStreamable",
+      "title": "Mambo-Roger Montiel",
+      "duration": 166,
+      "permalink": "/djrogermontiel/mambo-roger-montiel",
+      "is_streamable": false,
+      "genre": "Electronic",
+      "user": {
+        "id": "92Rm3X2",
+        "name": "Roger Montiel",
+        "handle": "djrogermontiel"
+      },
+      "artwork": {
+        "150x150": "https://audius-discovery-3.altego.net/content/baeaaaiqsec3emxlfrmqo5t3m72bz7zb7vuin2zmfkrfuqhdsygmbppd3ynfgo/150x150.jpg",
+        "480x480": "https://audius-discovery-3.altego.net/content/baeaaaiqsec3emxlfrmqo5t3m72bz7zb7vuin2zmfkrfuqhdsygmbppd3ynfgo/480x480.jpg",
+        "1000x1000": "https://audius-discovery-3.altego.net/content/baeaaaiqsec3emxlfrmqo5t3m72bz7zb7vuin2zmfkrfuqhdsygmbppd3ynfgo/1000x1000.jpg",
+        "mirrors": [
+          "https://v.monophonic.digital",
+          "https://audius-creator-7.theblueprint.xyz",
+          "https://audius-discovery-1.altego.net"
+        ]
+      }
+    }
+  ]
+}
