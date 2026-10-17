@@ -1,0 +1,214 @@
+{
+  "news": [
+    {
+      "sophoraId": "junge-union-vorsitzender-100",
+      "externalId": "c017f640-93c3-4690-9817-2ce50da21ad7",
+      "title": "Winkel als JU-Vorsitzender wiedergewählt",
+      "date": "2026-10-16T23:15:49.357+02:00",
+      "teaserImage": {
+        "copyright": "Henning Kaiser/dpa",
+        "alttext": "Johannes Winkel",
+        "imageVariants": {
+          "1x1-144": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStQvU/1x1-144.jpg",
+          "1x1-256": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStSJ8/1x1-256.jpg",
+          "1x1-432": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStTkw/1x1-432.jpg",
+          "1x1-640": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStU_E/1x1-640.jpg",
+          "1x1-840": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStWZo/1x1-840.jpg",
+          "16x9-256": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvh0M/16x9-256.jpg",
+          "16x9-384": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvjXw/16x9-384.jpg",
+          "16x9-512": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvlIQ/16x9-512.jpg",
+          "16x9-640": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvmjA/16x9-640.jpg",
+          "16x9-960": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvpk8/16x9-960.jpg",
+          "16x9-1280": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSveow/16x9-1280.jpg",
+          "16x9-1920": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvgNE/16x9-1920.jpg"
+        },
+        "type": "image"
+      },
+      "tags": [
+        {
+          "tag": "Junge Union"
+        },
+        {
+          "tag": "CDU"
+        },
+        {
+          "tag": "CSU"
+        }
+      ],
+      "topline": "Junge Union",
+      "firstSentence": "Johannes Winkel ist als Vorsitzender der Jungen Union mit seinem bislang besten Ergebnis wiedergewählt worden.",
+      "images": [],
+      "details": "https://www.tagesschau.de/api2u/inland/innenpolitik/junge-union-vorsitzender-100.json",
+      "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/junge-union-vorsitzender-100.html",
+      "shareURL": "https://www.tagesschau.de/inland/innenpolitik/junge-union-vorsitzender-100.html",
+      "geotags": [],
+      "regionId": 0,
+      "regionIds": [],
+      "ressort": "inland",
+      "breakingNews": false,
+      "type": "story"
+    },
+    {
+      "sophoraId": "soziale-medien-challenges-100",
+      "externalId": "37cfdf16-3e13-48d5-8e88-2314060fec7c",
+      "title": "Lebensgefährliche Mutproben und der Reiz für Teenager",
+      "date": "2026-10-16T20:42:07.911+02:00",
+      "teaserImage": {
+        "copyright": "Elisa Schu/dpa",
+        "alttext": "Eine junge Frau liegt mit dem Smartphone in der Hand auf dem Bett.",
+        "imageVariants": {
+          "1x1-144": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSStQvU/1x1-144.jpg",
+          "1x1-256": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSStSJ8/1x1-256.jpg",
+          "1x1-432": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSStTkw/1x1-432.jpg",
+          "1x1-640": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSStU_E/1x1-640.jpg",
+          "1x1-840": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSStWZo/1x1-840.jpg",
+          "16x9-256": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSvh0M/16x9-256.jpg",
+          "16x9-384": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSvjXw/16x9-384.jpg",
+          "16x9-512": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSvlIQ/16x9-512.jpg",
+          "16x9-640": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSvmjA/16x9-640.jpg",
+          "16x9-960": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSvpk8/16x9-960.jpg",
+          "16x9-1280": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSveow/16x9-1280.jpg",
+          "16x9-1920": "https://images.tagesschau.de/image/d9953858-0526-4af7-a09f-328068fc7118/AAABoUYFfyE/AAABnSSvgNE/16x9-1920.jpg"
+        },
+        "type": "image"
+      },
+      "tags": [
+        {
+          "tag": "Social Media"
+        },
+        {
+          "tag": "Bundesrat"
+        },
+        {
+          "tag": "Kinder"
+        },
+        {
+          "tag": "Jugendliche"
+        }
+      ],
+      "topline": "Bundesrat fordert mehr Schutz",
+      "firstSentence": "Die Bundesländer wollen Kinder und Jugendliche besser vor gefährlichen Mutproben im Netz schützen. ",
+      "images": [],
+      "details": "https://www.tagesschau.de/api2u/inland/innenpolitik/soziale-medien-challenges-100.json",
+      "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/soziale-medien-challenges-100.html",
+      "shareURL": "https://www.tagesschau.de/inland/innenpolitik/soziale-medien-challenges-100.html",
+      "geotags": [],
+      "regionId": 0,
+      "regionIds": [],
+      "ressort": "inland",
+      "breakingNews": false,
+      "type": "story"
+    },
+    {
+      "sophoraId": "katherina-reiche-tankrabatt-entlastungen-100",
+      "externalId": "b4680659-7397-482a-a78a-5b667af51ad5",
+      "title": "Reiche für Direktzahlungen nach \"Tankrabatt\"",
+      "date": "2026-10-16T16:55:10.984+02:00",
+      "teaserImage": {
+        "copyright": "Michael Brandt/dpa",
+        "alttext": "Katherina Reiche",
+        "imageVariants": {
+          "1x1-144": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSStQvU/1x1-144.jpg",
+          "1x1-256": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSStSJ8/1x1-256.jpg",
+          "1x1-432": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSStTkw/1x1-432.jpg",
+          "1x1-640": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSStU_E/1x1-640.jpg",
+          "1x1-840": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSStWZo/1x1-840.jpg",
+          "16x9-256": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSvh0M/16x9-256.jpg",
+          "16x9-384": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSvjXw/16x9-384.jpg",
+          "16x9-512": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSvlIQ/16x9-512.jpg",
+          "16x9-640": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSvmjA/16x9-640.jpg",
+          "16x9-960": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSvpk8/16x9-960.jpg",
+          "16x9-1280": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSveow/16x9-1280.jpg",
+          "16x9-1920": "https://images.tagesschau.de/image/a877b373-0905-423f-9fdb-a86809b5af0f/AAABoUWtZJY/AAABnSSvgNE/16x9-1920.jpg"
+        },
+        "type": "image"
+      },
+      "tags": [
+        {
+          "tag": "Reiche"
+        },
+        {
+          "tag": "Wirtschaftsministerin"
+        },
+        {
+          "tag": "Tankrabatt"
+        }
+      ],
+      "topline": "Ministerin zu Entlastungen",
+      "firstSentence": "Wirtschaftsministerin Reiche warnt vor Engpässen bei Diesel, Kerosin und Benzin aus dem Nahen Osten. ",
+      "images": [],
+      "details": "https://www.tagesschau.de/api2u/inland/innenpolitik/katherina-reiche-tankrabatt-entlastungen-100.json",
+      "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/katherina-reiche-tankrabatt-entlastungen-100.html",
+      "shareURL": "https://www.tagesschau.de/inland/innenpolitik/katherina-reiche-tankrabatt-entlastungen-100.html",
+      "geotags": [],
+      "regionId": 0,
+      "regionIds": [],
+      "ressort": "inland",
+      "breakingNews": false,
+      "type": "story"
+    },
+    {
+      "sophoraId": "junge-union-vorsitzender-100",
+      "externalId": "video-1",
+      "title": "Winkel als JU-Vorsitzender wiedergewählt",
+      "date": "2026-10-16T23:15:49.357+02:00",
+      "teaserImage": {
+        "copyright": "Henning Kaiser/dpa",
+        "alttext": "Johannes Winkel",
+        "imageVariants": {
+          "1x1-144": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStQvU/1x1-144.jpg",
+          "1x1-256": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStSJ8/1x1-256.jpg",
+          "1x1-432": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStTkw/1x1-432.jpg",
+          "1x1-640": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStU_E/1x1-640.jpg",
+          "1x1-840": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStWZo/1x1-840.jpg",
+          "16x9-256": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvh0M/16x9-256.jpg",
+          "16x9-384": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvjXw/16x9-384.jpg",
+          "16x9-512": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvlIQ/16x9-512.jpg",
+          "16x9-640": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvmjA/16x9-640.jpg",
+          "16x9-960": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvpk8/16x9-960.jpg",
+          "16x9-1280": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSveow/16x9-1280.jpg",
+          "16x9-1920": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvgNE/16x9-1920.jpg"
+        },
+        "type": "image"
+      },
+      "tags": [
+        {
+          "tag": "Junge Union"
+        },
+        {
+          "tag": "CDU"
+        },
+        {
+          "tag": "CSU"
+        }
+      ],
+      "updateCheckUrl": "https://www.tagesschau.de/api2u/junge-union-vorsitzender-100.json?view=hasChanged&lastKnown=9D3F733EC505927E4F6727A24D0F3DDF",
+      "tracking": [
+        {
+          "sid": "app.inland.innenpolitik.junge-union-vorsitzender-100",
+          "src": "tagesschau",
+          "ctp": "nicht-definiert",
+          "pdt": "20261016T2315",
+          "otp": "meldung",
+          "cid": "junge-union-vorsitzender-100",
+          "pti": "Winkel_als_Vorsitzender_der_Jungen_Union_wiedergewaehlt",
+          "bcr": "ja",
+          "type": "generic",
+          "av_full_show": false
+        }
+      ],
+      "topline": "Junge Union",
+      "firstSentence": "Johannes Winkel ist als Vorsitzender der Jungen Union mit seinem bislang besten Ergebnis wiedergewählt worden.",
+      "images": [],
+      "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/junge-union-vorsitzender-100.html",
+      "shareURL": "https://www.tagesschau.de/inland/innenpolitik/junge-union-vorsitzender-100.html",
+      "geotags": [],
+      "regionId": 0,
+      "regionIds": [],
+      "ressort": "inland",
+      "breakingNews": false,
+      "type": "video"
+    }
+  ],
+  "nextPage": "https://www.tagesschau.de/api2u/news?date=261011&ressort=inland"
+}

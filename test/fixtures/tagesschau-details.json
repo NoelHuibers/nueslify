@@ -1,0 +1,192 @@
+{
+  "sophoraId": "junge-union-vorsitzender-100",
+  "externalId": "c017f640-93c3-4690-9817-2ce50da21ad7",
+  "title": "Winkel als JU-Vorsitzender wiedergewählt",
+  "date": "2026-10-16T23:15:49.357+02:00",
+  "teaserImage": {
+    "copyright": "Henning Kaiser/dpa",
+    "alttext": "Johannes Winkel",
+    "imageVariants": {
+      "1x1-144": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStQvU/1x1-144.jpg",
+      "1x1-256": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStSJ8/1x1-256.jpg",
+      "1x1-432": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStTkw/1x1-432.jpg",
+      "1x1-640": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStU_E/1x1-640.jpg",
+      "1x1-840": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSStWZo/1x1-840.jpg",
+      "16x9-256": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvh0M/16x9-256.jpg",
+      "16x9-384": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvjXw/16x9-384.jpg",
+      "16x9-512": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvlIQ/16x9-512.jpg",
+      "16x9-640": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvmjA/16x9-640.jpg",
+      "16x9-960": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvpk8/16x9-960.jpg",
+      "16x9-1280": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSveow/16x9-1280.jpg",
+      "16x9-1920": "https://images.tagesschau.de/image/07ecf457-1226-48da-b757-ae26a7a83fdf/AAABoUZVZxQ/AAABnSSvgNE/16x9-1920.jpg"
+    },
+    "type": "image"
+  },
+  "tags": [
+    {
+      "tag": "Junge Union"
+    },
+    {
+      "tag": "CDU"
+    },
+    {
+      "tag": "CSU"
+    }
+  ],
+  "updateCheckUrl": "https://www.tagesschau.de/api2u/junge-union-vorsitzender-100.json?view=hasChanged&lastKnown=9D3F733EC505927E4F6727A24D0F3DDF",
+  "content": [
+    {
+      "value": "<strong>Johannes Winkel ist als Vorsitzender der Jungen Union mit seinem bislang besten Ergebnis wiedergewählt worden. Er rief zu Zuversicht und Selbstbewusstsein auf - und teilte gleich darauf in Richtung SPD aus.</strong>",
+      "type": "text"
+    },
+    {
+      "value": "Johannes Winkel ist als Vorsitzender der Jungen Union bestätigt worden. Auf dem \"Deutschlandtag\" der unabhängigen Jugendorganisation von CDU und CSU erhielt er 265 von 283 gültigen Stimmen. 16 Delegierte stimmten gegen ihn, zwei enthielten sich. Für den CDU-Bundestagsabgeordneten ist es sein bisher bestes Wahlergebnis.",
+      "type": "text"
+    },
+    {
+      "value": "In seiner Rede wies Winkel auf den Ernst der Lage in der Union hin. Die ist nach drei desaströsen Landtagswahlen enorm unter Druck. Gleichzeitig rief der 34-jährige Jurist aber zu Zuversicht und Selbstbewusstsein auf. \"Unsere Generation hat mit dieser Union noch einiges vor\", sagte er. \"Und wir werden diejenigen sein, die die Geschichte der Volkspartei von CDU und CSU erfolgreich weiterschreiben.\"",
+      "type": "text"
+    },
+    {
+      "value": "<h2>Frontalangriff auf Schwesig</h2>",
+      "type": "headline"
+    },
+    {
+      "value": "Der JU-Vorsitzende setzt beim \"Deutschlandtag\" auch gleich auf einen Frontalangriff und kritisierte die SPD-Politikerin Manuela Schwesig scharf. In Anspielung auf den früheren Einsatz der Ministerpräsidentin von Mecklenburg-Vorpommern für die deutsch-russische Pipeline Nord Stream 2 warf er ihr vor, sie habe sich \"von Russland kaufen lassen und das Ganze der deutschen Öffentlichkeit auch noch als Klimaschutz verkauft\".",
+      "type": "text"
+    },
+    {
+      "value": "Die Vorwürfe Schwesigs, die CDU sei \"unmenschlich\" mit der nach dem Tod ihrer Stieftochter zurückgetretenen Arbeitsministerin Bärbel Bas (SPD) umgegangen, wies Winkel erneut zurück. \"Wir lassen uns ganz bestimmt nicht von Manuela Schwesig belehren, wenn es um Anstand und Haltung in der deutschen Politik geht\", so Winkel. ",
+      "type": "text"
+    },
+    {
+      "box": {
+        "image": {
+          "copyright": "dpa",
+          "alttext": "Friedrich Merz beim Deutschlandtag der Jungen Union 2024",
+          "imageVariants": {
+            "1x1-144": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSStQvU/1x1-144.jpg",
+            "1x1-256": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSStSJ8/1x1-256.jpg",
+            "1x1-432": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSStTkw/1x1-432.jpg",
+            "1x1-640": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSStU_E/1x1-640.jpg",
+            "1x1-840": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSStWZo/1x1-840.jpg",
+            "16x9-256": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSvh0M/16x9-256.jpg",
+            "16x9-384": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSvjXw/16x9-384.jpg",
+            "16x9-512": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSvlIQ/16x9-512.jpg",
+            "16x9-640": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSvmjA/16x9-640.jpg",
+            "16x9-960": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSvpk8/16x9-960.jpg",
+            "16x9-1280": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSveow/16x9-1280.jpg",
+            "16x9-1920": "https://images.tagesschau.de/image/c8dc871e-86d7-4307-b791-e26af85b4fb6/AAABmoMLMv0/AAABnSSvgNE/16x9-1920.jpg"
+          },
+          "type": "image"
+        },
+        "date": "2025-11-14T16:45:40.818+01:00",
+        "link": "<a href=\"https://www.tagesschau.de/api2u/inland/innenpolitik/junge-union-rente-merz-deutschlandtag-100.json\" type=\"intern\">mehr</a>",
+        "subtitle": "Merz und die Junge Union",
+        "text": "Die Junge Union war lange eine Machtbasis von Friedrich Merz.",
+        "title": "Der Beginn einer Entfremdung?",
+        "infobox": false
+      },
+      "type": "box"
+    },
+    {
+      "value": "<h2>Wüst: Reißt euch zusammen</h2>",
+      "type": "headline"
+    },
+    {
+      "value": "Als Gast sprach auch der Ministerpräsident von Nordrhein-Westfalen, Hendrik Wüst. Er forderte die schwarz-rote Koalition im Bund auf, offene Streitereien zu beenden und vereinbarte Reformen umzusetzen. \"Die Debatten der letzten Tage haben wieder einmal niemandem geholfen - ganz im Gegenteil\", sagte Wüst. Er bitte deshalb alle, \"die da Verantwortung tragen: Reißt euch zusammen, setzt um\".",
+      "type": "text"
+    },
+    {
+      "value": "Eine Reform der Sozialsysteme sei nötig, betonte Wüst. Sonst werde Arbeit durch steigende Renten- und Krankenkassenbeiträge \"immer teurer\" und Arbeitsplätze würden gefährdet. Die CDU müsse hier glaubhaft machen, dass sie \"die Dinge zum Besseren wenden\" könne und für \"Zuversicht statt für Angst\" stehe.",
+      "type": "text"
+    },
+    {
+      "value": "<h2>Merz für Samstag erwartet</h2>",
+      "type": "headline"
+    },
+    {
+      "value": "Mit Spannung wird der Auftritt von Bundeskanzler und CDU-Chef Friedrich Merz am Samstag erwartet. Im vergangenen Jahr war er wegen der Rentenreform heftig mit den Delegierten aneinandergeraten. ",
+      "type": "text"
+    },
+    {
+      "value": "Das Erste | tagesthemen | 16.10.2026 | 21:45 Uhr",
+      "type": "text"
+    },
+    {
+      "related": [
+        {
+          "teaserImage": {
+            "copyright": "dpa",
+            "alttext": "Pascal Reddig",
+            "imageVariants": {
+              "1x1-144": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSStQvU/1x1-144.jpg",
+              "1x1-256": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSStSJ8/1x1-256.jpg",
+              "1x1-432": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSStTkw/1x1-432.jpg",
+              "1x1-640": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSStU_E/1x1-640.jpg",
+              "1x1-840": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSStWZo/1x1-840.jpg",
+              "16x9-256": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSvh0M/16x9-256.jpg",
+              "16x9-384": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSvjXw/16x9-384.jpg",
+              "16x9-512": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSvlIQ/16x9-512.jpg",
+              "16x9-640": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSvmjA/16x9-640.jpg",
+              "16x9-960": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSvpk8/16x9-960.jpg",
+              "16x9-1280": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSveow/16x9-1280.jpg",
+              "16x9-1920": "https://images.tagesschau.de/image/6f0f317c-5916-4ee2-a58a-9d9be2e9114f/AAABmeHBXrc/AAABnSSvgNE/16x9-1920.jpg"
+            },
+            "type": "image"
+          },
+          "date": "2025-10-14T14:36:24.577+02:00",
+          "sophoraId": "rente-union-gesetzentwurf-100",
+          "externalId": "1b57571f-6306-4e2c-a18d-2a1bd96c78c3",
+          "topline": "Gesetzentwurf von Schwarz-Rot",
+          "title": "Junge Unionsabgeordnete lehnen Rentenpaket ab",
+          "details": "https://www.tagesschau.de/api2u/inland/innenpolitik/rente-union-gesetzentwurf-100.json",
+          "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/rente-union-gesetzentwurf-100.html",
+          "type": "story"
+        },
+        {
+          "teaserImage": {
+            "copyright": "dpa",
+            "alttext": "Junge Menschen sitzen auf einer Mauer.",
+            "imageVariants": {
+              "1x1-144": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSStQvU/1x1-144.jpg",
+              "1x1-256": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSStSJ8/1x1-256.jpg",
+              "1x1-432": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSStTkw/1x1-432.jpg",
+              "1x1-640": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSStU_E/1x1-640.jpg",
+              "1x1-840": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSStWZo/1x1-840.jpg",
+              "16x9-256": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSvh0M/16x9-256.jpg",
+              "16x9-384": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSvjXw/16x9-384.jpg",
+              "16x9-512": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSvlIQ/16x9-512.jpg",
+              "16x9-640": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSvmjA/16x9-640.jpg",
+              "16x9-960": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSvpk8/16x9-960.jpg",
+              "16x9-1280": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSveow/16x9-1280.jpg",
+              "16x9-1920": "https://images.tagesschau.de/image/10f2f3d3-1eb6-46ce-9441-11c062185c2a/AAABn2USwsY/AAABnSSvgNE/16x9-1920.jpg"
+            },
+            "type": "image"
+          },
+          "date": "2025-06-25T07:37:00.770+02:00",
+          "sophoraId": "haushalt-junge-union-100",
+          "externalId": "9b6ac765-d90d-43f3-bde8-f836d0f72c1e",
+          "topline": "Haushaltspläne von Union und SPD",
+          "title": "Junge Union kritisiert \"atemberaubende\" Neuverschuldung",
+          "details": "https://www.tagesschau.de/api2u/inland/innenpolitik/haushalt-junge-union-100.json",
+          "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/haushalt-junge-union-100.html",
+          "type": "story"
+        }
+      ],
+      "type": "related"
+    }
+  ],
+  "topline": "Junge Union",
+  "firstSentence": "Johannes Winkel ist als Vorsitzender der Jungen Union mit seinem bislang besten Ergebnis wiedergewählt worden.",
+  "images": [],
+  "details": "https://www.tagesschau.de/api2u/inland/innenpolitik/junge-union-vorsitzender-100.json",
+  "detailsweb": "https://www.tagesschau.de/inland/innenpolitik/junge-union-vorsitzender-100.html",
+  "shareURL": "https://www.tagesschau.de/inland/innenpolitik/junge-union-vorsitzender-100.html",
+  "geotags": [],
+  "regionId": 0,
+  "regionIds": [],
+  "ressort": "inland",
+  "breakingNews": false,
+  "type": "story"
+}
