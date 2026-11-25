@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { AppHeader } from "#/components/app-header.tsx";
+import { SiteFooter } from "#/components/site-footer.tsx";
 import { PlayerDock } from "#/features/player/player-dock.tsx";
 import { PlayerProvider } from "#/features/player/player-provider.tsx";
 import { viewerQuery } from "#/lib/queries.ts";
@@ -22,11 +23,12 @@ function AppLayout() {
   const { viewer } = Route.useRouteContext();
   return (
     <PlayerProvider>
-      <div className="flex min-h-dvh flex-col">
+      <div className="flex min-h-dvh flex-col pb-64 md:pb-56">
         <AppHeader viewer={viewer} />
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-6 pb-64 md:px-8 md:pb-56">
+        <main className="mx-auto w-full max-w-6xl flex-1 px-4 pt-6 pb-12 md:px-8">
           <Outlet />
         </main>
+        <SiteFooter />
         <PlayerDock />
       </div>
     </PlayerProvider>

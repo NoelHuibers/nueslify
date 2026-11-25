@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/_app'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as AppHistoryRouteImport } from './routes/_app/history'
 import { Route as AppListenRouteImport } from './routes/_app/listen'
 import { Route as AppSettingsRouteImport } from './routes/_app/settings'
@@ -40,6 +42,16 @@ const AuthRoute = AuthRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppHistoryRoute = AppHistoryRouteImport.update({
@@ -96,6 +108,8 @@ const ApiCronNewsRoute = ApiCronNewsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/impressum': typeof ImpressumRoute
+  '/privacy': typeof PrivacyRoute
   '/history': typeof AppHistoryRoute
   '/listen': typeof AppListenRoute
   '/settings': typeof AppSettingsRoute
@@ -110,6 +124,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/impressum': typeof ImpressumRoute
+  '/privacy': typeof PrivacyRoute
   '/history': typeof AppHistoryRoute
   '/listen': typeof AppListenRoute
   '/settings': typeof AppSettingsRoute
@@ -127,6 +143,8 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/about': typeof AboutRoute
+  '/impressum': typeof ImpressumRoute
+  '/privacy': typeof PrivacyRoute
   '/_app/history': typeof AppHistoryRoute
   '/_app/listen': typeof AppListenRoute
   '/_app/settings': typeof AppSettingsRoute
@@ -143,6 +161,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/impressum'
+    | '/privacy'
     | '/history'
     | '/listen'
     | '/settings'
@@ -157,6 +177,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/impressum'
+    | '/privacy'
     | '/history'
     | '/listen'
     | '/settings'
@@ -173,6 +195,8 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_auth'
     | '/about'
+    | '/impressum'
+    | '/privacy'
     | '/_app/history'
     | '/_app/listen'
     | '/_app/settings'
@@ -190,6 +214,8 @@ export interface RootRouteChildren {
   AppRoute: typeof AppRouteWithChildren
   AuthRoute: typeof AuthRouteWithChildren
   AboutRoute: typeof AboutRoute
+  ImpressumRoute: typeof ImpressumRoute
+  PrivacyRoute: typeof PrivacyRoute
   ApiHealthRoute: typeof ApiHealthRoute
   ApiAudioSplatRoute: typeof ApiAudioSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -224,6 +250,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_app/history': {
@@ -332,6 +372,8 @@ const rootRouteChildren: RootRouteChildren = {
   AppRoute: AppRouteWithChildren,
   AuthRoute: AuthRouteWithChildren,
   AboutRoute: AboutRoute,
+  ImpressumRoute: ImpressumRoute,
+  PrivacyRoute: PrivacyRoute,
   ApiHealthRoute: ApiHealthRoute,
   ApiAudioSplatRoute: ApiAudioSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

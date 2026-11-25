@@ -1,6 +1,7 @@
 import { createFileRoute, Link, Outlet, redirect } from "@tanstack/react-router";
 import { z } from "zod";
 import { AppIcon, Wordmark } from "#/components/brand.tsx";
+import { SiteFooter } from "#/components/site-footer.tsx";
 import { publicConfigQuery, viewerQuery } from "#/lib/queries.ts";
 
 const searchSchema = z.object({
@@ -26,14 +27,17 @@ export const Route = createFileRoute("/_auth")({
 
 function AuthLayout() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center gap-8 p-4">
-      <Link aria-label="Nueslify home" className="flex items-center gap-3" to="/">
-        <AppIcon size={44} />
-        <Wordmark className="text-5xl" />
-      </Link>
-      <div className="w-full max-w-sm">
-        <Outlet />
-      </div>
-    </main>
+    <div className="flex min-h-dvh flex-col">
+      <main className="flex flex-1 flex-col items-center justify-center gap-8 p-4">
+        <Link aria-label="Nueslify home" className="flex items-center gap-3" to="/">
+          <AppIcon size={44} />
+          <Wordmark className="text-5xl" />
+        </Link>
+        <div className="w-full max-w-sm">
+          <Outlet />
+        </div>
+      </main>
+      <SiteFooter />
+    </div>
   );
 }
